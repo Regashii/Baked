@@ -44,7 +44,22 @@
   height: 90vh;
   background: rgb(142, 142, 241);
   padding: 20px;
+  overflow: auto;
 }
+
+.Pages1 body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 2px;
+  background: rgb(142, 142, 241);
+}
+.order {
+  height: 150px;
+  width: 185px;
+  border: 1px solid black;
+}
+
 /* -------------page2------------ */
 .Pages2 {
   width: 100vw;
