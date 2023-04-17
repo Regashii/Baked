@@ -1,7 +1,8 @@
 import "./App.css";
 import "./Sign.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BakedGoodies from "./components/BakedGoodies";
+import axios from "axios";
 
 function App() {
   const [check1, setCheck1] = useState(false);
@@ -9,44 +10,43 @@ function App() {
   const [check3, setCheck3] = useState(false);
 
   const [signin, setSignin] = useState(true);
-  const [goodies, setSGoodies] = useState(false);
+  const [goodies, setGoodies] = useState(false);
 
-  const userName = "Bakedgoodies";
-  const passWord = "12345";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [login, setLogin] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setLogin((prev) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  function signClick() {
-    if (login.username === "") {
+  async function signClick() {
+    if (username === "") {
       setCheck1(true);
       setCheck3(false);
     } else {
       setCheck1(false);
     }
 
-    if (login.password === "") {
+    if (password === "") {
       setCheck2(true);
       setCheck3(false);
     } else {
       setCheck2(false);
     }
 
-    if (login.username != "" && login.password != "") {
-      if (login.username === userName && login.password === passWord) {
-        setSignin(false);
-        setSGoodies(true);
-      } else {
-        setCheck3(true);
+    if (username != "" && password != "") {
+      try {
+        await axios
+          .post("http://localhost:3000/", {
+            username,
+            password,
+          })
+          .then((res) => {
+            if (res.data === "exist") {
+              setSignin(!signin);
+              setGoodies(!goodies);
+            } else if (res.data === "notexist") {
+              setCheck3(true);
+            }
+          });
+      } catch (error) {
+        console.log(error);
       }
     }
   }
@@ -62,7 +62,9 @@ function App() {
                 type="text"
                 required
                 name="username"
-                onChange={handleChange}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
               />
               <span className="user">Username</span>
               {check1 && <p>Please input your usernames</p>}
@@ -73,16 +75,21 @@ function App() {
                 type="password"
                 required
                 name="password"
-                onChange={handleChange}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
               <span>Password</span>
               {check2 && <p>Please input your password</p>}
             </div>
             {check3 && <i>Incorrect username or password</i>}
 
-            <button className="enter" onClick={signClick}>
-              Enter
-            </button>
+            <div className="buttons">
+              <button className="enter" onClick={signClick}>
+                Enter
+              </button>
+              <button className="enter">Change</button>
+            </div>
           </div>
         </div>
       )}
