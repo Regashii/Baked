@@ -39,6 +39,7 @@ function App() {
           })
           .then((res) => {
             if (res.data === "exist") {
+              console.log("success");
               setSignin(!signin);
               setGoodies(!goodies);
             } else if (res.data === "notexist") {
