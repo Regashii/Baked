@@ -1,45 +1,58 @@
 import axios from "axios";
+import { set } from "mongoose";
 import { useEffect, useState } from "react";
 
 const Request = () => {
   const [orders, setOrders] = useState([]);
+  const [pic, setPic] = useState("");
+  const [popup, setPopUp] = useState(false);
 
   useEffect(() => {
     axios.get("https://baked-goodies-api.vercel.app/order").then((res) => {
-      for (const order of res.data) {
-        if (order.isProcessed === false) {
-          //@ts-ignore
-          orders.push(order);
-        }
-        console.log("heloo");
-      }
+      setOrders(res.data);
     });
   }, []);
-
-  function click() {
-    console.log(orders);
-  }
 
   return (
     <div className="Pages1">
       <header>
-        <button onClick={click}>Refresh</button>
         <h1>Request</h1>
       </header>
+      {popup && (
+        <div className="pop">
+          <p
+            onClick={() => {
+              setPopUp(false);
+            }}
+          >
+            Close
+          </p>
+          <img src={pic} alt="pic" />
+        </div>
+      )}
+
       <div className="body">
         {orders.map((order: any, index) => {
-          console.log(order);
           return (
             <div className="order" key={index}>
               <div className="png">
-                <img src="" alt="Cake" />
+                <img
+                  src={order.images}
+                  alt="Cake"
+                  onClick={() => {
+                    setPic(order.images);
+                    setPopUp(true);
+                  }}
+                />
               </div>
               <div className="details">
                 <div className="flavor">
-                  <p>Flavor: {order.flavor}</p>
+                  <p>Flavor:</p>
+                  <p>{order.flavor}</p>
                 </div>
                 <div className="shape">
-                  <p>Shape: {order.shape}</p>
+                  <p>Shape: </p>
+                  <p>{order.shape}</p>
                 </div>
               </div>
 
@@ -52,10 +65,12 @@ const Request = () => {
                 </div>
               </div>
               <div className="description">
-                <p>Description: {order.orderDetails}</p>
+                <p>
+                  Description: <i>{order.orderDetails}</i>
+                </p>
               </div>
               <div className="comment">
-                <textarea placeholder="Comment" cols={65} rows={2}></textarea>
+                <textarea placeholder="Comment" cols={50} rows={9}></textarea>
               </div>
               <div className="settle">
                 <div className="payment">

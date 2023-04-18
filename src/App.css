@@ -31,6 +31,11 @@
   justify-content: end;
 }
 
+.reqBody {
+  display: flex;
+  height: 90vh;
+}
+
 .sideBar {
   display: flex;
   flex-direction: column;

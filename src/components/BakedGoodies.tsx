@@ -6,7 +6,10 @@ import {
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Request from "../pages/Request";
+import Ongoing from "../pages/Ongoing";
+import History from "../pages/History";
+import Date from "../pages/Date";
 
 const BakedGoodies = () => {
   let changeStyle = { width: "3m", height: "2em" };
@@ -42,6 +45,12 @@ const BakedGoodies = () => {
             <img src="BakedGoodies.png" alt="Logo" />
           </div>
         </div>
+        <div className="reqBody">
+          {page === "request" && <Request />}
+          {page === "onGoing" && <Ongoing />}
+          {page === "history" && <History />}
+          {page === "date" && <Date />}
+        </div>
         <div className="sideBar" style={{ width: tab }}>
           <div
             className="con1"
@@ -53,9 +62,7 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faEnvelope} style={changeStyle} />
             </div>
-            <h4>
-              <Link to="/request">Request</Link>
-            </h4>
+            <h4>Request</h4>
           </div>
           <div
             className="con1"
@@ -67,9 +74,7 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faCakeCandles} style={changeStyle} />
             </div>
-            <h4>
-              <Link to="/ongoing">Ongoing</Link>
-            </h4>
+            <h4>Ongoing</h4>
           </div>
           <div
             className="con1"
@@ -81,9 +86,7 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faClockRotateLeft} style={changeStyle} />
             </div>
-            <h4>
-              <Link to="/history">History</Link>
-            </h4>
+            <h4>History</h4>
           </div>
           <div
             className="con1"
@@ -95,9 +98,7 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faCalendar} style={changeStyle} />
             </div>
-            <h4>
-              <Link to="/date">Date</Link>
-            </h4>
+            <h4>Date</h4>
           </div>
         </div>
       </div>
