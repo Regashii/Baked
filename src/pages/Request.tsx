@@ -69,9 +69,7 @@ const Request = () => {
                   Description: <i>{order.orderDetails}</i>
                 </p>
               </div>
-              <div className="comment">
-                <textarea placeholder="Comment" cols={50} rows={9}></textarea>
-              </div>
+
               <div className="settle">
                 <div className="payment">
                   <p>Payment: {order.payment}</p>

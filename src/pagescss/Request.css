@@ -24,6 +24,8 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
+  background: bisque;
+  padding: 20px;
 }
 
 /* ------body------- */
@@ -34,6 +36,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .png img {
@@ -80,6 +84,8 @@
   gap: 50px;
   padding-left: 80px;
   height: 10%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .flavor {
@@ -90,17 +96,19 @@
 
 .dates {
   height: 10%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .description {
   height: auto;
-}
-
-.comment {
-  height: 30%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .settle {
   display: flex;
-  gap: 100px;
+  gap: 70px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
