@@ -19,8 +19,10 @@ app.post("/", async (req, res) => {
     });
     if (check) {
       res.json("exist");
+      console.log(check);
     } else {
       res.json("notexist");
+      console.log(check);
     }
   } catch (error) {
     res.json(error);
@@ -29,8 +31,10 @@ app.post("/", async (req, res) => {
 
 app.get("/product", async (req, res) => {
   try {
-    const items = await products.find({});
-    res.status(200).json(items);
+    const items = await products.find({
+      isProcessed: false,
+    });
+    res.send(items);
   } catch (error) {
     res.status(500).json(error);
   }

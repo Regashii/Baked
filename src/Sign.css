@@ -31,7 +31,11 @@
 
 .card i {
   position: absolute;
+  display: inline-block;
   bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2s;
 }
 .inputBox {
   position: relative;
@@ -41,6 +45,18 @@
 .inputBox p {
   color: red;
   position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2s;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  100% {
+    width: 220px;
+  }
 }
 
 .inputBox input {

@@ -6,10 +6,7 @@ import {
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import Request from "../pages/Request";
-import Ongoing from "../pages/Ongoing";
-import History from "../pages/History";
-import Date from "../pages/Date";
+import { Link } from "react-router-dom";
 
 const BakedGoodies = () => {
   let changeStyle = { width: "3m", height: "2em" };
@@ -45,13 +42,6 @@ const BakedGoodies = () => {
             <img src="BakedGoodies.png" alt="Logo" />
           </div>
         </div>
-        {page === "request" && <Request />}
-
-        {page === "onGoing" && <Ongoing />}
-
-        {page === "history" && <History />}
-
-        {page === "date" && <Date />}
         <div className="sideBar" style={{ width: tab }}>
           <div
             className="con1"
@@ -63,7 +53,9 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faEnvelope} style={changeStyle} />
             </div>
-            <h4>Request</h4>
+            <h4>
+              <Link to="/request">Request</Link>
+            </h4>
           </div>
           <div
             className="con1"
@@ -75,7 +67,9 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faCakeCandles} style={changeStyle} />
             </div>
-            <h4>Ongoing</h4>
+            <h4>
+              <Link to="/ongoing">Ongoing</Link>
+            </h4>
           </div>
           <div
             className="con1"
@@ -87,7 +81,9 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faClockRotateLeft} style={changeStyle} />
             </div>
-            <h4>History</h4>
+            <h4>
+              <Link to="/history">History</Link>
+            </h4>
           </div>
           <div
             className="con1"
@@ -99,7 +95,9 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon icon={faCalendar} style={changeStyle} />
             </div>
-            <h4>Date</h4>
+            <h4>
+              <Link to="/date">Date</Link>
+            </h4>
           </div>
         </div>
       </div>
