@@ -20,13 +20,13 @@ const Request = () => {
       </header>
       {popup && (
         <div className="pop">
-          <p
+          <b
             onClick={() => {
               setPopUp(false);
             }}
           >
             Close
-          </p>
+          </b>
           <img src={pic} alt="pic" />
         </div>
       )}
@@ -47,32 +47,36 @@ const Request = () => {
               </div>
               <div className="details">
                 <div className="flavor">
-                  <p>Flavor:</p>
-                  <p>{order.flavor}</p>
+                  <b>Flavor: {order.flavor}</b>
                 </div>
                 <div className="shape">
-                  <p>Shape: </p>
-                  <p>{order.shape}</p>
+                  <b>Shape: {order.shape}</b>
                 </div>
               </div>
 
               <div className="dates">
                 <div className="orderDate">
-                  <p>Order Date: {order.orderDate}</p>
+                  <b>Order Date: {order.orderDate}</b>
                 </div>
                 <div className="promiseDate">
-                  <p>Deadline: {order.promiseDate}</p>
+                  <b>Deadline: {order.promiseDate}</b>
                 </div>
               </div>
               <div className="description">
-                <p>
+                <b>
                   Description: <i>{order.orderDetails}</i>
-                </p>
+                </b>
+              </div>
+              <div className="price">
+                <b>Price: </b>
+                <input type="text" placeholder="half price/50%" />
               </div>
 
               <div className="settle">
                 <div className="payment">
-                  <p>Payment: {order.payment}</p>
+                  <b>
+                    Payment: <div>{order.payment}</div>
+                  </b>
                 </div>
                 <div className="decision">
                   <button className="btn btn-success">Accept</button>

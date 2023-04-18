@@ -1,114 +1,124 @@
-.Pages1 {
-  width: 100vw;
-  height: 90vh;
-  background: rgb(142, 142, 241);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-.body {
-  display: flex;
-  flex-wrap: wrap;
-  height: auto;
-  width: 100%;
-  gap: 10px;
-  padding: 2px;
-  background: rgb(142, 142, 241);
-}
-.order {
-  height: auto;
-  width: 100%;
-  border: 1px solid black;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  background: bisque;
-  padding: 20px;
-}
-
-/* ------body------- */
-
-.png {
-  width: 100%;
-  height: 35%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.png img {
-  width: 60%;
-  height: 90%;
-}
-
-.pop {
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.pop img {
-  width: 70%;
-  height: 60%;
-  animation: popup 0.5s;
-}
-
-.pop p {
-  position: absolute;
-  color: red;
-  top: 90px;
-  left: 60px;
-}
-
-@keyframes popup {
-  from {
-    transform: scale(0);
+@media (width < 426px) {
+  .Pages1 {
+    width: 100vw;
+    height: 90vh;
+    background-image: url("mountain.jpg");
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
   }
-  to {
-    transform: scale(1);
+
+  .body {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    width: 100%;
+    gap: 10px;
+    padding: 2px;
   }
-}
+  .order {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    background-color: #ffffff10;
+    backdrop-filter: blur(20px);
+    --webkit-backdrop-filter: blur(20px);
+    padding: 20px;
+    color: rgb(255, 255, 255);
+  }
 
-.details {
-  display: flex;
-  gap: 50px;
-  padding-left: 80px;
-  height: 10%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  /* ------body------- */
 
-.flavor {
-}
+  .png {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 
-.shape {
-}
+  .png img {
+    width: 60%;
+    height: 90%;
+  }
 
-.dates {
-  height: 10%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .pop {
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+  }
 
-.description {
-  height: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .pop img {
+    width: 70%;
+    height: 60%;
+    animation: popup 0.5s;
+  }
 
-.settle {
-  display: flex;
-  gap: 70px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  .pop b {
+    position: absolute;
+    color: red;
+    top: 90px;
+    left: 60px;
+  }
+
+  @keyframes popup {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .details {
+    display: flex;
+    gap: 50px;
+    height: 20%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dates {
+    height: 20%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .settle {
+    display: flex;
+    gap: 70px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 20%;
+  }
+
+  .payment div {
+    background: rgb(6, 48, 238);
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15%;
+  }
 }
