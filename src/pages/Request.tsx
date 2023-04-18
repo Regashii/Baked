@@ -8,6 +8,7 @@ const Request = () => {
     axios.get("https://baked-goodies-api.vercel.app/order").then((res) => {
       for (const order of res.data) {
         if (order.isProcessed === false) {
+          //@ts-ignore
           orders.push(order);
         }
         console.log("heloo");
