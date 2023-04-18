@@ -28,10 +28,11 @@ const Request = () => {
       </header>
       <div className="body">
         {orders.map((order: any, index) => {
+          console.log(order);
           return (
             <div className="order" key={index}>
               <div className="png">
-                <img src={order.images} alt="Cake" />
+                <img src="" alt="Cake" />
               </div>
               <div className="details">
                 <div className="flavor">
