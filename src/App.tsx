@@ -16,8 +16,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Admin />}></Route>
-          <Route path="/admin/login" element={<Login />}></Route>
+          <Route path="/" element={<Login />}></Route>
           <Route path="/admin/change" element={<ChangePass />}></Route>
         </Routes>
       </Router>

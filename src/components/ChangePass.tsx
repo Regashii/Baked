@@ -5,7 +5,7 @@ const ChangePass = () => {
   const navigate = useNavigate();
   return (
     <>
-      <button onClick={() => navigate("/admin/login")}>Go back</button>
+      <button onClick={() => navigate("/")}>Go back</button>
     </>
   );
 };
