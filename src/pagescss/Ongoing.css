@@ -8,4 +8,13 @@
     padding: 20px;
     overflow: auto;
   }
+
+  .num p {
+    background: bisque;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20%;
+  }
 }

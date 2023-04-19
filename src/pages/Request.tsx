@@ -71,7 +71,7 @@ const Request = () => {
               </div>
               <div className="price">
                 <b>Price: </b>
-                <input type="text" placeholder="half price/50%" />
+                <input type="text" placeholder="Type 30% of the price" />
               </div>
 
               <div className="settle">
