@@ -18,14 +18,16 @@ const BakedGoodies = () => {
     <>
       <div className="Home">
         <div className="dashboard">
-          <div className="dashbox1">
-            <p>Acc</p>
-          </div>
-          <div className="dashbox2">
-            <h1>Dashboard</h1>
-          </div>
-          <div className="dashbox3">
-            <img src="BakedGoodies.png" alt="Logo" />
+          <div className="dashCon">
+            <div className="dashbox1">
+              <p>Acc</p>
+            </div>
+            <div className="dashbox2">
+              <h1>Dashboard</h1>
+            </div>
+            <div className="dashbox3">
+              <img src="BakedGoodies.png" alt="Logo" />
+            </div>
           </div>
 
           <div className="sideBar1">
