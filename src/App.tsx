@@ -9,14 +9,15 @@ import "./pagescss/Date.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
 import ChangePass from "./components/ChangePass";
+import Admin from "./components/Admin";
 
 function App() {
   return (
     <>
       <Router>
-        <Login />
         <Routes>
-          <Route path="/" element={<Login />}></Route>
+          <Route path="/" element={<Admin />}></Route>
+          <Route path="/admin/login" element={<Login />}></Route>
           <Route path="/admin/change" element={<ChangePass />}></Route>
         </Routes>
       </Router>
