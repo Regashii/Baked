@@ -1,0 +1,9 @@
+@media (width < 426px) {
+  /* -------------page3------------ */
+  .Pages3 {
+    width: 100vw;
+    height: 93vh;
+    background: rgb(35, 244, 35);
+    padding: 20px;
+  }
+}

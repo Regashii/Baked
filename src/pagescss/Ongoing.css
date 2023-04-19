@@ -1,0 +1,11 @@
+@media (width < 426px) {
+  /* -------------page2------------ */
+  .Pages2 {
+    width: 100vw;
+    height: 93vh;
+    background: rgb(247, 151, 151);
+    padding: 20px;
+    padding: 20px;
+    overflow: auto;
+  }
+}

@@ -8,9 +8,11 @@ const Request = () => {
   const [popup, setPopUp] = useState(false);
 
   useEffect(() => {
-    axios.get("https://baked-goodies-api.vercel.app/order").then((res) => {
-      setOrders(res.data);
-    });
+    axios
+      .get("https://baked-goodies-api.vercel.app/order?isProcessed=false")
+      .then((res) => {
+        setOrders(res.data);
+      });
   }, []);
 
   return (

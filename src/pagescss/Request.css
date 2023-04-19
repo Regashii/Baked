@@ -1,8 +1,8 @@
 @media (width < 426px) {
   .Pages1 {
     width: 100vw;
-    height: 90vh;
-    background-image: url("mountain.jpg");
+    height: 93vh;
+    background: #05d4d7;
     padding: 20px;
     display: flex;
     flex-direction: column;

@@ -1,6 +1,5 @@
 @media (width < 426px) {
   /* ----------------bakedgoodies--------------------- */
-
   .Home {
     display: flex;
     flex-direction: column;
@@ -71,28 +70,6 @@
     display: flex;
     align-items: center;
     padding-left: 15px;
-  }
-
-  /* -------------page2------------ */
-  .Pages2 {
-    width: 100vw;
-    height: 90vh;
-    background: rgb(247, 151, 151);
-    padding: 20px;
-    padding: 20px;
-  }
-  /* -------------page3------------ */
-  .Pages3 {
-    width: 100vw;
-    height: 90vh;
-    background: rgb(35, 244, 35);
-    padding: 20px;
-  }
-
-  /* -------------page4------------ */
-  .Pages4 {
-    width: 100vw;
-    height: 90vh;
   }
 
   .Pages4 header {

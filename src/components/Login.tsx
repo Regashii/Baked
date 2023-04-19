@@ -1,22 +1,20 @@
 import { useState } from "react";
 import BakedGoodies from "./BakedGoodies";
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
-import Ongoing from "../pages/Ongoing";
-import Request from "../pages/Request";
-import History from "../pages/History";
-import Date from "../pages/Date";
 
 const Login = () => {
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
 
-  const [signin, setSignin] = useState(false);
-  const [goodies, setGoodies] = useState(true);
+  const [signin, setSignin] = useState(true);
+  const [goodies, setGoodies] = useState(false);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
+
+  const [infos, setInfos] = useState([]);
 
   async function signClick() {
     if (username === "") {
@@ -36,22 +34,23 @@ const Login = () => {
     if (username != "" && password != "") {
       try {
         await axios
-          .post("http://localhost:3000/", {
-            username,
-            password,
-          })
-          .then((res) => {
-            if (res.data === "exist") {
-              setSignin(!signin);
-              setGoodies(!goodies);
-            } else if (res.data === "notexist") {
-              setCheck3(true);
-            }
+          .get("https://baked-goodies-api.vercel.app/admin", {})
+          .then((res: any) => {
+            setInfos(res.data);
           });
       } catch (error) {
         console.log(error);
       }
     }
+
+    infos.map((info: any) => {
+      if (info.username === username && info.password === password) {
+        setSignin(!signin);
+        setGoodies(!goodies);
+      } else {
+        setCheck3(true);
+      }
+    });
   }
   return (
     <>
@@ -74,13 +73,21 @@ const Login = () => {
 
             <div className="inputBox">
               <input
-                type="password"
+                type={show ? "type" : "password"}
                 required
                 name="password"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
               />
+              <div
+                className="show"
+                onClick={() => {
+                  setShow(!show);
+                }}
+              >
+                Show
+              </div>
               <span>Password</span>
               {check2 && <p>Please input your password</p>}
             </div>
@@ -99,12 +106,6 @@ const Login = () => {
       {goodies && (
         <>
           <BakedGoodies />
-          <Routes>
-            <Route path="/request" element={<Request />}></Route>
-            <Route path="/ongoing" element={<Ongoing />}></Route>
-            <Route path="/history" element={<History />}></Route>
-            <Route path="/date" element={<Date />}></Route>
-          </Routes>
         </>
       )}
     </>
