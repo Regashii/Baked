@@ -9,7 +9,6 @@ import "./pagescss/Date.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
 import ChangePass from "./components/ChangePass";
-import Admin from "./components/Admin";
 
 function App() {
   return (
