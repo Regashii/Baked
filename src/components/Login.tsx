@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BakedGoodies from "./BakedGoodies";
 import axios from "axios";
 
@@ -16,6 +16,14 @@ const Login = () => {
 
   const [infos, setInfos] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("https://baked-goodies-api.vercel.app/api/admin", {})
+      .then((res: any) => {
+        setInfos(res.data);
+      });
+  }, []);
+
   async function signClick() {
     if (username === "") {
       setCheck1(true);
@@ -32,25 +40,15 @@ const Login = () => {
     }
 
     if (username != "" && password != "") {
-      try {
-        await axios
-          .get("https://baked-goodies-api.vercel.app/admin", {})
-          .then((res: any) => {
-            setInfos(res.data);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      infos.map((info: any) => {
+        if (info.username === username && info.password === password) {
+          setSignin(!signin);
+          setGoodies(!goodies);
+        } else {
+          setCheck3(true);
+        }
+      });
     }
-
-    infos.map((info: any) => {
-      if (info.username === username && info.password === password) {
-        setSignin(!signin);
-        setGoodies(!goodies);
-      } else {
-        setCheck3(true);
-      }
-    });
   }
   return (
     <>

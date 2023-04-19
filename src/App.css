@@ -1,4 +1,4 @@
-@media (width < 426px) {
+@media (width < 550px) {
   /* ----------------bakedgoodies--------------------- */
   .Home {
     display: flex;
@@ -8,17 +8,20 @@
   }
   .dashboard {
     display: flex;
-    height: 10vh;
+    flex-wrap: wrap;
+    height: 20vh;
   }
 
   .dashbox1 {
     width: 5em;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .dashbox2 {
-    width: 90vw;
+    width: 20em;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,6 +30,7 @@
   .dashbox3 {
     display: flex;
     width: 5em;
+    height: 50%;
     object-fit: none;
     justify-content: end;
   }
@@ -36,53 +40,31 @@
     height: 90vh;
   }
 
-  .sideBar {
+  .sideBar1 {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-    position: absolute;
+    height: 10vh;
+    width: 100%;
     background: rgb(231, 231, 231);
-    justify-content: center;
-    overflow: hidden;
-    transition: all 0.8s;
-    z-index: 999;
   }
 
-  .con1 {
-    display: grid;
-    grid-template-columns: auto auto;
+  .sideBar1 .con1 {
+    border: 1px solid black;
+    display: flex;
+    width: 25%;
     color: #d53f8c;
   }
 
-  .con1:active {
-    background-color: bisque;
-  }
-
-  .con1 h4 {
+  .sideBar1 .icon {
+    height: 100%;
+    width: 25%;
     display: flex;
+    justify-content: center;
     align-items: center;
-    width: 6em;
   }
 
-  .icon {
-    height: 20vh;
-    width: 5em;
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-  }
+  /* ----pc screen--- */
 
-  .Pages4 header {
-    width: 100vw;
-    height: 20vh;
-    padding: 20px;
-  }
-
-  .Pages4 body {
-    width: 100vw;
-    height: 70vh;
-    background: grey;
-    padding: 20px;
-    border-radius: 10px;
+  .sideBar2 {
+    display: none;
   }
 }

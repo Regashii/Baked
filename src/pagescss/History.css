@@ -1,9 +1,9 @@
-@media (width < 426px) {
+@media (width < 550px) {
   /* -------------page3------------ */
   .Pages3 {
     width: 100vw;
-    height: 93vh;
-    background: rgb(35, 244, 35);
+    height: 80vh;
+    background: rgba(2, 68, 97, 0.449);
     padding: 20px;
   }
 }

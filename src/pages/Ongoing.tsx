@@ -9,7 +9,7 @@ const Ongoing = () => {
 
   useEffect(() => {
     axios
-      .get("https://baked-goodies-api.vercel.app/order?isProcessed=true")
+      .get("https://baked-goodies-api.vercel.app/api/order?isProcessed=true")
       .then((res) => {
         setOrders(res.data);
       });
