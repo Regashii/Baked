@@ -1,11 +1,19 @@
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { set } from "mongoose";
+
 import { useEffect, useState } from "react";
 
 const Request = () => {
   const [orders, setOrders] = useState([]);
   const [pic, setPic] = useState("");
+  const [personal, setPersonal] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
   const [popup, setPopUp] = useState(false);
+  const [personalPop, setPersonalPop] = useState(false);
 
   useEffect(() => {
     axios
@@ -20,6 +28,34 @@ const Request = () => {
       <header>
         <h1>Request</h1>
       </header>
+      {personalPop && (
+        <div className="personalPop">
+          <div className="container">
+            <span
+              className="close"
+              onClick={() => {
+                setPersonalPop(false);
+              }}
+            >
+              Close
+            </span>
+            <div className="profile">
+              <FontAwesomeIcon icon={faUser} className="icon" />
+            </div>
+            <div className="name">
+              {" "}
+              <p>Name: {personal.name}</p>
+            </div>
+            <div className="email">
+              {" "}
+              <p>Email: {personal.email}</p>
+            </div>
+            <div className="phone">
+              <p>Phone: {personal.phone}</p>{" "}
+            </div>
+          </div>
+        </div>
+      )}
       {popup && (
         <div className="pop">
           <b
@@ -84,6 +120,20 @@ const Request = () => {
                   <button className="btn btn-success">Accept</button>
                   <button className="btn btn-danger">Decline</button>
                 </div>
+              </div>
+              <div className="personalInfo">
+                <FontAwesomeIcon
+                  icon={faUser}
+                  onClick={() => {
+                    setPersonalPop(true);
+                    setPersonal({
+                      name: order.customer.name,
+                      email: order.customer.email,
+                      phone: order.customer.phone,
+                    });
+                  }}
+                  className="icon"
+                />
               </div>
             </div>
           );

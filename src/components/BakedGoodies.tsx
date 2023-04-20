@@ -10,9 +10,16 @@ import Request from "../pages/Request";
 import Ongoing from "../pages/Ongoing";
 import History from "../pages/History";
 import Date from "../pages/Date";
+import { useNavigate } from "react-router-dom";
 
 const BakedGoodies = () => {
   const [page, setPage] = useState("request");
+  const navigate = useNavigate();
+
+  const loginAuth = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   return (
     <>
@@ -20,7 +27,7 @@ const BakedGoodies = () => {
         <div className="dashboard">
           <div className="dashCon">
             <div className="dashbox1">
-              <p>Acc</p>
+              <p onClick={loginAuth}>Acc</p>
             </div>
             <div className="dashbox2">
               <h1>Dashboard</h1>

@@ -2,6 +2,8 @@
   .Pages1 {
     width: 100vw;
     height: 80vh;
+    border-top-right-radius: 5%;
+    border-top-left-radius: 5%;
     background: #05d4d7;
     padding: 20px;
     display: flex;
@@ -23,11 +25,10 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    background-color: #a9df0510;
-    backdrop-filter: blur(20px);
-    --webkit-backdrop-filter: blur(20px);
-    padding: 20px;
-    color: rgb(255, 255, 255);
+    padding: 30px;
+    color: rgb(0, 0, 0);
+    background-color: bisque;
+    border-radius: 10%;
   }
 
   /* ------body------- */
@@ -120,5 +121,62 @@
     justify-content: center;
     align-items: center;
     border-radius: 15%;
+  }
+
+  /* ---personal info----- */
+  .personalInfo .icon {
+    cursor: pointer;
+  }
+  .close {
+    cursor: pointer;
+  }
+
+  .personalPop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    padding: 20px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    background: white;
+    border-radius: 20%;
+    padding: 50px;
+    row-gap: 10px;
+  }
+
+  .container :where(.name, .email, .phone) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    width: 100%;
+    background: pink;
+    border-radius: 30%;
+  }
+
+  .container .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    width: 100%;
+    border-radius: 30%;
+  }
+
+  .container .profile .icon {
+    background: pink;
+    height: 40%;
+    padding: 10px;
+    border-radius: 100%;
   }
 }

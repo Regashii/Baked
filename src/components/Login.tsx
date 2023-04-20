@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import BakedGoodies from "./BakedGoodies";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
-
-  const [signin, setSignin] = useState(true);
-  const [goodies, setGoodies] = useState(false);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +25,7 @@ const Login = () => {
       });
   }, []);
 
-  async function signClick() {
+  async function loginAuth() {
     if (username === "") {
       setCheck1(true);
       setCheck3(false);
@@ -42,8 +43,8 @@ const Login = () => {
     if (username != "" && password != "") {
       infos.map((info: any) => {
         if (info.username === username && info.password === password) {
-          setSignin(!signin);
-          setGoodies(!goodies);
+          localStorage.setItem("user", "test");
+          navigate("/dashboard");
         } else {
           setCheck3(true);
         }
@@ -52,60 +53,63 @@ const Login = () => {
   }
   return (
     <>
-      {signin && (
-        <div className="sign-in">
-          <div className="card">
-            <a className="login">Log in</a>
-            <div className="inputBox">
-              <input
-                type="text"
-                required
-                name="username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-              <span className="user">Username</span>
-              {check1 && <p>Please input your usernames</p>}
-            </div>
+      <div className="sign-in">
+        <div className="card">
+          <a className="login">Log in</a>
+          <div className="inputBox">
+            <input
+              type="text"
+              required
+              name="username"
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+            <span className="user">Username</span>
+            {check1 && <p>Please input your usernames</p>}
+          </div>
 
-            <div className="inputBox">
-              <input
-                type={show ? "type" : "password"}
-                required
-                name="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <div
-                className="show"
-                onClick={() => {
-                  setShow(!show);
-                }}
-              >
-                Show
-              </div>
-              <span>Password</span>
-              {check2 && <p>Please input your password</p>}
+          <div className="inputBox">
+            <input
+              type={show ? "type" : "password"}
+              required
+              name="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <div
+              className="show"
+              onClick={() => {
+                setShow(!show);
+              }}
+            >
+              {show ? (
+                <FontAwesomeIcon icon={faEye} />
+              ) : (
+                <FontAwesomeIcon icon={faEyeSlash} />
+              )}
             </div>
-            {check3 && <i>Incorrect username or password</i>}
+            <span>Password</span>
+            {check2 && <p>Please input your password</p>}
+          </div>
+          {check3 && <i>Incorrect username or password</i>}
 
-            <div className="buttons">
-              <button className="enter" onClick={signClick}>
-                Enter
-              </button>
-              <button className="enter">Change</button>
-            </div>
+          <div className="buttons">
+            <button className="enter" onClick={loginAuth}>
+              Enter
+            </button>
+            <button
+              className="enter"
+              onClick={() => {
+                navigate("/admin/change");
+              }}
+            >
+              Change
+            </button>
           </div>
         </div>
-      )}
-
-      {goodies && (
-        <>
-          <BakedGoodies />
-        </>
-      )}
+      </div>
     </>
   );
 };
