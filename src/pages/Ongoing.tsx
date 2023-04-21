@@ -9,7 +9,7 @@ const Ongoing = () => {
 
   useEffect(() => {
     axios
-      .get("https://baked-goodies-api.vercel.app/api/order?status=fullfilling")
+      .get("https://baked-goodies-api.vercel.app/api/order?status=paid")
       .then((res) => {
         setOrders(res.data);
       });
@@ -75,6 +75,7 @@ const Ongoing = () => {
                       Payment: <div>{order.payment}</div>
                     </b>
                   </div>
+                  <button className="btn btn-primary">Done</button>
                 </div>
               </div>
             )}

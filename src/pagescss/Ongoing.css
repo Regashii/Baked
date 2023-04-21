@@ -9,12 +9,22 @@
     overflow: auto;
   }
 
-  .num p {
+  .Pages2 .num p {
     background: bisque;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .Page2 .settle {
+    display: flex;
+    gap: 70px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 20%;
+    gap: 20em;
+    border: 1px solid black;
   }
 }

@@ -3,32 +3,56 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 const Request = () => {
   const [orders, setOrders] = useState([]);
   const [pic, setPic] = useState("");
+  const [popup, setPopUp] = useState(false);
   const [personal, setPersonal] = useState({
     name: "",
     email: "",
     phone: "",
   });
-  const [popup, setPopUp] = useState(false);
   const [personalPop, setPersonalPop] = useState(false);
-
   const [final, setFinal] = useState(false);
-
   const [id, setId] = useState("");
+  const [price, setPrice] = useState(Number);
 
   const status = {
     status: "paying",
+    price: price,
   };
 
   function changeStatus() {
-    axios
-      .put(`https://baked-goodies-api.vercel.app/api/order/${id}`, status)
-      .then((res) => {
-        console.log(res.data);
+    if (price <= 0) {
+      toast.error("Input price", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+    } else {
+      axios
+        .put(`https://baked-goodies-api.vercel.app/api/order/${id}`, status)
+        .then((res) => {
+          console.log(res.data);
+        });
+      toast.success("Suceess", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   }
 
   useEffect(() => {
@@ -41,6 +65,7 @@ const Request = () => {
 
   return (
     <div className="Pages1">
+      <ToastContainer />
       <header>
         <h1>Request</h1>
       </header>
@@ -123,7 +148,14 @@ const Request = () => {
               </div>
               <div className="price">
                 <b>Price: </b>
-                <input type="text" placeholder="Type 30% of the price" />
+                <input
+                  type="number"
+                  placeholder="Type 30% of the price"
+                  onChange={(e: any) => {
+                    setPrice(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                />
               </div>
 
               <div className="settle">
