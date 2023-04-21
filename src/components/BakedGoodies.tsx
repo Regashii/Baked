@@ -15,21 +15,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const BakedGoodies = () => {
-  useEffect(() => {
-    toast.success("Success", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  });
-
   const [page, setPage] = useState("request");
   const navigate = useNavigate();
+  const [admin, toggleAdmin] = useState(false);
 
   const loginAuth = () => {
     localStorage.removeItem("user");
@@ -39,26 +27,31 @@ const BakedGoodies = () => {
   return (
     <>
       <div className="Home">
+        {admin && (
+          <div className="adminAcc">
+            <button
+              className="enter"
+              onClick={() => {
+                navigate("/admin/change");
+              }}
+            >
+              Change
+            </button>
+            <button className="enter" onClick={loginAuth}>
+              Log out
+            </button>
+          </div>
+        )}
         <div className="dashboard">
           <div className="dashCon">
             <div className="dashbox1">
-              <p onClick={loginAuth}>Acc</p>
-
-              <button
-                className="enter"
-                onClick={() => {
-                  navigate("/admin/change");
-                }}
-              >
-                Change
-              </button>
+              <p onClick={() => toggleAdmin(!admin)}>Acc</p>
             </div>
             <div className="dashbox2">
               <h1>Dashboard</h1>
             </div>
             <div className="dashbox3">
               <img src="BakedGoodies.png" alt="Logo" />
-              <ToastContainer />
             </div>
           </div>
 
