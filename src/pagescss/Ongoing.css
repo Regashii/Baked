@@ -11,10 +11,10 @@
 
   .num p {
     background: bisque;
-    height: 2em;
+    height: auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 20%;
   }
 }

@@ -35,7 +35,11 @@
   bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
-  animation: typing 2s;
+  background-color: rgb(235, 74, 106);
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  color: #fff;
 }
 .inputBox {
   position: relative;

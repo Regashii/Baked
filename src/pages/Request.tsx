@@ -15,6 +15,22 @@ const Request = () => {
   const [popup, setPopUp] = useState(false);
   const [personalPop, setPersonalPop] = useState(false);
 
+  const [final, setFinal] = useState(false);
+
+  const [id, setId] = useState("");
+
+  const status = {
+    status: "paying",
+  };
+
+  function changeStatus() {
+    axios
+      .put(`https://baked-goodies-api.vercel.app/api/order/${id}`, status)
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+
   useEffect(() => {
     axios
       .get("https://baked-goodies-api.vercel.app/api/order?status=processing")
@@ -117,7 +133,15 @@ const Request = () => {
                   </b>
                 </div>
                 <div className="decision">
-                  <button className="btn btn-success">Accept</button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      setId(order._id);
+                      setFinal(true);
+                    }}
+                  >
+                    Accept
+                  </button>
                   <button className="btn btn-danger">Decline</button>
                 </div>
               </div>
@@ -135,6 +159,23 @@ const Request = () => {
                   className="icon"
                 />
               </div>
+
+              {final && (
+                <p>
+                  Are you sure
+                  <button className="btn btn-success" onClick={changeStatus}>
+                    Yes
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      setFinal(false);
+                    }}
+                  >
+                    No
+                  </button>
+                </p>
+              )}
             </div>
           );
         })}

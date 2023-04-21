@@ -3,9 +3,20 @@ import Login from "./Login";
 
 const ChangePass = () => {
   const navigate = useNavigate();
+
+  const loginAuth = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+  };
   return (
     <>
-      <button onClick={() => navigate("/")}>Go back</button>
+      <button
+        onClick={() => {
+          loginAuth();
+        }}
+      >
+        Go back
+      </button>
     </>
   );
 };

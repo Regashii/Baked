@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
+  const [errUser, seterrUser] = useState(false);
+  const [errPass, seterrPass] = useState(false);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false);
+  const [show, toggleShow] = useState(false);
 
   const [infos, setInfos] = useState([]);
 
@@ -27,17 +28,15 @@ const Login = () => {
 
   async function loginAuth() {
     if (username === "") {
-      setCheck1(true);
-      setCheck3(false);
+      seterrUser(true);
     } else {
-      setCheck1(false);
+      seterrUser(false);
     }
 
     if (password === "") {
-      setCheck2(true);
-      setCheck3(false);
+      seterrPass(true);
     } else {
-      setCheck2(false);
+      seterrPass(false);
     }
 
     if (username != "" && password != "") {
@@ -46,7 +45,16 @@ const Login = () => {
           localStorage.setItem("user", "test");
           navigate("/dashboard");
         } else {
-          setCheck3(true);
+          toast.error("Wrong password or username", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
       });
     }
@@ -66,7 +74,7 @@ const Login = () => {
               }}
             />
             <span className="user">Username</span>
-            {check1 && <p>Please input your usernames</p>}
+            {errUser && <p>Please input your usernames</p>}
           </div>
 
           <div className="inputBox">
@@ -81,7 +89,7 @@ const Login = () => {
             <div
               className="show"
               onClick={() => {
-                setShow(!show);
+                toggleShow(!show);
               }}
             >
               {show ? (
@@ -91,23 +99,15 @@ const Login = () => {
               )}
             </div>
             <span>Password</span>
-            {check2 && <p>Please input your password</p>}
+            {errPass && <p>Please input your password</p>}
           </div>
-          {check3 && <i>Incorrect username or password</i>}
 
           <div className="buttons">
             <button className="enter" onClick={loginAuth}>
               Enter
             </button>
-            <button
-              className="enter"
-              onClick={() => {
-                navigate("/admin/change");
-              }}
-            >
-              Change
-            </button>
           </div>
+          <ToastContainer />
         </div>
       </div>
     </>

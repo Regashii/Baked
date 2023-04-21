@@ -5,14 +5,29 @@ import {
   faClockRotateLeft,
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Request from "../pages/Request";
 import Ongoing from "../pages/Ongoing";
 import History from "../pages/History";
 import Date from "../pages/Date";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BakedGoodies = () => {
+  useEffect(() => {
+    toast.success("Success", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  });
+
   const [page, setPage] = useState("request");
   const navigate = useNavigate();
 
@@ -28,12 +43,22 @@ const BakedGoodies = () => {
           <div className="dashCon">
             <div className="dashbox1">
               <p onClick={loginAuth}>Acc</p>
+
+              <button
+                className="enter"
+                onClick={() => {
+                  navigate("/admin/change");
+                }}
+              >
+                Change
+              </button>
             </div>
             <div className="dashbox2">
               <h1>Dashboard</h1>
             </div>
             <div className="dashbox3">
               <img src="BakedGoodies.png" alt="Logo" />
+              <ToastContainer />
             </div>
           </div>
 

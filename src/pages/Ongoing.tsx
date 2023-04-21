@@ -9,7 +9,7 @@ const Ongoing = () => {
 
   useEffect(() => {
     axios
-      .get("https://baked-goodies-api.vercel.app/api/order?isProcessed=true")
+      .get("https://baked-goodies-api.vercel.app/api/order?status=fullfilling")
       .then((res) => {
         setOrders(res.data);
       });
@@ -25,7 +25,10 @@ const Ongoing = () => {
                 SetDrop(!drop);
               }}
             >
-              Request number: {index + 1}{" "}
+              <p>Request number: {index + 1} </p>
+              <p>Name: {order.customer.name}</p>
+              <p>Email: {order.customer.email}</p>
+              <p>Phone: {order.customer.phone}</p>
             </p>
             {drop && (
               <div className="order" key={index}>
