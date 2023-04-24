@@ -4,48 +4,46 @@ import {
   faEnvelope,
   faClockRotateLeft,
   faCalendar,
+  faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Request from "../pages/Request";
 import Ongoing from "../pages/Ongoing";
 import History from "../pages/History";
 import Date from "../pages/Date";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const BakedGoodies = () => {
   const [page, setPage] = useState("request");
   const navigate = useNavigate();
-  const [admin, toggleAdmin] = useState(false);
+  const [notif, setNotif] = useState([]);
 
-  const loginAuth = () => {
-    localStorage.removeItem("user");
-    navigate("/");
-  };
+  useEffect(() => {
+    axios
+      .get("https://baked-goodies-api.vercel.app/api/order?status=processing")
+      .then((res) => {
+        setNotif(res.data);
+      });
+  }, []);
 
   return (
     <>
       <div className="Home">
-        {admin && (
-          <div className="adminAcc">
-            <button
-              className="enter"
-              onClick={() => {
-                navigate("/admin/change");
-              }}
-            >
-              Change
-            </button>
-            <button className="enter" onClick={loginAuth}>
-              Log out
-            </button>
-          </div>
-        )}
         <div className="dashboard">
           <div className="dashCon">
             <div className="dashbox1">
-              <p onClick={() => toggleAdmin(!admin)}>Acc</p>
+              <p
+                onClick={() => {
+                  navigate("/dashboard/setting");
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faUserSecret}
+                  style={{ height: "30px" }}
+                />
+              </p>
             </div>
             <div className="dashbox2">
               <h1>Dashboard</h1>
@@ -55,7 +53,7 @@ const BakedGoodies = () => {
             </div>
           </div>
 
-          <div className="sideBar1">
+          <div className="iconBar">
             <div className="icon">
               <FontAwesomeIcon
                 onClick={() => {
@@ -67,7 +65,12 @@ const BakedGoodies = () => {
                   width: "3m",
                   height: "2em",
                 }}
+                className="icon1"
               />
+
+              <span className="position-absolute translate-middle badge rounded-pill bg-warning">
+                {notif.length}
+              </span>
             </div>
 
             <div className="icon">
@@ -81,6 +84,7 @@ const BakedGoodies = () => {
                   width: "3m",
                   height: "2em",
                 }}
+                className="icon1"
               />
             </div>
 
@@ -95,6 +99,7 @@ const BakedGoodies = () => {
                   width: "3m",
                   height: "2em",
                 }}
+                className="icon1"
               />
             </div>
             <div className="icon">
@@ -108,6 +113,7 @@ const BakedGoodies = () => {
                   width: "3m",
                   height: "2em",
                 }}
+                className="icon1"
               />
             </div>
           </div>

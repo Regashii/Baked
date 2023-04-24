@@ -5,17 +5,50 @@
     height: 80vh;
   }
 
+  /* ----header-------- */
+
   .Pages4 header {
     width: 100vw;
-    height: 20vh;
+    height: 10vh;
     padding: 20px;
+    color: black;
   }
 
-  .Pages4 body {
+  /* ----body------ */
+
+  .Pages4 .body {
     width: 100vw;
     height: 70vh;
-    background: rgb(82, 138, 243);
+    background: rgb(0, 0, 0);
     padding: 20px;
+    color: white;
+  }
+
+  .Pages4 .eventCal {
+    display: flex;
+    overflow: auto;
+  }
+
+  .Pages4 .taskDate {
+    width: 10%;
+    display: flex;
+    padding-left: 3%;
+    margin-right: 10px;
+  }
+
+  .Pages4 .taskEvent {
+    width: 90%;
+    margin-right: 10px;
+    height: 20%;
+  }
+
+  .Pages4 .taskEvent p {
+    background-color: rgb(0, 117, 94);
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
     border-radius: 10px;
+    color: black;
   }
 }

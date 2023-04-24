@@ -6,10 +6,27 @@
     height: 10vh;
     width: 100vw;
   }
+
+  /* -------dashboard---------- */
   .dashboard {
     display: flex;
     flex-direction: column;
+    background: linear-gradient(90deg, #2cd9ff, #7effb2);
+    background-size: 400% 400%;
+    animation: devblog 2.5s infinite ease-in-out;
     height: 20vh;
+  }
+
+  @keyframes devblog {
+    0% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
   }
   .dashCon {
     height: 50%;
@@ -22,6 +39,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
   }
   .dashbox2 {
     width: 60%;
@@ -39,31 +57,35 @@
     justify-content: end;
   }
 
-  .reqBody {
-    display: flex;
-    height: 90vh;
-  }
+  /* --------icons--------- */
 
-  .sideBar1 {
+  .iconBar {
     display: flex;
     height: 10vh;
     width: 100%;
-    background: rgb(231, 231, 231);
   }
 
-  .sideBar1 .con1 {
+  .iconBar .con1 {
     border: 1px solid black;
     display: flex;
     width: 25%;
     color: #d53f8c;
   }
 
-  .sideBar1 .icon {
+  .iconBar .icon {
     height: 100%;
     width: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .icon:hover .icon1 {
+    transform: scale(1.2);
+  }
+
+  .icon:hover {
+    background-color: white;
   }
 
   /* ----pc screen--- */

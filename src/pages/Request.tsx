@@ -3,20 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const Request = () => {
+  const navigate = useNavigate();
+  // order request from customer
   const [orders, setOrders] = useState([]);
+
+  // image pop up when client click the image
   const [pic, setPic] = useState("");
-  const [popup, setPopUp] = useState(false);
+  const [popup, togglePopUp] = useState(false);
+
+  //personal info of customer and pop up animation
   const [personal, setPersonal] = useState({
     name: "",
     email: "",
     phone: "",
   });
-  const [personalPop, setPersonalPop] = useState(false);
+  const [personalPop, togglePersonalPop] = useState(false);
+
+  // Final decision
   const [final, setFinal] = useState(false);
   const [id, setId] = useState("");
+  const [declinePop, toggleDeclinePop] = useState(false);
+
+  // input price
   const [price, setPrice] = useState(Number);
 
   const status = {
@@ -25,34 +37,24 @@ const Request = () => {
   };
 
   function changeStatus() {
-    if (price <= 0) {
-      toast.error("Input price", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
+    axios
+      .put(`https://baked-goodies-api.vercel.app/api/order/${id}`, status)
+      .then((res) => {
+        console.log(res.data);
       });
-    } else {
-      axios
-        .put(`https://baked-goodies-api.vercel.app/api/order/${id}`, status)
-        .then((res) => {
-          console.log(res.data);
-        });
-      toast.success("Suceess", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
+    toast.success("Suceess", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
   useEffect(() => {
@@ -62,6 +64,22 @@ const Request = () => {
         setOrders(res.data);
       });
   }, []);
+
+  function declineReq() {
+    toast.success("Suceess", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
 
   return (
     <div className="Pages1">
@@ -75,7 +93,7 @@ const Request = () => {
             <span
               className="close"
               onClick={() => {
-                setPersonalPop(false);
+                togglePersonalPop(false);
               }}
             >
               Close
@@ -85,14 +103,14 @@ const Request = () => {
             </div>
             <div className="name">
               {" "}
-              <p>Name: {personal.name}</p>
+              <b>Name: {personal.name}</b>
             </div>
             <div className="email">
               {" "}
-              <p>Email: {personal.email}</p>
+              <b>Email: {personal.email}</b>
             </div>
             <div className="phone">
-              <p>Phone: {personal.phone}</p>{" "}
+              <b>Phone: {personal.phone}</b>{" "}
             </div>
           </div>
         </div>
@@ -101,12 +119,52 @@ const Request = () => {
         <div className="pop">
           <b
             onClick={() => {
-              setPopUp(false);
+              togglePopUp(false);
             }}
           >
             Close
           </b>
           <img src={pic} alt="pic" />
+        </div>
+      )}
+
+      {final && (
+        <div className="finalDecision">
+          <div>
+            <p>Are you sure</p>
+            <button className="btn btn-success" onClick={changeStatus}>
+              Yes
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                setFinal(false);
+              }}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      )}
+
+      {declinePop && (
+        <div className="declineBox">
+          <div className="declineCon">
+            <textarea cols={30} rows={10} placeholder="Reason"></textarea>
+            <div>
+              <button className="btn btn-success" onClick={declineReq}>
+                Confirm
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  toggleDeclinePop(false);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -120,7 +178,7 @@ const Request = () => {
                   alt="Cake"
                   onClick={() => {
                     setPic(order.images);
-                    setPopUp(true);
+                    togglePopUp(true);
                   }}
                 />
               </div>
@@ -153,35 +211,53 @@ const Request = () => {
                   placeholder="Type 30% of the price"
                   onChange={(e: any) => {
                     setPrice(e.target.value);
-                    console.log(e.target.value);
                   }}
                 />
               </div>
 
               <div className="settle">
                 <div className="payment">
-                  <b>
-                    Payment: <div>{order.payment}</div>
-                  </b>
+                  <b>Payment:</b>
+                  <div className="payType">{order.payment}</div>
                 </div>
                 <div className="decision">
                   <button
                     className="btn btn-success"
                     onClick={() => {
-                      setId(order._id);
-                      setFinal(true);
+                      if (price <= 0) {
+                        toast.error("Input price", {
+                          position: "top-right",
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "colored",
+                        });
+                      } else {
+                        setId(order._id);
+                        setFinal(true);
+                      }
                     }}
                   >
                     Accept
                   </button>
-                  <button className="btn btn-danger">Decline</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      toggleDeclinePop(!declinePop);
+                    }}
+                  >
+                    Decline
+                  </button>
                 </div>
               </div>
               <div className="personalInfo">
                 <FontAwesomeIcon
                   icon={faUser}
                   onClick={() => {
-                    setPersonalPop(true);
+                    togglePersonalPop(true);
                     setPersonal({
                       name: order.customer.name,
                       email: order.customer.email,
@@ -191,23 +267,6 @@ const Request = () => {
                   className="icon"
                 />
               </div>
-
-              {final && (
-                <p>
-                  Are you sure
-                  <button className="btn btn-success" onClick={changeStatus}>
-                    Yes
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      setFinal(false);
-                    }}
-                  >
-                    No
-                  </button>
-                </p>
-              )}
             </div>
           );
         })}

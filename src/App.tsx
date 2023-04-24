@@ -10,6 +10,7 @@ import "./pagescss/Request.css";
 import ChangePass from "./components/ChangePass";
 import BakedGoodies from "./components/BakedGoodies";
 import Confirm from "./components/Confirm";
+import Settings from "./components/Settings";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route element={<Confirm />}>
             <Route path="/dashboard" element={<BakedGoodies />}></Route>
             <Route path="/admin/change" element={<ChangePass />}></Route>
+            <Route path="/dashboard/setting" element={<Settings />}></Route>
           </Route>
         </Routes>
       </Router>

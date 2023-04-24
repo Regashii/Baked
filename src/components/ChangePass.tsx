@@ -8,6 +8,10 @@ const ChangePass = () => {
     localStorage.removeItem("user");
     navigate("/");
   };
+
+  const dashboard = () => {
+    navigate("/dashboard");
+  };
   return (
     <>
       <button
@@ -15,8 +19,9 @@ const ChangePass = () => {
           loginAuth();
         }}
       >
-        Go back
+        Go back logi in page
       </button>
+      <button onClick={dashboard}>Go back to dashboard</button>
     </>
   );
 };

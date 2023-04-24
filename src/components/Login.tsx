@@ -16,16 +16,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [show, toggleShow] = useState(false);
 
-  const [infos, setInfos] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://baked-goodies-api.vercel.app/api/admin", {})
-      .then((res: any) => {
-        setInfos(res.data);
-      });
-  }, []);
-
   async function loginAuth() {
     if (username === "") {
       seterrUser(true);
@@ -40,23 +30,28 @@ const Login = () => {
     }
 
     if (username != "" && password != "") {
-      infos.map((info: any) => {
-        if (info.username === username && info.password === password) {
-          localStorage.setItem("user", "test");
-          navigate("/dashboard");
-        } else {
-          toast.error("Wrong password or username", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      });
+      axios
+        .post("https://baked-goodies-api.vercel.app/api/admin", {
+          username,
+          password,
+        })
+        .then((res: any) => {
+          if (res.data === "exist") {
+            localStorage.setItem("user", "test");
+            navigate("/dashboard");
+          } else if (res.data === "notexist") {
+            toast.error("Wrong password or username", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+        });
     }
   }
   return (
