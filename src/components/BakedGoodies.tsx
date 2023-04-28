@@ -5,12 +5,15 @@ import {
   faClockRotateLeft,
   faCalendar,
   faUserSecret,
+  faCircleInfo,
+  faGear,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Request from "../pages/Request";
 import Ongoing from "../pages/Ongoing";
 import History from "../pages/History";
-import Date from "../pages/Date";
+import Sched from "../pages/Sched";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -19,6 +22,7 @@ const BakedGoodies = () => {
   const [page, setPage] = useState("request");
   const navigate = useNavigate();
   const [notif, setNotif] = useState([]);
+  const res = window.localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -28,21 +32,40 @@ const BakedGoodies = () => {
       });
   }, []);
 
+  function directSettings() {
+    navigate("/dashboard/setting");
+  }
+
+  const loginAuth = () => {
+    window.localStorage.removeItem("isLoggin");
+    window.localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://new-back-rho.vercel.app/admin", {
+  //       headers: {
+  //         Authorization: `Bearer ${res}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.data !== "Congrats") {
+  //         window.localStorage.removeItem("isLoggin");
+  //         window.localStorage.removeItem("token");
+  //         navigate("/");
+  //       }
+  //     });
+  // }, []);
+
   return (
     <>
       <div className="Home">
         <div className="dashboard">
           <div className="dashCon">
             <div className="dashbox1">
-              <p
-                onClick={() => {
-                  navigate("/dashboard/setting");
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faUserSecret}
-                  style={{ height: "30px" }}
-                />
+              <p onClick={directSettings}>
+                <FontAwesomeIcon icon={faUserSecret} className="userSecret" />
               </p>
             </div>
             <div className="dashbox2">
@@ -50,6 +73,11 @@ const BakedGoodies = () => {
             </div>
             <div className="dashbox3">
               <img src="BakedGoodies.png" alt="Logo" />
+
+              <h3>
+                <FontAwesomeIcon icon={faCircleInfo} />
+                Dashboard
+              </h3>
             </div>
           </div>
 
@@ -61,7 +89,7 @@ const BakedGoodies = () => {
                 }}
                 icon={faEnvelope}
                 style={{
-                  color: page === "request" ? "#d53f8c" : "black",
+                  color: page === "request" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -80,7 +108,7 @@ const BakedGoodies = () => {
                 }}
                 icon={faCakeCandles}
                 style={{
-                  color: page === "onGoing" ? "#d53f8c" : "black",
+                  color: page === "onGoing" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -95,7 +123,7 @@ const BakedGoodies = () => {
                 }}
                 icon={faClockRotateLeft}
                 style={{
-                  color: page === "history" ? "#d53f8c" : "black",
+                  color: page === "history" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -109,7 +137,7 @@ const BakedGoodies = () => {
                 }}
                 icon={faCalendar}
                 style={{
-                  color: page === "date" ? "#d53f8c" : "black",
+                  color: page === "date" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -117,59 +145,84 @@ const BakedGoodies = () => {
               />
             </div>
           </div>
+
+          <div className="iconBar2">
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("request");
+              }}
+              style={{
+                background: page === "request" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </div>
+              <h4>Request</h4>
+            </div>
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("onGoing");
+              }}
+              style={{
+                background: page === "onGoing" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faCakeCandles} />
+              </div>
+              <h4>Ongoing</h4>
+            </div>
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("history");
+              }}
+              style={{
+                background: page === "history" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faClockRotateLeft} />
+              </div>
+              <h4>History</h4>
+            </div>
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("date");
+              }}
+              style={{
+                background: page === "date" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faCalendar} />
+              </div>
+              <h4>Date</h4>
+            </div>
+            <div className="con1" onClick={directSettings}>
+              <div className="icon">
+                <FontAwesomeIcon icon={faGear} />
+              </div>
+              <h4>Settings</h4>
+            </div>
+          </div>
+          <div className="logout">
+            <div className="icon" onClick={loginAuth}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+            </div>
+            <h4 onClick={loginAuth}>log out</h4>
+          </div>
         </div>
         <div className="reqBody">
           {page === "request" && <Request />}
           {page === "onGoing" && <Ongoing />}
           {page === "history" && <History />}
-          {page === "date" && <Date />}
+          {page === "date" && <Sched />}
         </div>
-        {/* <div className="sideBar2">
-          <div
-            className="con1"
-            onClick={() => {
-              setPage("request");
-            }}
-          >
-            <div className="icon">
-              <FontAwesomeIcon icon={faEnvelope} style={changeStyle} />
-            </div>
-            <h4>Request</h4>
-          </div>
-          <div
-            className="con1"
-            onClick={() => {
-              setPage("onGoing");
-            }}
-          >
-            <div className="icon">
-              <FontAwesomeIcon icon={faCakeCandles} style={changeStyle} />
-            </div>
-            <h4>Ongoing</h4>
-          </div>
-          <div
-            className="con1"
-            onClick={() => {
-              setPage("history");
-            }}
-          >
-            <div className="icon">
-              <FontAwesomeIcon icon={faClockRotateLeft} style={changeStyle} />
-            </div>
-            <h4>History</h4>
-          </div>
-          <div
-            className="con1"
-            onClick={() => {
-              setPage("date");
-            }}
-          >
-            <div className="icon">
-              <FontAwesomeIcon icon={faCalendar} style={changeStyle} />
-            </div>
-            <h4>Date</h4>
-          </div>
-        </div> */}
       </div>
     </>
   );

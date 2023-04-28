@@ -1,8 +1,23 @@
-@media (width < 880px) {
+@media (width < 770px) {
   /* -------------page3------------ */
   .Pages3 {
     width: 100vw;
     height: 80vh;
     padding: 20px;
+  }
+}
+
+@media (width > 770px) {
+  .Pages3 header {
+    display: none;
+  }
+  .Pages3 {
+    width: 70vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    padding: 50px;
   }
 }

@@ -1,12 +1,12 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const Request = () => {
+  const res = window.localStorage.getItem("token");
   const navigate = useNavigate();
   // order request from customer
   const [orders, setOrders] = useState([]);
@@ -35,6 +35,22 @@ const Request = () => {
     status: "paying",
     price: price,
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://new-back-rho.vercel.app/admin", {
+  //       headers: {
+  //         Authorization: `Bearer ${res}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.data !== "Congrats") {
+  //         window.localStorage.removeItem("isLoggin");
+  //         window.localStorage.removeItem("token");
+  //         navigate("/");
+  //       }
+  //     });
+  // }, []);
 
   function changeStatus() {
     axios
@@ -87,17 +103,18 @@ const Request = () => {
       <header>
         <h1>Request</h1>
       </header>
+
       {personalPop && (
         <div className="personalPop">
           <div className="container">
-            <span
-              className="close"
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
               onClick={() => {
                 togglePersonalPop(false);
               }}
-            >
-              Close
-            </span>
+            />
             <div className="profile">
               <FontAwesomeIcon icon={faUser} className="icon" />
             </div>
@@ -117,13 +134,14 @@ const Request = () => {
       )}
       {popup && (
         <div className="pop">
-          <b
+          <button
+            type="button"
+            className="btn-close bg-danger"
+            aria-label="Close"
             onClick={() => {
               togglePopUp(false);
             }}
-          >
-            Close
-          </b>
+          ></button>
           <img src={pic} alt="pic" />
         </div>
       )}

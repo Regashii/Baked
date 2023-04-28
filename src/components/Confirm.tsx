@@ -1,8 +1,10 @@
+import axios from "axios";
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-  const user = localStorage.getItem("user");
-  if (user) {
+  const user = window.localStorage.getItem("isLoggin");
+  const refpage = window.localStorage.getItem("token");
+  if (user && refpage) {
     return true;
   } else {
     return false;

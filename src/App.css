@@ -1,33 +1,36 @@
-@media (width < 880px) {
+@media (width < 770px) {
   /* ----------------bakedgoodies--------------------- */
   .Home {
     display: flex;
     flex-direction: column;
     height: 10vh;
     width: 100vw;
+    color: black;
+  }
+
+  .Home::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    background: radial-gradient(
+      circle,
+      rgba(255, 228, 196, 1) 37%,
+      rgba(213, 63, 140, 1) 100%
+    );
   }
 
   /* -------dashboard---------- */
   .dashboard {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(90deg, #2cd9ff, #7effb2);
-    background-size: 400% 400%;
-    animation: devblog 2.5s infinite ease-in-out;
+
     height: 20vh;
   }
 
-  @keyframes devblog {
-    0% {
-      background-position: 0 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0 50%;
-    }
-  }
   .dashCon {
     height: 50%;
     display: flex;
@@ -41,6 +44,11 @@
     align-items: center;
     padding-top: 20px;
   }
+
+  .dashbox1 .userSecret {
+    height: 30px;
+  }
+
   .dashbox2 {
     width: 60%;
     height: 100%;
@@ -65,13 +73,6 @@
     width: 100%;
   }
 
-  .iconBar .con1 {
-    border: 1px solid black;
-    display: flex;
-    width: 25%;
-    color: #d53f8c;
-  }
-
   .iconBar .icon {
     height: 100%;
     width: 25%;
@@ -84,13 +85,133 @@
     transform: scale(1.2);
   }
 
-  .icon:hover {
-    background-color: white;
-  }
-
   /* ----pc screen--- */
 
-  .sideBar2 {
+  .iconBar2 {
     display: none;
+  }
+
+  .logout {
+    display: none;
+  }
+
+  .dashbox3 h3 {
+    display: none;
+  }
+}
+
+/* --------------------pc screen------------------------ */
+@media (width > 770px) {
+  .iconBar {
+    display: none;
+  }
+
+  /* ------sidebar------- */
+
+  .Home {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    padding: 50px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 228, 196, 1) 37%,
+      rgba(213, 63, 140, 1) 100%
+    );
+  }
+
+  .Home :where(.reqBody, .dashboard) {
+    background-color: #ffffff10;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+  }
+
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 20vw;
+  }
+
+  .dashCon {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+    width: 100%;
+  }
+
+  .dashbox1 {
+    display: none;
+  }
+
+  .dashbox2 {
+    display: none;
+  }
+
+  .dashbox3 {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+
+  .dashbox3 img {
+    display: none;
+  }
+
+  .dashbox3 h3 {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ------icons------- */
+
+  .iconBar2 .con1 {
+    display: flex;
+    font-size: 1em;
+    height: 4em;
+    cursor: pointer;
+  }
+
+  .iconBar2 h4 {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .iconBar2 .icon {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logout {
+    display: flex;
+    position: relative;
+    top: 90px;
+  }
+
+  .logout h4 {
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .logout .icon {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
   }
 }

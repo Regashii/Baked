@@ -1,11 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Ongoing = () => {
+  const res = window.localStorage.getItem("token");
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [pic, setPic] = useState("");
   const [popup, setPopUp] = useState(false);
   const [drop, SetDrop] = useState(false);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://new-back-rho.vercel.app/admin", {
+  //       headers: {
+  //         Authorization: `Bearer ${res}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.data !== "Congrats") {
+  //         console.log("oppps");
+  //         window.localStorage.removeItem("isLoggin");
+  //         window.localStorage.removeItem("token");
+  //         navigate("/");
+  //       }
+  //     });
+  // }, []);
 
   useEffect(() => {
     axios
@@ -16,7 +36,10 @@ const Ongoing = () => {
   }, []);
   return (
     <div className="Pages2">
-      <h1>Ongoing</h1>
+      <header>
+        <h1>Ongoing</h1>
+      </header>
+
       <div className="process">
         {orders.map((order: any, index) => (
           <div className="num">

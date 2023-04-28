@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import jwt_decode from "jwt-decode";
 
-const Login = () => {
+function Login(): JSX.Element {
   const navigate = useNavigate();
 
   const [errUser, seterrUser] = useState(false);
@@ -15,6 +16,39 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [show, toggleShow] = useState(false);
+
+  const [access, setAccess] = useState(null);
+
+  const tokenRefresh = async () => {
+    try {
+      const res = await axios.post("https://new-back-rho.vercel.app/token", {
+        // @ts-ignore
+        token: access.refeshToken,
+      });
+
+      setAccess({
+        // @ts-ignore
+        ...access,
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+      });
+    } catch (error) {}
+  };
+  // const axoisJwt = axios.create();
+
+  // if (access) {
+  //   console.log(access);
+  //   axoisJwt.interceptors.request.use(async (config) => {
+  //     let currentDate = new Date();
+  //     const decodeToken = jwt_decode(access.accessToken);
+  //     if (decodeToken.exp * 1000 < currentDate.getTime()) {
+  //       // await tokenRefresh();
+  //       console.log("hi");
+  //     } else {
+  //       console.log("him");
+  //     }
+  //   });
+  // }
 
   async function loginAuth() {
     if (username === "") {
@@ -30,28 +64,46 @@ const Login = () => {
     }
 
     if (username != "" && password != "") {
-      axios
-        .post("https://baked-goodies-api.vercel.app/api/admin", {
-          username,
-          password,
-        })
-        .then((res: any) => {
-          if (res.data === "exist") {
-            localStorage.setItem("user", "test");
-            navigate("/dashboard");
-          } else if (res.data === "notexist") {
-            toast.error("Wrong password or username", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-          }
-        });
+      try {
+        axios
+          .post("https://new-back-rho.vercel.app/token", {
+            username,
+            password,
+          })
+          .then((res: any) => {
+            if (res.data === "Who are you?!?!") {
+              toast.error("Wrong password or username", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+            } else {
+              setAccess(res.data);
+
+              window.localStorage.setItem("isLoggin", "true");
+              window.localStorage.setItem("token", res.data.accessToken);
+
+              axios
+                .get("https://new-back-rho.vercel.app/admin", {
+                  headers: {
+                    Authorization: `Bearer ${res.data.accessToken}`,
+                  },
+                })
+                .then((response) => {
+                  if (response.data) {
+                    navigate("/dashboard");
+                  }
+                });
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
   return (
@@ -107,6 +159,6 @@ const Login = () => {
       </div>
     </>
   );
-};
+}
 
 export default Login;

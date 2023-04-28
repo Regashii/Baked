@@ -1,4 +1,4 @@
-@media (width < 880px) {
+@media (width < 770px) {
   /* -------------page2------------ */
   .Pages2 {
     width: 100vw;
@@ -25,5 +25,20 @@
     height: 20%;
     gap: 20em;
     border: 1px solid black;
+  }
+}
+
+@media (width > 770px) {
+  .Pages2 header {
+    display: none;
+  }
+  .Pages2 {
+    width: 70vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    padding: 50px;
   }
 }
