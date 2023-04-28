@@ -32,9 +32,8 @@ const Settings = () => {
       });
   }, []);
 
-  const loginAuth = () => {
-    window.localStorage.removeItem("isLoggin");
-    window.localStorage.removeItem("token");
+  const loginAuth = async () => {
+    await axios.get("https://new-back-rho.vercel.app/logout");
     navigate("/");
   };
 

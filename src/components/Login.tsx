@@ -65,49 +65,27 @@ function Login(): JSX.Element {
 
     if (username != "" && password != "") {
       try {
-        axios
+        await axios
           .post("https://new-back-rho.vercel.app/token", {
             username,
             password,
           })
-          .then((res: any) => {
-            if (res.data === "Who are you?!?!") {
-              toast.error("Wrong password or username", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
-            } else {
-              setAccess(res.data);
-
-              window.localStorage.setItem("isLoggin", "true");
-              window.localStorage.setItem("token", res.data.accessToken);
-
-              axios
-                .get("https://new-back-rho.vercel.app/admin", {
-                  headers: {
-                    Authorization: `Bearer ${res.data.accessToken}`,
-                  },
-                })
-                .then((response) => {
-                  if (response.data) {
-                    navigate("/dashboard");
-                  }
-                });
-            }
+          .then((res) => {
+            console.log(res);
           });
       } catch (error) {
         console.log(error);
       }
     }
   }
+
+  async function asdassf() {
+    const see = await axios.get("https://new-back-rho.vercel.app/admin");
+    console.log(see);
+  }
   return (
     <>
+      <button onClick={asdassf}>Log out</button>
       <div className="sign-in">
         <div className="card">
           <a className="login">Log in</a>
