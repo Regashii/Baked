@@ -60,6 +60,7 @@ const BakedGoodies = () => {
 
   return (
     <>
+      {!token && <h1>Hi</h1>}
       {token && (
         <div className="Home">
           <div className="dashboard">
