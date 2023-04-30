@@ -32,8 +32,8 @@ const Settings = () => {
       });
   }, []);
 
-  const loginAuth = async () => {
-    await axios.get("https://new-back-rho.vercel.app/logout");
+  const logout = async () => {
+    localStorage.clear();
     navigate("/");
   };
 
@@ -193,7 +193,7 @@ const Settings = () => {
             >
               Change password
             </button>
-            <button className="btn btn-success" onClick={loginAuth}>
+            <button className="btn btn-success" onClick={logout}>
               Log out
             </button>
           </div>

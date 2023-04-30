@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -65,13 +65,25 @@ function Login(): JSX.Element {
 
     if (username != "" && password != "") {
       try {
-        await axios
-          .post("https://new-back-rho.vercel.app/token", {
-            username,
-            password,
-          })
+        axios
+          .post("https://new-back-rho.vercel.app/login", { username, password })
           .then((res) => {
-            console.log(res);
+            if (res.data.accessToken) {
+              console.log(res.data);
+              localStorage.setItem("token", res.data.accessToken);
+              navigate("/dashboard");
+            } else {
+              toast.error("No user found", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+            }
           });
       } catch (error) {
         console.log(error);
@@ -79,13 +91,14 @@ function Login(): JSX.Element {
     }
   }
 
-  async function asdassf() {
-    const see = await axios.get("https://new-back-rho.vercel.app/admin");
-    console.log(see);
-  }
+  // useEffect(() => {
+  //   fetch("https://new-back-rho.vercel.app/login").then((res) => {
+  //     console.log(res);
+  //   });
+  // });
+
   return (
     <>
-      <button onClick={asdassf}>Log out</button>
       <div className="sign-in">
         <div className="card">
           <a className="login">Log in</a>

@@ -36,8 +36,8 @@ const BakedGoodies = () => {
     navigate("/dashboard/setting");
   }
 
-  const loginAuth = async () => {
-    // await axios.get("https://new-back-rho.vercel.app/logout");
+  const logout = async () => {
+    localStorage.clear();
     navigate("/");
   };
 
@@ -210,10 +210,10 @@ const BakedGoodies = () => {
             </div>
           </div>
           <div className="logout">
-            <div className="icon" onClick={loginAuth}>
+            <div className="icon" onClick={logout}>
               <FontAwesomeIcon icon={faRightFromBracket} />
             </div>
-            <h4 onClick={loginAuth}>log out</h4>
+            <h4 onClick={logout}>log out</h4>
           </div>
         </div>
         <div className="reqBody">
