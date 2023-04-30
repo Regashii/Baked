@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ChangePass = () => {
   const navigate = useNavigate();
@@ -10,6 +11,26 @@ const ChangePass = () => {
 
   const user = "baked";
   const pass = "admin";
+
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    axios
+      .get("https://new-back-rho.vercel.app/admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (
+          response.data === "No token provided" ||
+          response.data === "Token is not valid!"
+        ) {
+          localStorage.clear();
+          navigate("/");
+        }
+      });
+  }, []);
 
   function checkAdmin() {
     if (user === username && pass === password) {

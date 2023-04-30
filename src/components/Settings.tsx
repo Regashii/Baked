@@ -32,6 +32,26 @@ const Settings = () => {
       });
   }, []);
 
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    axios
+      .get("https://new-back-rho.vercel.app/admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (
+          response.data === "No token provided" ||
+          response.data === "Token is not valid!"
+        ) {
+          localStorage.clear();
+          navigate("/");
+        }
+      });
+  }, []);
+
   const logout = async () => {
     localStorage.clear();
     navigate("/");

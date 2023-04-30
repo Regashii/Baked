@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const BakedGoodies = () => {
+  const token = localStorage.getItem("token");
   const [page, setPage] = useState("request");
   const navigate = useNavigate();
   const [notif, setNotif] = useState([]);
@@ -41,21 +42,24 @@ const BakedGoodies = () => {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://new-back-rho.vercel.app/admin", {
-  //       headers: {
-  //         Authorization: `Bearer ${res}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.data !== "Congrats") {
-  //         window.localStorage.removeItem("isLoggin");
-  //         window.localStorage.removeItem("token");
-  //         navigate("/");
-  //       }
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("https://new-back-rho.vercel.app/admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (
+          response.data === "No token provided" ||
+          response.data === "Token is not valid!"
+        ) {
+          localStorage.clear();
+          navigate("/");
+        }
+      });
+  }, []);
 
   return (
     <>
