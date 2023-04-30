@@ -1,9 +1,10 @@
 import axios from "axios";
+import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-  let user = false;
-  if (user) {
+  const token = localStorage.getItem("token");
+  if (token) {
     return true;
   } else {
     return false;
