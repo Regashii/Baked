@@ -18,10 +18,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-
-          <Route path="/dashboard" element={<BakedGoodies />}></Route>
-          <Route path="/admin/change" element={<ChangePass />}></Route>
-          <Route path="/dashboard/setting" element={<Settings />}></Route>
+          <Route element={<Confirm />}>
+            <Route path="/dashboard" element={<BakedGoodies />}></Route>
+            <Route path="/admin/change" element={<ChangePass />}></Route>
+            <Route path="/dashboard/setting" element={<Settings />}></Route>
+          </Route>
         </Routes>
       </Router>
     </>

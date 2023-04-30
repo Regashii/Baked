@@ -19,39 +19,66 @@ const ChangePass = () => {
     }
   }
 
-  const token = localStorage.getItem("token");
-
   return (
     <>
-      {token && (
+      <div className="container">
         <div className="container">
-          <div className="container">
-            <h4
-              onClick={() => {
-                navigate("/dashboard/setting");
+          <h4
+            onClick={() => {
+              navigate("/dashboard/setting");
+            }}
+            style={{ display: "flex", gap: "10px" }}
+          >
+            <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+            Go back
+          </h4>
+          <h1>Confimation</h1>
+          <div className="input-group flex-nowrap">
+            <span className="input-group-text" id="addon-wrapping">
+              Username:
+            </span>
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => {
+                setUsername(e.target.value);
               }}
-              style={{ display: "flex", gap: "10px" }}
-            >
-              <FontAwesomeIcon icon={faArrowAltCircleLeft} />
-              Go back
-            </h4>
-            <h1>Confimation</h1>
+            />
+          </div>
+          <br />
+          <div className="input-group flex-nowrap">
+            <span className="input-group-text" id="addon-wrapping">
+              Password:
+            </span>
+            <input
+              type="password"
+              className="form-control"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <br />
+          <button className="btn btn-outline-warning" onClick={checkAdmin}>
+            Confirm
+          </button>
+
+          <div className="container">
             <div className="input-group flex-nowrap">
               <span className="input-group-text" id="addon-wrapping">
-                Username:
+                Old Pass:
               </span>
               <input
                 type="text"
                 className="form-control"
                 onChange={(e) => {
-                  setUsername(e.target.value);
+                  setPassword(e.target.value);
                 }}
               />
             </div>
-            <br />
             <div className="input-group flex-nowrap">
               <span className="input-group-text" id="addon-wrapping">
-                Password:
+                new Password:
               </span>
               <input
                 type="password"
@@ -61,52 +88,21 @@ const ChangePass = () => {
                 }}
               />
             </div>
-            <br />
-            <button className="btn btn-outline-warning" onClick={checkAdmin}>
-              Confirm
-            </button>
-
-            <div className="container">
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  Old Pass:
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  new Password:
-                </span>
-                <input
-                  type="password"
-                  className="form-control"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  confirm Password:
-                </span>
-                <input
-                  type="password"
-                  className="form-control"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-              </div>
+            <div className="input-group flex-nowrap">
+              <span className="input-group-text" id="addon-wrapping">
+                confirm Password:
+              </span>
+              <input
+                type="password"
+                className="form-control"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

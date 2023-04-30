@@ -56,177 +56,173 @@ const BakedGoodies = () => {
   //       }
   //     });
   // }, []);
-  const token = localStorage.getItem("token");
 
   return (
     <>
-      {!token && <h1>Hi</h1>}
-      {token && (
-        <div className="Home">
-          <div className="dashboard">
-            <div className="dashCon">
-              <div className="dashbox1">
-                <p onClick={directSettings}>
-                  <FontAwesomeIcon icon={faUserSecret} className="userSecret" />
-                </p>
-              </div>
-              <div className="dashbox2">
-                <h1>Dashboard</h1>
-              </div>
-              <div className="dashbox3">
-                <img src="BakedGoodies.png" alt="Logo" />
-
-                <h3>
-                  <FontAwesomeIcon icon={faCircleInfo} />
-                  Dashboard
-                </h3>
-              </div>
+      <div className="Home">
+        <div className="dashboard">
+          <div className="dashCon">
+            <div className="dashbox1">
+              <p onClick={directSettings}>
+                <FontAwesomeIcon icon={faUserSecret} className="userSecret" />
+              </p>
             </div>
-
-            <div className="iconBar">
-              <div className="icon">
-                <FontAwesomeIcon
-                  onClick={() => {
-                    setPage("request");
-                  }}
-                  icon={faEnvelope}
-                  style={{
-                    color: page === "request" ? "#d53f8c" : "",
-                    width: "3m",
-                    height: "2em",
-                  }}
-                  className="icon1"
-                />
-
-                <span className="position-absolute translate-middle badge rounded-pill bg-warning">
-                  {notif.length}
-                </span>
-              </div>
-
-              <div className="icon">
-                <FontAwesomeIcon
-                  onClick={() => {
-                    setPage("onGoing");
-                  }}
-                  icon={faCakeCandles}
-                  style={{
-                    color: page === "onGoing" ? "#d53f8c" : "",
-                    width: "3m",
-                    height: "2em",
-                  }}
-                  className="icon1"
-                />
-              </div>
-
-              <div className="icon">
-                <FontAwesomeIcon
-                  onClick={() => {
-                    setPage("history");
-                  }}
-                  icon={faClockRotateLeft}
-                  style={{
-                    color: page === "history" ? "#d53f8c" : "",
-                    width: "3m",
-                    height: "2em",
-                  }}
-                  className="icon1"
-                />
-              </div>
-              <div className="icon">
-                <FontAwesomeIcon
-                  onClick={() => {
-                    setPage("date");
-                  }}
-                  icon={faCalendar}
-                  style={{
-                    color: page === "date" ? "#d53f8c" : "",
-                    width: "3m",
-                    height: "2em",
-                  }}
-                  className="icon1"
-                />
-              </div>
+            <div className="dashbox2">
+              <h1>Dashboard</h1>
             </div>
+            <div className="dashbox3">
+              <img src="BakedGoodies.png" alt="Logo" />
 
-            <div className="iconBar2">
-              <div
-                className="con1"
+              <h3>
+                <FontAwesomeIcon icon={faCircleInfo} />
+                Dashboard
+              </h3>
+            </div>
+          </div>
+
+          <div className="iconBar">
+            <div className="icon">
+              <FontAwesomeIcon
                 onClick={() => {
                   setPage("request");
                 }}
+                icon={faEnvelope}
                 style={{
-                  background: page === "request" ? "#d53f8c" : "",
+                  color: page === "request" ? "#d53f8c" : "",
+                  width: "3m",
+                  height: "2em",
                 }}
-              >
-                <div className="icon">
-                  <FontAwesomeIcon icon={faEnvelope} />
-                </div>
-                <h4>Request</h4>
-              </div>
-              <div
-                className="con1"
+                className="icon1"
+              />
+
+              <span className="position-absolute translate-middle badge rounded-pill bg-warning">
+                {notif.length}
+              </span>
+            </div>
+
+            <div className="icon">
+              <FontAwesomeIcon
                 onClick={() => {
                   setPage("onGoing");
                 }}
+                icon={faCakeCandles}
                 style={{
-                  background: page === "onGoing" ? "#d53f8c" : "",
+                  color: page === "onGoing" ? "#d53f8c" : "",
+                  width: "3m",
+                  height: "2em",
                 }}
-              >
-                <div className="icon">
-                  <FontAwesomeIcon icon={faCakeCandles} />
-                </div>
-                <h4>Ongoing</h4>
-              </div>
-              <div
-                className="con1"
+                className="icon1"
+              />
+            </div>
+
+            <div className="icon">
+              <FontAwesomeIcon
                 onClick={() => {
                   setPage("history");
                 }}
+                icon={faClockRotateLeft}
                 style={{
-                  background: page === "history" ? "#d53f8c" : "",
+                  color: page === "history" ? "#d53f8c" : "",
+                  width: "3m",
+                  height: "2em",
                 }}
-              >
-                <div className="icon">
-                  <FontAwesomeIcon icon={faClockRotateLeft} />
-                </div>
-                <h4>History</h4>
-              </div>
-              <div
-                className="con1"
+                className="icon1"
+              />
+            </div>
+            <div className="icon">
+              <FontAwesomeIcon
                 onClick={() => {
                   setPage("date");
                 }}
+                icon={faCalendar}
                 style={{
-                  background: page === "date" ? "#d53f8c" : "",
+                  color: page === "date" ? "#d53f8c" : "",
+                  width: "3m",
+                  height: "2em",
                 }}
-              >
-                <div className="icon">
-                  <FontAwesomeIcon icon={faCalendar} />
-                </div>
-                <h4>Date</h4>
-              </div>
-              <div className="con1" onClick={directSettings}>
-                <div className="icon">
-                  <FontAwesomeIcon icon={faGear} />
-                </div>
-                <h4>Settings</h4>
-              </div>
-            </div>
-            <div className="logout">
-              <div className="icon" onClick={logout}>
-                <FontAwesomeIcon icon={faRightFromBracket} />
-              </div>
-              <h4 onClick={logout}>log out</h4>
+                className="icon1"
+              />
             </div>
           </div>
-          <div className="reqBody">
-            {page === "request" && <Request />}
-            {page === "onGoing" && <Ongoing />}
-            {page === "history" && <History />}
-            {page === "date" && <Sched />}
+
+          <div className="iconBar2">
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("request");
+              }}
+              style={{
+                background: page === "request" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </div>
+              <h4>Request</h4>
+            </div>
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("onGoing");
+              }}
+              style={{
+                background: page === "onGoing" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faCakeCandles} />
+              </div>
+              <h4>Ongoing</h4>
+            </div>
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("history");
+              }}
+              style={{
+                background: page === "history" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faClockRotateLeft} />
+              </div>
+              <h4>History</h4>
+            </div>
+            <div
+              className="con1"
+              onClick={() => {
+                setPage("date");
+              }}
+              style={{
+                background: page === "date" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faCalendar} />
+              </div>
+              <h4>Date</h4>
+            </div>
+            <div className="con1" onClick={directSettings}>
+              <div className="icon">
+                <FontAwesomeIcon icon={faGear} />
+              </div>
+              <h4>Settings</h4>
+            </div>
+          </div>
+          <div className="logout">
+            <div className="icon" onClick={logout}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+            </div>
+            <h4 onClick={logout}>log out</h4>
           </div>
         </div>
-      )}
+        <div className="reqBody">
+          {page === "request" && <Request />}
+          {page === "onGoing" && <Ongoing />}
+          {page === "history" && <History />}
+          {page === "date" && <Sched />}
+        </div>
+      </div>
     </>
   );
 };

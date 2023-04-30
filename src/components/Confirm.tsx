@@ -1,9 +1,7 @@
-import axios from "axios";
-import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-  let token = true;
+  const token = localStorage.getItem("token");
   if (token) {
     return true;
   } else {
