@@ -101,104 +101,113 @@ const Settings = () => {
       navigate("/");
     }, 7000);
   }
+
+  const token = localStorage.getItem("token");
   return (
     <>
-      <ToastContainer />
-      <div
-        className="container-fluid"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <div className="container bg-info" style={{ padding: "20px" }}>
-          <h4
-            onClick={() => {
-              navigate("/dashboard");
-            }}
-          >
-            <FontAwesomeIcon icon={faArrowAltCircleLeft} />
-            Dashboard
-          </h4>
-          <h1
-            className="container"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "3em",
-            }}
-          >
-            Admin Side
-          </h1>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Username:</span>
-            <input type="text" className="form-control" value={info} readOnly />
-            <button
-              className="btn btn-danger"
-              type="button"
-              id="button-addon2"
-              onClick={checkPass}
-              disabled={disabled1}
-            >
-              Edit
-            </button>
-            <input
-              type="text"
-              placeholder="enter password to edit"
-              onChange={(e) => {
-                setPassword(e.target.value);
+      {token && (
+        <div
+          className="container-fluid"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <div className="container bg-info" style={{ padding: "20px" }}>
+            <h4
+              onClick={() => {
+                navigate("/dashboard");
               }}
-            />
-          </div>
-          {user && (
+            >
+              <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+              Dashboard
+            </h4>
+            <h1
+              className="container"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "3em",
+              }}
+            >
+              Admin Side
+            </h1>
             <div className="input-group mb-3">
-              <span className="input-group-text">New username:</span>
+              <span className="input-group-text">Username:</span>
               <input
                 type="text"
                 className="form-control"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
+                value={info}
+                readOnly
               />
               <button
                 className="btn btn-danger"
                 type="button"
                 id="button-addon2"
-                onClick={changeUsername}
-                disabled={disabled2}
+                onClick={checkPass}
+                disabled={disabled1}
               >
-                Change
+                Edit
               </button>
+              <input
+                type="text"
+                placeholder="enter password to edit"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
             </div>
-          )}
+            {user && (
+              <div className="input-group mb-3">
+                <span className="input-group-text">New username:</span>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+                <button
+                  className="btn btn-danger"
+                  type="button"
+                  id="button-addon2"
+                  onClick={changeUsername}
+                  disabled={disabled2}
+                >
+                  Change
+                </button>
+              </div>
+            )}
 
-          <div
-            className="container"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "7em",
-              gap: "20px ",
-            }}
-          >
-            <button
-              className="btn btn-warning"
-              onClick={() => {
-                navigate("/admin/change");
+            <div
+              className="container"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "7em",
+                gap: "20px ",
               }}
             >
-              Change password
-            </button>
-            <button className="btn btn-success" onClick={logout}>
-              Log out
-            </button>
+              <button
+                className="btn btn-warning"
+                onClick={() => {
+                  navigate("/admin/change");
+                }}
+              >
+                Change password
+              </button>
+              <button className="btn btn-success" onClick={logout}>
+                Log out
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      <ToastContainer />
     </>
   );
 };
