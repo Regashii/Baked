@@ -21,7 +21,7 @@
       rgba(255, 228, 196, 1) 37%,
       rgba(213, 63, 140, 1) 100%
     ); */
-    background-image: url(pink.jpg);
+    background-image: url(/public/pink.jpg);
     background-size: cover;
   }
 
