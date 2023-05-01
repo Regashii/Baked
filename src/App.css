@@ -114,7 +114,7 @@
     width: 100vw;
     padding: 50px;
     /* cursor: url(/Food-Pastry-Bag-icon.png), auto;  */
-    background-image: url(pink.jpg);
+    background-image: url(/public/pink.jpg);
     background-size: 100% 100%;
   }
   .dashboard-container {
