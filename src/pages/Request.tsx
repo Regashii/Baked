@@ -28,29 +28,9 @@ const Request = () => {
   const [id, setId] = useState("");
   const [declinePop, toggleDeclinePop] = useState(false);
 
-  // input price
-  const [price, setPrice] = useState(Number);
-
   const status = {
-    status: "paying",
-    price: price,
+    status: "paid",
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://new-back-rho.vercel.app/admin", {
-  //       headers: {
-  //         Authorization: `Bearer ${res}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.data !== "Congrats") {
-  //         window.localStorage.removeItem("isLoggin");
-  //         window.localStorage.removeItem("token");
-  //         navigate("/");
-  //       }
-  //     });
-  // }, []);
 
   function changeStatus() {
     axios
@@ -99,7 +79,6 @@ const Request = () => {
 
   return (
     <div className="Pages1">
-      <ToastContainer />
       <header>
         <h1>Request</h1>
       </header>
@@ -222,16 +201,6 @@ const Request = () => {
                   Description: <i>{order.orderDetails}</i>
                 </b>
               </div>
-              <div className="price">
-                <b>Price: </b>
-                <input
-                  type="number"
-                  placeholder="Type 30% of the price"
-                  onChange={(e: any) => {
-                    setPrice(e.target.value);
-                  }}
-                />
-              </div>
 
               <div className="settle">
                 <div className="payment">
@@ -242,21 +211,8 @@ const Request = () => {
                   <button
                     className="btn btn-success"
                     onClick={() => {
-                      if (price <= 0) {
-                        toast.error("Input price", {
-                          position: "top-right",
-                          autoClose: 5000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: true,
-                          draggable: true,
-                          progress: undefined,
-                          theme: "colored",
-                        });
-                      } else {
-                        setId(order._id);
-                        setFinal(true);
-                      }
+                      setId(order._id);
+                      setFinal(true);
                     }}
                   >
                     Accept

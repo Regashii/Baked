@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,21 +6,6 @@ const Sched = () => {
   const navigate = useNavigate();
   const now = new Date();
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://new-back-rho.vercel.app/admin", {
-  //       headers: {
-  //         Authorization: `Bearer ${res}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.data !== "Congrats") {
-  //         window.localStorage.removeItem("isLoggin");
-  //         window.localStorage.removeItem("token");
-  //         navigate("/");
-  //       }
-  //     });
-  // }, []);
   return (
     <div className="Pages4">
       <header>

@@ -71,7 +71,8 @@ function Login(): JSX.Element {
             if (res.data.accessToken) {
               console.log(res.data);
               localStorage.setItem("token", res.data.accessToken);
-              navigate("/dashboard");
+              localStorage.setItem("route", "request");
+              navigate("/dashboard-request");
             } else {
               toast.error("No user found", {
                 position: "top-right",

@@ -116,9 +116,8 @@ const Settings = () => {
     }
     setTimeout(() => {
       changeUser(false);
-      window.localStorage.removeItem("isLoggin");
-      window.localStorage.removeItem("token");
-      navigate("/");
+      localStorage.clear();
+      navigate("/login");
     }, 7000);
   }
 
@@ -136,7 +135,7 @@ const Settings = () => {
         <div className="container bg-info" style={{ padding: "20px" }}>
           <h4
             onClick={() => {
-              navigate("/dashboard");
+              navigate("/dashboard-request");
             }}
           >
             <FontAwesomeIcon icon={faArrowAltCircleLeft} />

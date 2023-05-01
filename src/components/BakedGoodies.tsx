@@ -10,17 +10,14 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import Request from "../pages/Request";
-import Ongoing from "../pages/Ongoing";
-import History from "../pages/History";
-import Sched from "../pages/Sched";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const BakedGoodies = () => {
+  const dashRoute = localStorage.getItem("route");
   const token = localStorage.getItem("token");
-  const [page, setPage] = useState("request");
+
   const navigate = useNavigate();
   const [notif, setNotif] = useState([]);
   const res = window.localStorage.getItem("token");
@@ -39,7 +36,7 @@ const BakedGoodies = () => {
 
   const logout = async () => {
     localStorage.clear();
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -56,7 +53,7 @@ const BakedGoodies = () => {
           response.data === "Token is not valid!"
         ) {
           localStorage.clear();
-          navigate("/");
+          navigate("/login");
         }
       });
   }, []);
@@ -88,11 +85,12 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon
                 onClick={() => {
-                  setPage("request");
+                  localStorage.setItem("route", "request");
+                  navigate("/dashboard-request");
                 }}
                 icon={faEnvelope}
                 style={{
-                  color: page === "request" ? "#d53f8c" : "",
+                  color: dashRoute === "request" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -107,11 +105,12 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon
                 onClick={() => {
-                  setPage("onGoing");
+                  localStorage.setItem("route", "onGoing");
+                  navigate("/dashboard-ongoing");
                 }}
                 icon={faCakeCandles}
                 style={{
-                  color: page === "onGoing" ? "#d53f8c" : "",
+                  color: dashRoute === "onGoing" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -122,11 +121,12 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon
                 onClick={() => {
-                  setPage("history");
+                  localStorage.setItem("route", "history");
+                  navigate("/dashboard-history");
                 }}
                 icon={faClockRotateLeft}
                 style={{
-                  color: page === "history" ? "#d53f8c" : "",
+                  color: dashRoute === "history" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -136,11 +136,12 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon
                 onClick={() => {
-                  setPage("date");
+                  localStorage.setItem("route", "schedule");
+                  navigate("/dashboard-schedule");
                 }}
                 icon={faCalendar}
                 style={{
-                  color: page === "date" ? "#d53f8c" : "",
+                  color: dashRoute === "schedule" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -153,10 +154,11 @@ const BakedGoodies = () => {
             <div
               className="con1"
               onClick={() => {
-                setPage("request");
+                localStorage.setItem("route", "request");
+                navigate("/dashboard-request");
               }}
               style={{
-                background: page === "request" ? "#d53f8c" : "",
+                background: dashRoute === "request" ? "#d53f8c" : "",
               }}
             >
               <div className="icon">
@@ -167,10 +169,11 @@ const BakedGoodies = () => {
             <div
               className="con1"
               onClick={() => {
-                setPage("onGoing");
+                localStorage.setItem("route", "onGoing");
+                navigate("/dashboard-ongoing");
               }}
               style={{
-                background: page === "onGoing" ? "#d53f8c" : "",
+                background: dashRoute === "onGoing" ? "#d53f8c" : "",
               }}
             >
               <div className="icon">
@@ -181,10 +184,11 @@ const BakedGoodies = () => {
             <div
               className="con1"
               onClick={() => {
-                setPage("history");
+                localStorage.setItem("route", "history");
+                navigate("/dashboard-history");
               }}
               style={{
-                background: page === "history" ? "#d53f8c" : "",
+                background: dashRoute === "history" ? "#d53f8c" : "",
               }}
             >
               <div className="icon">
@@ -195,10 +199,11 @@ const BakedGoodies = () => {
             <div
               className="con1"
               onClick={() => {
-                setPage("date");
+                localStorage.setItem("route", "schedule");
+                navigate("/dashboard-schedule");
               }}
               style={{
-                background: page === "date" ? "#d53f8c" : "",
+                background: dashRoute === "schedule" ? "#d53f8c" : "",
               }}
             >
               <div className="icon">
@@ -219,12 +224,6 @@ const BakedGoodies = () => {
             </div>
             <h4 onClick={logout}>log out</h4>
           </div>
-        </div>
-        <div className="reqBody">
-          {page === "request" && <Request />}
-          {page === "onGoing" && <Ongoing />}
-          {page === "history" && <History />}
-          {page === "date" && <Sched />}
         </div>
       </div>
     </>

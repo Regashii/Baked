@@ -3,7 +3,7 @@
   .Home {
     display: flex;
     flex-direction: column;
-    height: 10vh;
+    height: 20vh;
     width: 100vw;
     color: black;
   }
@@ -16,11 +16,13 @@
     height: 100vh;
     width: 100vw;
     z-index: -1;
-    background: radial-gradient(
+    /* background: radial-gradient(
       circle,
       rgba(255, 228, 196, 1) 37%,
       rgba(213, 63, 140, 1) 100%
-    );
+    ); */
+    background-image: url(pink.jpg);
+    background-size: cover;
   }
 
   /* -------dashboard---------- */
@@ -107,24 +109,24 @@
   }
 
   /* ------sidebar------- */
-
-  .Home {
-    display: flex;
-    flex-direction: row;
+  .dashboard-main {
     height: 100vh;
     width: 100vw;
     padding: 50px;
-    background: radial-gradient(
-      circle,
-      rgba(255, 228, 196, 1) 37%,
-      rgba(213, 63, 140, 1) 100%
-    );
+    /* cursor: url(/Food-Pastry-Bag-icon.png), auto;  */
+    background-image: url(pink.jpg);
+    background-size: 100% 100%;
   }
-
-  .Home :where(.reqBody, .dashboard) {
+  .dashboard-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
     background-color: #ffffff10;
-    backdrop-filter: blur(100px);
-    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    color: black;
   }
 
   .dashboard {
@@ -175,6 +177,8 @@
     font-size: 1em;
     height: 4em;
     cursor: pointer;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
   }
 
   .iconBar2 h4 {
@@ -194,13 +198,15 @@
 
   .logout {
     display: flex;
-    position: relative;
-    top: 90px;
+    align-items: end;
+    height: 20%;
   }
 
   .logout h4 {
     width: auto;
-    height: 100%;
+    height: 30%;
+    margin: 0;
+
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -208,7 +214,8 @@
 
   .logout .icon {
     width: 20%;
-    height: 100%;
+    height: 30%;
+
     display: flex;
     justify-content: center;
     align-items: center;

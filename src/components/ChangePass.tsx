@@ -27,7 +27,7 @@ const ChangePass = () => {
           response.data === "Token is not valid!"
         ) {
           localStorage.clear();
-          navigate("/");
+          navigate("/login");
         }
       });
   }, []);

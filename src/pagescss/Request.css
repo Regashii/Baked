@@ -129,6 +129,7 @@
     align-items: center;
     left: 0;
     top: 0;
+    z-index: 1;
   }
 
   .Pages1 .finalDecision div {
@@ -149,7 +150,8 @@
   .Pages1 .payment .payType {
     background: rgb(6, 48, 238);
     height: 2em;
-    width: 4em;
+    width: auto;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -166,6 +168,7 @@
     align-items: center;
     left: 0;
     top: 0;
+    z-index: 1;
   }
 
   .Pages1 .declineCon {
@@ -237,12 +240,26 @@
   }
 
   .Pages1 {
-    width: 70vw;
+    width: 80vw;
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow: auto;
     padding: 50px;
+  }
+
+  .Pages1::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* .Pages1::-webkit-scrollbar-track {
+    background: orange;
+  } */
+
+  .Pages1::-webkit-scrollbar-thumb {
+    background-color: bisque;
+    border-radius: 20px;
+    border: 3px solid orange;
   }
 
   .Pages1 .body {
@@ -255,12 +272,15 @@
   }
   .Pages1 .order {
     height: auto;
-    width: 100%;
+    width: 30em;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     padding: 30px;
     border-radius: 5%;
+    background-color: #ffffff10;
+    backdrop-filter: blur(1000px);
+    -webkit-backdrop-filter: blur(1000px);
   }
 
   /* ------body------- */
@@ -299,7 +319,7 @@
   /* -------dates--------------- */
 
   .Pages1 .dates {
-    height: 20%;
+    height: 10%;
     margin-top: 10px;
     margin-bottom: 10px;
   }
@@ -318,7 +338,7 @@
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
-    height: 20%;
+    height: 10%;
     width: 100%;
   }
 
@@ -332,6 +352,7 @@
     align-items: center;
     left: 0;
     top: 0;
+    z-index: 1;
   }
 
   .Pages1 .finalDecision div {
@@ -352,7 +373,9 @@
   .Pages1 .payment .payType {
     background: rgb(6, 48, 238);
     height: 2em;
-    width: 4em;
+    width: auto;
+    padding: 10px;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -369,6 +392,7 @@
     align-items: center;
     left: 0;
     top: 0;
+    z-index: 1;
   }
 
   .Pages1 .declineCon {

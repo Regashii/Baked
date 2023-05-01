@@ -4,28 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 const Ongoing = () => {
   const res = window.localStorage.getItem("token");
-  const navigate = useNavigate();
+
   const [orders, setOrders] = useState([]);
   const [pic, setPic] = useState("");
   const [popup, setPopUp] = useState(false);
-  const [drop, SetDrop] = useState(false);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://new-back-rho.vercel.app/admin", {
-  //       headers: {
-  //         Authorization: `Bearer ${res}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.data !== "Congrats") {
-  //         console.log("oppps");
-  //         window.localStorage.removeItem("isLoggin");
-  //         window.localStorage.removeItem("token");
-  //         navigate("/");
-  //       }
-  //     });
-  // }, []);
 
   useEffect(() => {
     axios
@@ -43,65 +25,69 @@ const Ongoing = () => {
       <div className="process">
         {orders.map((order: any, index) => (
           <div className="num">
-            <p
-              onClick={() => {
-                SetDrop(!drop);
-              }}
-            >
+            <div className="index">
               <p>Request number: {index + 1} </p>
               <p>Name: {order.customer.name}</p>
               <p>Email: {order.customer.email}</p>
               <p>Phone: {order.customer.phone}</p>
-            </p>
-            {drop && (
-              <div className="order" key={index}>
-                <div className="png">
-                  <img
-                    src={order.images}
-                    alt="Cake"
-                    onClick={() => {
-                      setPic(order.images);
-                      setPopUp(true);
-                    }}
-                  />
-                </div>
-                <div className="details">
-                  <div className="flavor">
-                    <b>Flavor: {order.flavor}</b>
+              <div className="spinner">
+                <span>P</span>
+                <span>R</span>
+                <span>O</span>
+                <span>C</span>
+                <span>E</span>
+                <span>S</span>
+                <span>S</span>
+                <span>I</span>
+                <span>N</span>
+                <span>G</span>
+              </div>
+              <button className="btn btn-primary">Ready to pickup</button>
+              <details>
+                <div className="order" key={index}>
+                  <div className="png">
+                    <img
+                      src={order.images}
+                      alt="Cake"
+                      onClick={() => {
+                        setPic(order.images);
+                        setPopUp(true);
+                      }}
+                    />
                   </div>
-                  <div className="shape">
-                    <b>Shape: {order.shape}</b>
+                  <div className="details">
+                    <div className="flavor">
+                      <b>Flavor: {order.flavor}</b>
+                    </div>
+                    <div className="shape">
+                      <b>Shape: {order.shape}</b>
+                    </div>
                   </div>
-                </div>
 
-                <div className="dates">
-                  <div className="orderDate">
-                    <b>Order Date: {order.orderDate}</b>
+                  <div className="dates">
+                    <div className="orderDate">
+                      <b>Order Date: {order.orderDate}</b>
+                    </div>
+                    <div className="promiseDate">
+                      <b>Deadline: {order.promiseDate}</b>
+                    </div>
                   </div>
-                  <div className="promiseDate">
-                    <b>Deadline: {order.promiseDate}</b>
-                  </div>
-                </div>
-                <div className="description">
-                  <b>
-                    Description: <i>{order.orderDetails}</i>
-                  </b>
-                </div>
-                <div className="price">
-                  <b>Price: </b>
-                  <input type="text" placeholder="30% paid" disabled />
-                </div>
-
-                <div className="settle">
-                  <div className="payment">
+                  <div className="description">
                     <b>
-                      Payment: <div>{order.payment}</div>
+                      Description: <i>{order.orderDetails}</i>
                     </b>
                   </div>
-                  <button className="btn btn-primary">Done</button>
+
+                  <div className="settle">
+                    <div className="payment">
+                      <b>
+                        Payment: <div>{order.payment}</div>
+                      </b>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              </details>
+            </div>
           </div>
         ))}
       </div>
