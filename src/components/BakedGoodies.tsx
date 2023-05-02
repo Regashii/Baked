@@ -1,14 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCakeCandles,
+  faClipboardList,
   faEnvelope,
   faClockRotateLeft,
-  faCalendar,
   faUserSecret,
-  faCircleInfo,
   faGear,
   faRightFromBracket,
+  faBagShopping,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -67,14 +68,14 @@ const BakedGoodies = () => {
               </p>
             </div>
             <div className="dashbox2">
-              <h1>Dashboard</h1>
+              <h1>BakedGoodies</h1>
             </div>
             <div className="dashbox3">
               <img src="BakedGoodies.png" alt="Logo" />
 
               <h3>
-                <FontAwesomeIcon icon={faCircleInfo} />
-                Dashboard
+                <FontAwesomeIcon icon={faBagShopping} />
+                BakedGoodies
               </h3>
             </div>
           </div>
@@ -106,7 +107,7 @@ const BakedGoodies = () => {
                   localStorage.setItem("route", "onGoing");
                   navigate("/dashboard-ongoing");
                 }}
-                icon={faCakeCandles}
+                icon={faClipboardList}
                 style={{
                   color: dashRoute === "onGoing" ? "#d53f8c" : "",
                   width: "3m",
@@ -134,12 +135,12 @@ const BakedGoodies = () => {
             <div className="icon">
               <FontAwesomeIcon
                 onClick={() => {
-                  localStorage.setItem("route", "schedule");
-                  navigate("/dashboard-schedule");
+                  localStorage.setItem("route", "customer");
+                  navigate("/dashboard-customer");
                 }}
-                icon={faCalendar}
+                icon={faUsers}
                 style={{
-                  color: dashRoute === "schedule" ? "#d53f8c" : "",
+                  color: dashRoute === "customer" ? "#d53f8c" : "",
                   width: "3m",
                   height: "2em",
                 }}
@@ -175,7 +176,7 @@ const BakedGoodies = () => {
               }}
             >
               <div className="icon">
-                <FontAwesomeIcon icon={faCakeCandles} />
+                <FontAwesomeIcon icon={faClipboardList} />
               </div>
               <h4>Ongoing</h4>
             </div>
@@ -197,17 +198,17 @@ const BakedGoodies = () => {
             <div
               className="con1"
               onClick={() => {
-                localStorage.setItem("route", "schedule");
-                navigate("/dashboard-schedule");
+                localStorage.setItem("route", "customer");
+                navigate("/dashboard-customer");
               }}
               style={{
-                background: dashRoute === "schedule" ? "#d53f8c" : "",
+                background: dashRoute === "customer" ? "#d53f8c" : "",
               }}
             >
               <div className="icon">
-                <FontAwesomeIcon icon={faCalendar} />
+                <FontAwesomeIcon icon={faUsers} />
               </div>
-              <h4>Date</h4>
+              <h4>Customer</h4>
             </div>
             <div className="con1" onClick={directSettings}>
               <div className="icon">

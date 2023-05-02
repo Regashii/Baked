@@ -4,7 +4,7 @@ import "./Sign.css";
 import "./pagescss/Request.css";
 import "./pagescss/History.css";
 import "./pagescss/Ongoing.css";
-import "./pagescss/Date.css";
+import "./pagescss/Customer.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
 import ChangePass from "./components/ChangePass";
@@ -14,14 +14,16 @@ import Settings from "./components/Settings";
 import Request from "./pages/Request";
 import Ongoing from "./pages/Ongoing";
 import History from "./pages/History";
-import Sched from "./pages/Sched";
+import Sched from "./pages/Customer";
 import { ToastContainer } from "react-toastify";
+import MainPage from "./components/MainPage";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<MainPage />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route element={<Confirm />}>
             <Route
@@ -56,7 +58,7 @@ function App() {
               }
             />
             <Route
-              path="/dashboard-schedule"
+              path="/dashboard-customer"
               element={
                 <div className="dashboard-main">
                   <div className="dashboard-container">
