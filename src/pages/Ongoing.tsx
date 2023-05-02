@@ -24,7 +24,7 @@ const Ongoing = () => {
 
       <div className="process">
         {orders.map((order: any, index) => (
-          <div className="num">
+          <div className="num" key={index}>
             <div className="index">
               <p>Request number: {index + 1} </p>
               <p>Name: {order.customer.name}</p>

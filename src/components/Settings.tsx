@@ -15,7 +15,7 @@ const Settings = () => {
   const [username, setUsername] = useState("");
   const [info, setInfo] = useState("");
   const [user, changeUser] = useState(false);
-  const res = window.localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const [disabled1, setDisabled1] = useState(false);
   const [disabled2, setDisabled2] = useState(false);
@@ -24,24 +24,10 @@ const Settings = () => {
     axios
       .get("https://new-back-rho.vercel.app/admin", {
         headers: {
-          Authorization: `Bearer ${res}`,
-        },
-      })
-      .then((response) => {
-        setInfo(response.data.username);
-      });
-  }, []);
-
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    axios
-      .get("https://new-back-rho.vercel.app/admin", {
-        headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         if (
           response.data === "No token provided" ||
           response.data === "Token is not valid!"
@@ -49,12 +35,13 @@ const Settings = () => {
           localStorage.clear();
           navigate("/");
         }
+        setInfo(response.data.username);
       });
   }, []);
 
   const logout = async () => {
     localStorage.clear();
-    navigate("/");
+    navigate("/login");
   };
 
   async function checkPass() {

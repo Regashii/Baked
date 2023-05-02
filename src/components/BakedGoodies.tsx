@@ -20,7 +20,6 @@ const BakedGoodies = () => {
 
   const navigate = useNavigate();
   const [notif, setNotif] = useState([]);
-  const res = window.localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -47,7 +46,6 @@ const BakedGoodies = () => {
         },
       })
       .then((response) => {
-        console.log(response);
         if (
           response.data === "No token provided" ||
           response.data === "Token is not valid!"

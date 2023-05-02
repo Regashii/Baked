@@ -69,7 +69,6 @@ function Login(): JSX.Element {
           .post("https://new-back-rho.vercel.app/login", { username, password })
           .then((res) => {
             if (res.data.accessToken) {
-              console.log(res.data);
               localStorage.setItem("token", res.data.accessToken);
               localStorage.setItem("route", "request");
               navigate("/dashboard-request");

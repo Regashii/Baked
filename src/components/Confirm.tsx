@@ -13,7 +13,6 @@ const useAuth = () => {
         },
       })
       .then((response) => {
-        console.log(response);
         if (
           response.data === "No token provided" ||
           response.data === "Token is not valid!"

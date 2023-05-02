@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 const Sched = () => {
-  const res = window.localStorage.getItem("token");
-  const navigate = useNavigate();
   const now = new Date();
 
   return (
