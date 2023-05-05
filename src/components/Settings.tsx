@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Settings = () => {
   const navigate = useNavigate();
+  const Router = localStorage.getItem("route");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [info, setInfo] = useState("");
@@ -122,7 +123,7 @@ const Settings = () => {
         <div className="container bg-info" style={{ padding: "20px" }}>
           <h4
             onClick={() => {
-              navigate("/dashboard-request");
+              navigate(`/dashboard-${Router}`);
             }}
           >
             <FontAwesomeIcon icon={faArrowAltCircleLeft} />

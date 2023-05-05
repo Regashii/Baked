@@ -5,6 +5,7 @@ import "./pagescss/Request.css";
 import "./pagescss/History.css";
 import "./pagescss/Ongoing.css";
 import "./pagescss/Customer.css";
+import "./pagescss/Loading.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
 import ChangePass from "./components/ChangePass";

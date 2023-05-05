@@ -5,6 +5,48 @@
     height: 80vh;
     padding: 20px;
   }
+
+  .Pages3 .table3 {
+    width: 100%;
+    background: white;
+    height: 400px;
+    overflow: auto;
+    border: 1px solid grey;
+  }
+
+  .Pages3 table {
+    width: 60em;
+  }
+
+  .Pages3 table thead tr th {
+    padding: 10px 0 10px 10px;
+  }
+
+  .Pages3 .email {
+    width: 20em;
+    border-right: 1px solid;
+  }
+
+  .Pages3 .cake {
+    width: 20em;
+    gap: 60px;
+    border-right: 1px solid;
+  }
+
+  .Pages3 .cake b {
+    display: inline-flex;
+    width: 110px;
+  }
+
+  .Pages3 .date {
+    width: 20em;
+    gap: 10px;
+  }
+
+  .Pages3 .date b {
+    display: inline-flex;
+    width: 160px;
+  }
 }
 
 @media (width > 770px) {
@@ -19,5 +61,47 @@
     overflow: auto;
 
     padding: 50px;
+  }
+
+  .Pages3 .table3 {
+    width: 100%;
+    background: white;
+    height: 400px;
+    overflow: auto;
+    border: 1px solid grey;
+  }
+
+  .Pages3 table {
+    width: 60em;
+  }
+
+  .Pages3 table thead tr th {
+    padding: 10px 0 10px 10px;
+  }
+
+  .Pages3 .email {
+    width: 20em;
+    border-right: 1px solid;
+  }
+
+  .Pages3 .cake {
+    width: 20em;
+    gap: 60px;
+    border-right: 1px solid;
+  }
+
+  .Pages3 .cake b {
+    display: inline-flex;
+    width: 110px;
+  }
+
+  .Pages3 .date {
+    width: 20em;
+    gap: 10px;
+  }
+
+  .Pages3 .date b {
+    display: inline-flex;
+    width: 160px;
   }
 }

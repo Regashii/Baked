@@ -16,11 +16,7 @@
     height: 100vh;
     width: 100vw;
     z-index: -1;
-    /* background: radial-gradient(
-      circle,
-      rgba(255, 228, 196, 1) 37%,
-      rgba(213, 63, 140, 1) 100%
-    ); */
+
     background-image: url(/public/pink.jpg);
     background-size: cover;
   }
@@ -93,7 +89,7 @@
     display: none;
   }
 
-  .logout {
+  .userInter {
     display: none;
   }
 
@@ -112,7 +108,7 @@
   .dashboard-main {
     height: 100vh;
     width: 100vw;
-    padding: 50px;
+    padding: 20px;
     /* cursor: url(/Food-Pastry-Bag-icon.png), auto;  */
     background-image: url(/public/pink.jpg);
     background-size: 100% 100%;
@@ -196,26 +192,30 @@
     align-items: center;
   }
 
-  .logout {
+  .userInter {
     display: flex;
-    align-items: end;
-    height: 20%;
+    flex-direction: column;
+    justify-content: end;
+    height: 40%;
   }
 
-  .logout h4 {
-    width: auto;
-    height: 30%;
-    margin: 0;
+  .userInter .con1 {
+    display: flex;
+    font-size: 1em;
+    height: 4em;
+  }
 
+  .userInter h4 {
+    width: auto;
+    height: 100%;
     display: flex;
     align-items: center;
     cursor: pointer;
   }
 
-  .logout .icon {
+  .userInter .icon {
     width: 20%;
-    height: 30%;
-
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

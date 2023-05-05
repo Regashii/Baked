@@ -91,12 +91,6 @@ function Login(): JSX.Element {
     }
   }
 
-  // useEffect(() => {
-  //   fetch("https://new-back-rho.vercel.app/login").then((res) => {
-  //     console.log(res);
-  //   });
-  // });
-
   return (
     <>
       <div className="sign-in">

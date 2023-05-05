@@ -3,12 +3,31 @@
   .Pages2 {
     width: 100vw;
     height: 80vh;
-    padding: 20px;
-    padding: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
   }
 
-  .Pages2 .index {
+  .Pages2 .loadingPage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Pages2 .errorPage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Pages2 .Pages2 .index {
     background: #d53f8c;
     border-radius: 30px;
     height: auto;
@@ -41,6 +60,24 @@
     flex-direction: column;
     overflow: auto;
     padding: 50px;
+  }
+
+  .Pages2 .loadingPage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Pages2 .errorPage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .Pages2::-webkit-scrollbar {

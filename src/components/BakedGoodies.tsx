@@ -210,18 +210,20 @@ const BakedGoodies = () => {
               </div>
               <h4>Customer</h4>
             </div>
+          </div>
+          <div className="userInter">
             <div className="con1" onClick={directSettings}>
               <div className="icon">
                 <FontAwesomeIcon icon={faGear} />
               </div>
               <h4>Settings</h4>
             </div>
-          </div>
-          <div className="logout">
-            <div className="icon" onClick={logout}>
-              <FontAwesomeIcon icon={faRightFromBracket} />
+            <div className="con1">
+              <div className="icon" onClick={logout}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+              </div>
+              <h4 onClick={logout}>log out</h4>
             </div>
-            <h4 onClick={logout}>log out</h4>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Ongoing = () => {
   const res = window.localStorage.getItem("token");
@@ -8,6 +7,7 @@ const Ongoing = () => {
   const [orders, setOrders] = useState([]);
   const [pic, setPic] = useState("");
   const [popup, setPopUp] = useState(false);
+  const [arrayItem, setArrayItem] = useState(false);
 
   useEffect(() => {
     axios
@@ -16,11 +16,53 @@ const Ongoing = () => {
         setOrders(res.data);
       });
   }, []);
+
+  setTimeout(() => {
+    if (orders.length === 0) {
+      setArrayItem(true);
+    }
+  }, 5000);
   return (
     <div className="Pages2">
       <header>
         <h1>Ongoing</h1>
       </header>
+      {orders.length === 0 && arrayItem === false && (
+        <div className="loadingPage">
+          <div
+            aria-label="Orange and tan hamster running in a metal wheel"
+            role="img"
+            className="wheel-and-hamster"
+          >
+            <div className="wheel"></div>
+            <div className="hamster">
+              <div className="hamster__body">
+                <div className="hamster__head">
+                  <div className="hamster__ear"></div>
+                  <div className="hamster__eye"></div>
+                  <div className="hamster__nose"></div>
+                </div>
+                <div className="hamster__limb hamster__limb--fr"></div>
+                <div className="hamster__limb hamster__limb--fl"></div>
+                <div className="hamster__limb hamster__limb--br"></div>
+                <div className="hamster__limb hamster__limb--bl"></div>
+                <div className="hamster__tail"></div>
+              </div>
+            </div>
+            <div className="spoke"></div>
+          </div>
+          <div>
+            <h2>LOADING</h2>
+          </div>
+        </div>
+      )}
+
+      {orders.length === 0 && arrayItem === true && (
+        <div className="errorPage">
+          <img src="idk.png" alt="idk" width={100} />
+          <h2> No data found or low connection</h2>
+        </div>
+      )}
 
       <div className="process">
         {orders.map((order: any, index) => (
