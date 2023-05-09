@@ -28,7 +28,7 @@
   }
 
   .Pages3 .cake {
-    width: 20em;
+    width: 15em;
     gap: 60px;
     border-right: 1px solid;
   }
@@ -39,8 +39,9 @@
   }
 
   .Pages3 .date {
-    width: 20em;
+    width: 15em;
     gap: 10px;
+    border-right: 1px solid;
   }
 
   .Pages3 .date b {
@@ -59,7 +60,6 @@
     display: flex;
     flex-direction: column;
     overflow: auto;
-
     padding: 50px;
   }
 
@@ -72,7 +72,7 @@
   }
 
   .Pages3 table {
-    width: 60em;
+    width: auto;
   }
 
   .Pages3 table thead tr th {
@@ -80,12 +80,12 @@
   }
 
   .Pages3 .email {
-    width: 20em;
+    width: 25em;
     border-right: 1px solid;
   }
 
   .Pages3 .cake {
-    width: 20em;
+    width: 25 em;
     gap: 60px;
     border-right: 1px solid;
   }
@@ -98,6 +98,11 @@
   .Pages3 .date {
     width: 20em;
     gap: 10px;
+    border-right: 1px solid;
+  }
+
+  .Pages3 .finish {
+    width: 15em;
   }
 
   .Pages3 .date b {

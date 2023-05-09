@@ -12,6 +12,38 @@ const MainPage = () => {
       >
         Login
       </button>
+      <br />
+      <button
+        onClick={() => {
+          navigate("/dashboard-request");
+        }}
+      >
+        dashboard reqeust
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          navigate("/dashboard-ongoing");
+        }}
+      >
+        dashboard ongoing
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          navigate("/dashboard-history");
+        }}
+      >
+        dashboard history
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          navigate("/dashboard-customer");
+        }}
+      >
+        dashboard cutomer
+      </button>
     </>
   );
 };

@@ -28,15 +28,16 @@ const Settings = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        if (
-          response.data === "No token provided" ||
-          response.data === "Token is not valid!"
-        ) {
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
           localStorage.clear();
-          navigate("/");
+          navigate("/login");
         }
-        setInfo(response.data.username);
+      })
+      .then((response: any) => {
+        if (response.status === 200) {
+          setInfo(response.data.username);
+        }
       });
   }, []);
 
@@ -46,11 +47,9 @@ const Settings = () => {
   };
 
   async function checkPass() {
-    console.log(password);
     await axios
       .post("https://new-back-rho.vercel.app/username", { password })
       .then((res) => {
-        console.log(res);
         if (res.data === "Correct") {
           changeUser(true);
           setDisabled1(true);
@@ -77,7 +76,7 @@ const Settings = () => {
     if (success) {
       toast.success("Success!", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: false,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -90,7 +89,7 @@ const Settings = () => {
         "Log in again, in any minute this account will be signing out",
         {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: false,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -106,7 +105,7 @@ const Settings = () => {
       changeUser(false);
       localStorage.clear();
       navigate("/login");
-    }, 7000);
+    }, 10000);
   }
 
   return (

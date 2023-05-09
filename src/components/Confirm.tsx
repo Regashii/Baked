@@ -5,6 +5,7 @@ import { Navigate, Outlet, useNavigate } from "react-router-dom";
 const useAuth = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     axios
       .get("https://new-back-rho.vercel.app/admin", {
@@ -12,11 +13,8 @@ const useAuth = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        if (
-          response.data === "No token provided" ||
-          response.data === "Token is not valid!"
-        ) {
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
           localStorage.clear();
           navigate("/login");
         }

@@ -64,30 +64,29 @@ function Login(): JSX.Element {
     }
 
     if (username != "" && password != "") {
-      try {
-        axios
-          .post("https://new-back-rho.vercel.app/login", { username, password })
-          .then((res) => {
-            if (res.data.accessToken) {
-              localStorage.setItem("token", res.data.accessToken);
-              localStorage.setItem("route", "request");
-              navigate("/dashboard-request");
-            } else {
-              toast.error("No user found", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      axios
+        .post("https://new-back-rho.vercel.app/login", { username, password })
+        .then((res) => {
+          if (res.data.accessToken) {
+            localStorage.setItem("token", res.data.accessToken);
+            localStorage.setItem("route", "request");
+            navigate("/dashboard-request");
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 404 || error.response.status === 400) {
+            toast.error("No user found", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+        });
     }
   }
 

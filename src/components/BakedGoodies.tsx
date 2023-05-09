@@ -46,11 +46,8 @@ const BakedGoodies = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        if (
-          response.data === "No token provided" ||
-          response.data === "Token is not valid!"
-        ) {
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
           localStorage.clear();
           navigate("/login");
         }

@@ -3,14 +3,16 @@ import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../pagescss/ChangePass.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const ChangePass = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const user = "baked";
-  const pass = "admin";
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const [correct, setCorrect] = useState(false);
 
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -20,12 +22,8 @@ const ChangePass = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        console.log(response);
-        if (
-          response.data === "No token provided" ||
-          response.data === "Token is not valid!"
-        ) {
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
           localStorage.clear();
           navigate("/login");
         }
@@ -33,17 +31,89 @@ const ChangePass = () => {
   }, []);
 
   function checkAdmin() {
-    if (user === username && pass === password) {
-      console.log("hi");
-    } else {
-      console.log("nope");
-    }
+    axios
+      .post("https://new-back-rho.vercel.app/password", { password, username })
+      .then((res) => {
+        if (res.data === "Correct") {
+          setCorrect(true);
+        } else {
+          setCorrect(false);
+          toast.error("No user found!!!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
   }
+
+  const changePass = (e: any) => {
+    e.preventDefault();
+    if (confirmPass === newPass) {
+      axios
+        .put("https://new-back-rho.vercel.app/password", { password: newPass })
+        .then((res) => {
+          if (res.data === "sorry") {
+            return toast.error("Sorry, try again later", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+          toast.success("Congrats", {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          toast.warning("Please wait, don't back or click anything", {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setTimeout(() => {
+            navigate("/login");
+            localStorage.clear();
+          }, 7000);
+        });
+    } else {
+      toast.error("Do not match", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   return (
     <>
-      <div className="container">
-        <div className="container">
+      <ToastContainer />
+      <div className="box">
+        <div className="form">
           <h4
             onClick={() => {
               navigate("/dashboard/setting");
@@ -54,74 +124,85 @@ const ChangePass = () => {
             Go back
           </h4>
           <h1>Confimation</h1>
-          <div className="input-group flex-nowrap">
-            <span className="input-group-text" id="addon-wrapping">
-              Username:
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
-          </div>
-          <br />
-          <div className="input-group flex-nowrap">
-            <span className="input-group-text" id="addon-wrapping">
-              Password:
-            </span>
-            <input
-              type="password"
-              className="form-control"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-          <br />
-          <button className="btn btn-outline-warning" onClick={checkAdmin}>
-            Confirm
-          </button>
+          {!correct && (
+            <>
+              <div className="input-group flex-nowrap">
+                <span className="input-group-text" id="addon-wrapping">
+                  Username:
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                  readOnly
+                  placeholder="disabled for now to avoid changing"
+                />
+              </div>
+              <br />
+              <div className="input-group flex-nowrap">
+                <span className="input-group-text" id="addon-wrapping">
+                  Password:
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  readOnly
+                  placeholder="disabled for now to avoid changing"
+                />
+              </div>
+              <br />
+              <button
+                className="btn btn-outline-warning"
+                onClick={checkAdmin}
+                disabled
+              >
+                Confirm
+              </button>
+            </>
+          )}
 
-          <div className="container">
-            <div className="input-group flex-nowrap">
-              <span className="input-group-text" id="addon-wrapping">
-                Old Pass:
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="input-group flex-nowrap">
-              <span className="input-group-text" id="addon-wrapping">
-                new Password:
-              </span>
-              <input
-                type="password"
-                className="form-control"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="input-group flex-nowrap">
-              <span className="input-group-text" id="addon-wrapping">
-                confirm Password:
-              </span>
-              <input
-                type="password"
-                className="form-control"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-          </div>
+          {correct && (
+            <form className="change" onSubmit={changePass}>
+              <div className="input-group flex-nowrap">
+                <span className="input-group-text" id="addon-wrapping">
+                  new Password:
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => {
+                    setNewPass(e.target.value);
+                  }}
+                  required
+                  readOnly
+                  placeholder="disabled for now to avoid changing"
+                />
+              </div>
+              <div className="input-group flex-nowrap">
+                <span className="input-group-text" id="addon-wrapping">
+                  confirm Password:
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => {
+                    setConfirmPass(e.target.value);
+                  }}
+                  required
+                  readOnly
+                  placeholder="disabled for now to avoid changing"
+                />
+              </div>
+              <button className="btn btn-outline-warning" disabled>
+                Change
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </>

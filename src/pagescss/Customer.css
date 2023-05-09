@@ -4,6 +4,7 @@
     width: 100vw;
     height: 80vh;
     padding: 0 15px 0 15px;
+    overflow: auto;
   }
 
   /* ----table-------- */
@@ -85,12 +86,14 @@
     padding: 10px;
     gap: 15px;
     background: pink;
+    height: 10em;
   }
 
   .Pages4 .individual aside div {
-    font-size: x-large;
+    font-size: large;
     display: flex;
     flex-direction: column;
+    align-self: center;
     padding: 0 15px 15px 0;
   }
 
@@ -122,7 +125,15 @@
   }
 
   .Pages4 .individual footer table {
-    width: 100%;
+    width: 60em;
+  }
+
+  .Pages4 :where(.cakeType, .cakeSize) {
+    width: 20em;
+  }
+
+  .Pages4 :where(.cakeStatus, .cakeRating) {
+    width: 10em;
   }
 }
 
@@ -258,5 +269,13 @@
 
   .Pages4 .individual footer table {
     width: 100%;
+  }
+
+  .Pages4 :where(.cakeType, .cakeSize) {
+    width: 30%;
+  }
+
+  .Pages4 :where(.cakeStatus, .cakeRating) {
+    width: 20%;
   }
 }

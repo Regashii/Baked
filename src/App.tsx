@@ -1,10 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "./Sign.css";
-import "./pagescss/Request.css";
-import "./pagescss/History.css";
-import "./pagescss/Ongoing.css";
-import "./pagescss/Customer.css";
 import "./pagescss/Loading.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
@@ -18,6 +14,7 @@ import History from "./pages/History";
 import Sched from "./pages/Customer";
 import { ToastContainer } from "react-toastify";
 import MainPage from "./components/MainPage";
+import Finished from "./pages/Finished";
 
 function App() {
   return (
@@ -70,6 +67,7 @@ function App() {
             />
             <Route path="/admin/change" element={<ChangePass />}></Route>
             <Route path="/dashboard/setting" element={<Settings />}></Route>
+            <Route path="/finish-product" element={<Finished />}></Route>
           </Route>
         </Routes>
       </Router>

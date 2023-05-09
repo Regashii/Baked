@@ -2,17 +2,16 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-
+import { toast } from "react-toastify";
+import "../pagescss/Request.css";
 const Request = () => {
+  localStorage.setItem("route", "request");
   // order request from customer
   const [orders, setOrders] = useState([]);
   const [arrayItem, setArrayItem] = useState(false);
 
   // image pop up when client click the image
   const [pic, setPic] = useState("");
-  const [popup, togglePopUp] = useState(false);
 
   //personal info of customer and pop up animation
   const [personal, setPersonal] = useState({
@@ -20,26 +19,26 @@ const Request = () => {
     email: "",
     phone: "",
   });
-  const [personalPop, togglePersonalPop] = useState(false);
 
   // Final decision
-  const [final, setFinal] = useState(false);
   const [id, setId] = useState("");
+  const [acceptPop, toggleAcceptPop] = useState(false);
   const [declinePop, toggleDeclinePop] = useState(false);
+  const [comment, setComment] = useState("");
 
-  const status = {
-    status: "paid",
-  };
-
-  function changeStatus() {
+  const changeStatus = () => {
+    const newStatus = { status: "accepted" };
     axios
-      .put(`https://baked-goodies-api.vercel.app/api/order/${id}`, status)
+      .put(
+        `https://baked-goodies-api.vercel.app/api/order/server/${id}`,
+        newStatus
+      )
       .then((res) => {
         console.log(res.data);
       });
     toast.success("Suceess", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: false,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -50,7 +49,7 @@ const Request = () => {
     setTimeout(() => {
       window.location.reload();
     }, 1000);
-  }
+  };
 
   useEffect(() => {
     axios
@@ -60,10 +59,23 @@ const Request = () => {
       });
   }, []);
 
-  function declineReq() {
+  const declineReq = (e: any) => {
+    e.preventDefault();
+    const newStatus = {
+      status: "decline",
+      comment: comment,
+    };
+    axios
+      .put(
+        `https://baked-goodies-api.vercel.app/api/order/server/${id}`,
+        newStatus
+      )
+      .then((res) => {
+        console.log(res.data);
+      });
     toast.success("Suceess", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: false,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -74,13 +86,13 @@ const Request = () => {
     setTimeout(() => {
       window.location.reload();
     }, 1000);
-  }
+  };
 
   setTimeout(() => {
     if (orders.length === 0) {
       setArrayItem(true);
     }
-  }, 5000);
+  }, 10000);
 
   return (
     <div className="Pages1">
@@ -120,11 +132,11 @@ const Request = () => {
       {orders.length === 0 && arrayItem === true && (
         <div className="errorPage">
           <img src="idk.png" alt="idk" width={100} />
-          <h2> No data found or low connection</h2>
+          <h2> No data found or low connection, try to again later</h2>
         </div>
       )}
 
-      {personalPop && (
+      {personal.name !== "" && (
         <div className="personalPop">
           <div className="container">
             <button
@@ -132,41 +144,40 @@ const Request = () => {
               className="btn-close"
               aria-label="Close"
               onClick={() => {
-                togglePersonalPop(false);
+                setPersonal({
+                  name: "",
+                  email: "",
+                  phone: "",
+                });
               }}
             />
             <div className="profile">
               <FontAwesomeIcon icon={faUser} className="icon" />
             </div>
             <div className="name">
-              {" "}
               <b>Name: {personal.name}</b>
             </div>
             <div className="email">
-              {" "}
               <b>Email: {personal.email}</b>
-            </div>
-            <div className="phone">
-              <b>Phone: {personal.phone}</b>{" "}
             </div>
           </div>
         </div>
       )}
-      {popup && (
+      {pic !== "" && (
         <div className="pop">
           <button
             type="button"
             className="btn-close bg-danger"
             aria-label="Close"
             onClick={() => {
-              togglePopUp(false);
+              setPic("");
             }}
           ></button>
           <img src={pic} alt="pic" />
         </div>
       )}
 
-      {final && (
+      {acceptPop && (
         <div className="finalDecision">
           <div>
             <p>Are you sure</p>
@@ -176,7 +187,8 @@ const Request = () => {
             <button
               className="btn btn-danger"
               onClick={() => {
-                setFinal(false);
+                setId("");
+                toggleAcceptPop(false);
               }}
             >
               No
@@ -186,106 +198,111 @@ const Request = () => {
       )}
 
       {declinePop && (
-        <div className="declineBox">
+        <form className="declineBox" onSubmit={declineReq}>
           <div className="declineCon">
-            <textarea cols={30} rows={10} placeholder="Reason"></textarea>
+            <textarea
+              cols={30}
+              rows={10}
+              placeholder="Reason"
+              required
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            ></textarea>
             <div>
-              <button className="btn btn-success" onClick={declineReq}>
-                Confirm
-              </button>
+              <button className="btn btn-success">Confirm</button>
               <button
                 className="btn btn-danger"
                 onClick={() => {
+                  setId("");
                   toggleDeclinePop(false);
+                  setComment("");
                 }}
               >
                 Cancel
               </button>
             </div>
           </div>
-        </div>
+        </form>
       )}
 
-      <div className="body">
-        {orders.map((order: any, index) => {
-          return (
-            <div className="order" key={index}>
-              <div className="png">
-                <img
-                  src={order.images}
-                  alt="Cake"
-                  onClick={() => {
-                    setPic(order.images);
-                    togglePopUp(true);
-                  }}
-                />
-              </div>
-              <div className="details">
-                <div className="flavor">
-                  <b>Flavor: {order.flavor}</b>
-                </div>
-                <div className="shape">
-                  <b>Shape: {order.shape}</b>
-                </div>
-              </div>
-
-              <div className="dates">
-                <div className="orderDate">
-                  <b>Order Date: {order.orderDate}</b>
-                </div>
-                <div className="promiseDate">
-                  <b>Deadline: {order.promiseDate}</b>
-                </div>
-              </div>
-              <div className="description">
-                <b>
-                  Description: <i>{order.orderDetails}</i>
-                </b>
-              </div>
-
-              <div className="settle">
-                <div className="payment">
-                  <b>Payment:</b>
-                  <div className="payType">{order.payment}</div>
-                </div>
-                <div className="decision">
-                  <button
-                    className="btn btn-success"
+      {orders.length > 0 && (
+        <div className="body">
+          {orders.map((order: any, index) => {
+            return (
+              <div className="order" key={index}>
+                <div className="png">
+                  <img
+                    src={order.images}
+                    alt="Cake"
                     onClick={() => {
-                      setId(order._id);
-                      setFinal(true);
+                      setPic(order.images);
                     }}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      toggleDeclinePop(!declinePop);
-                    }}
-                  >
-                    Decline
-                  </button>
+                  />
+                </div>
+                <div className="details">
+                  <div className="flavor">
+                    <b>Flavor: {order.flavor}</b>
+                  </div>
+                  <div className="shape">
+                    <b>Shape: {order.shape}</b>
+                  </div>
+                </div>
+
+                <div className="dates">
+                  <div className="orderDate">
+                    <b>Order Date: {order.orderDate}</b>
+                  </div>
+                  <div className="promiseDate">
+                    <b>Deadline: {order.promiseDate}</b>
+                  </div>
+                </div>
+                <div className="description">
+                  <b>
+                    Description: <i>{order.orderDetails}</i>
+                  </b>
+                </div>
+
+                <div className="settle">
+                  <div className="decision">
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        setId(order._id);
+                        toggleAcceptPop(true);
+                      }}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        setId(order._id);
+                        toggleDeclinePop(!declinePop);
+                      }}
+                    >
+                      Decline
+                    </button>
+                  </div>
+                  <div className="personalInfo">
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      onClick={() => {
+                        setPersonal({
+                          name: order.customer.name,
+                          email: order.customer.email,
+                          phone: order.customer.phone,
+                        });
+                      }}
+                      className="icon"
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="personalInfo">
-                <FontAwesomeIcon
-                  icon={faUser}
-                  onClick={() => {
-                    togglePersonalPop(true);
-                    setPersonal({
-                      name: order.customer.name,
-                      email: order.customer.email,
-                      phone: order.customer.phone,
-                    });
-                  }}
-                  className="icon"
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
