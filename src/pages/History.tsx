@@ -1,16 +1,20 @@
+import { useEffect, useState } from "react";
+import "../pagescss/History.css";
+import axios from "axios";
+
 const History = () => {
-  let sample1 = [
-    {
-      email: "ack@gmail.com",
-      Cakes: "Bento Bundle",
-      date: "2/11/2023",
-    },
-    {
-      email: "arf@gmail.com",
-      Cakes: "CupCake",
-      date: "1/1/2023",
-    },
-  ];
+  localStorage.setItem("route", "history");
+  const [selects, setSelects] = useState("");
+  const [pickUp, setPickUP] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`https://baked-goodies-api.vercel.app/api/order?isDone=true`)
+      .then((response) => {
+        setPickUP(response.data);
+      });
+  }, []);
+
   return (
     <div className="Pages3">
       <header>
@@ -25,38 +29,60 @@ const History = () => {
               </th>
               <th className="cake">
                 <b>Cakes</b>
-                <select name="" id="">
-                  <option value="choose">Sort</option>
-                  <option value="bentoBundle">Bento Bundle</option>
-                  <option value="minimaoptionstCake">
-                    Minimaoptionst Cake
-                  </option>
-                  <option value="cakePopSicle">Cake (Pops & Sicle)</option>
-                  <option value="cheesecakeSeries">Cheesecake Series</option>
-                  <option value="cupcakes">Cupcakes</option>
-                  <option value="moneyCake">Money Cake</option>
-                  <option value="tierCake">Tier Cake</option>
-                  <option value="bNumberCake">Bento Number Cake</option>
-                  <option value="numberCake">Number Cake</option>
-                  <option value="customizeCake">Customize Theme Cake</option>
-                  <option value="pullapartCupcake">Pullapart Cupcake</option>
-                  <option value="mNumberCake">Mini Number Cake</option>
-                  <option value="bentoCake">Bento Cake</option>
+                <select
+                  value={selects}
+                  onChange={(e) => {
+                    setSelects(e.target.value);
+                  }}
+                >
+                  <option value="">All</option>
+                  <option value="Bento Cake">Bento Cake</option>
+                  <option value="Bento Number Cake">Bento Number Cake</option>
+                  <option value="Number Cake">Number Cake</option>
+                  <option value="Mini Number Cake">Mini Number Cake</option>
+                  <option value="Bento Bundle">Bento Bundle</option>
+                  <option value="Minimalist Cake">Minimalist Cake</option>
+                  <option value="Money Cake">Money Cake</option>
+                  <option value="Theme Cake">Theme Cake</option>
+                  <option value="Baby Tier Cake">Baby Tier Cake</option>
+                  <option value="Mini Tier Cake">Mini Tier Cake</option>
+                  <option value="Small Tier Cake">Small Tier Cake</option>
+                  <option value="Big Tier Cake">Big Tier Cake</option>
+                  <option value="Small 3 Tier Cake">Small 3 Tier Cake</option>
+                  <option value="3 Tier Cake">3 Tier Cake</option>
+                  <option value="Pullapart Cupcake">Pullapart Cupcake</option>
+                  <option value="Cupcake">Cupcake</option>
                 </select>
               </th>
               <th className="date">
-                <b>Date</b>
-                <input type="date" />
+                <b>From</b>
+              </th>
+              <th className="finish">
+                <b>to</b>
               </th>
             </tr>
           </thead>
           <tbody>
-            {sample1.map((sample) => (
-              <tr>
-                <td>{sample.email}</td>
-                <td>{sample.Cakes}</td>
-                <td>{sample.date}</td>
-              </tr>
+            {pickUp.map((pick: any) => (
+              <>
+                {selects === pick.type && (
+                  <tr key={pick.type}>
+                    <td>{pick.customer.email}</td>
+                    <td>{pick.type}</td>
+                    <td>{pick.orderDate}</td>
+                    <td>{pick.endDate}</td>
+                  </tr>
+                )}
+
+                {selects === "" && (
+                  <tr key={pick.type}>
+                    <td>{pick.customer.email}</td>
+                    <td>{pick.type}</td>
+                    <td>{pick.orderDate}</td>
+                    <td>{pick.endDate}</td>
+                  </tr>
+                )}
+              </>
             ))}
           </tbody>
         </table>
