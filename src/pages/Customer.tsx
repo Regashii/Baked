@@ -1,6 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../pagescss/Customer.css";
+
+import { faStar as thinStar } from "@fortawesome/free-regular-svg-icons";
+import {
+  faStarHalfStroke,
+  faStar as solidStar,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Customer = () => {
   localStorage.setItem("route", "customer");
@@ -9,6 +15,7 @@ const Customer = () => {
   const [search, setSearch] = useState("");
   const [allOrders, setAllOrders] = useState([]);
   const [average, setAverage] = useState(0);
+  const [total, setTotal] = useState([]);
 
   useEffect(() => {
     axios
@@ -17,40 +24,32 @@ const Customer = () => {
         setBuyers(res.data);
       });
   }, []);
-  //@ts-ignore
 
-  const addItem = (datos: any) => {
+  const allSum = (add: any) => {
+    setAverage((old) => old + add);
     //@ts-ignore
-    setAllOrders((ordering) => {
-      return [...ordering, datos];
+    setTotal((prev) => {
+      return [...prev, add];
     });
   };
 
-  function handleSubmit(data: any) {
-    data.map((dat: any) => {
+  const handleSubmit = (data: any) => {
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
       axios
-        .get(`https://baked-goodies-api.vercel.app/api/order?_id=${dat}`)
+        .get(`https://baked-goodies-api.vercel.app/api/order?_id=${element}`)
         .then((res) => {
-          addItem(res.data[0]);
+          //@ts-ignore
+          setAllOrders((ordering) => {
+            return [...ordering, res.data[0]];
+          });
+
+          if (res.data[0].isDone === true) {
+            allSum(res.data[0].feedback.rating);
+          }
         });
-    });
-  }
-
-  useEffect(() => {
-    let sum: any = 0;
-    let sumAll = [];
-    axios
-      .get(`https://baked-goodies-api.vercel.app/api/order?isDone=true`)
-      .then((response) => {
-        for (let index = 0; index < response.data.length; index++) {
-          const element = response.data[index].feedback.rating;
-
-          sum += element;
-          sumAll.push(element);
-        }
-        setAverage(sum / sumAll.length);
-      });
-  }, []);
+    }
+  };
 
   return (
     <div className="Pages4">
@@ -60,6 +59,8 @@ const Customer = () => {
             <button
               onClick={() => {
                 setAllOrders([]);
+                setTotal([]);
+                setAverage(0);
               }}
               className="btn btn-danger"
               style={{
@@ -78,12 +79,129 @@ const Customer = () => {
             </div>
           </aside>
           <main>
-            <h4>Total Rating</h4>
-            {average === 5 && <div>⭐⭐⭐⭐⭐</div>}
-            {average === 4 && <div>⭐⭐⭐⭐</div>}
-            {average === 3 && <div>⭐⭐⭐</div>}
-            {average === 2 && <div>⭐⭐</div>}
-            {average === 1 && <div>⭐</div>}
+            {average === 0 && <h4>Total Rating - 0 star</h4>}
+            {average !== 0 && (
+              <h4>Total Rating - {average / total.length} star</h4>
+            )}
+
+            <div>
+              {average / total.length <= 5 && average / total.length > 4 && (
+                <>
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  {average / total.length === 5 && (
+                    <FontAwesomeIcon icon={solidStar} className="star" />
+                  )}
+                  {average / total.length <= 4.99 &&
+                    average / total.length >= 4.5 && (
+                      <FontAwesomeIcon
+                        icon={faStarHalfStroke}
+                        className="star"
+                      />
+                    )}
+                  {average / total.length <= 4.49 &&
+                    average / total.length >= 4 && (
+                      <FontAwesomeIcon icon={thinStar} className="star" />
+                    )}
+                </>
+              )}
+              {average / total.length <= 4 && average / total.length > 3 && (
+                <>
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  {average / total.length === 4 && (
+                    <FontAwesomeIcon icon={solidStar} className="star" />
+                  )}
+                  {average / total.length <= 3.99 &&
+                    average / total.length >= 3.5 && (
+                      <FontAwesomeIcon
+                        icon={faStarHalfStroke}
+                        className="star"
+                      />
+                    )}
+                  {average / total.length <= 3.49 &&
+                    average / total.length >= 3 && (
+                      <FontAwesomeIcon icon={thinStar} className="star" />
+                    )}
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                </>
+              )}
+              {average / total.length <= 3 && average / total.length > 2 && (
+                <>
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  {average / total.length === 3 && (
+                    <FontAwesomeIcon icon={solidStar} className="star" />
+                  )}
+                  {average / total.length <= 2.99 &&
+                    average / total.length >= 2.5 && (
+                      <FontAwesomeIcon
+                        icon={faStarHalfStroke}
+                        className="star"
+                      />
+                    )}
+                  {average / total.length <= 2.49 &&
+                    average / total.length >= 2 && (
+                      <FontAwesomeIcon icon={thinStar} className="star" />
+                    )}
+
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                </>
+              )}
+              {average / total.length <= 2 && average / total.length > 1.1 && (
+                <>
+                  <FontAwesomeIcon icon={solidStar} className="star" />
+                  {average / total.length === 2 && (
+                    <FontAwesomeIcon icon={solidStar} className="star" />
+                  )}
+                  {average / total.length <= 1.99 &&
+                    average / total.length >= 1.5 && (
+                      <FontAwesomeIcon
+                        icon={faStarHalfStroke}
+                        className="star"
+                      />
+                    )}
+                  {average / total.length <= 1.49 &&
+                    average / total.length >= 1 && (
+                      <FontAwesomeIcon icon={thinStar} className="star" />
+                    )}
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                </>
+              )}
+              {average / total.length <= 1 && average / total.length > 0 && (
+                <>
+                  {average / total.length === 1 && (
+                    <FontAwesomeIcon icon={solidStar} className="star" />
+                  )}
+                  {average / total.length <= 0.99 &&
+                    average / total.length >= 0.5 && (
+                      <FontAwesomeIcon
+                        icon={faStarHalfStroke}
+                        className="star"
+                      />
+                    )}
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                </>
+              )}
+              {average === 0 && (
+                <>
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                  <FontAwesomeIcon icon={thinStar} className="star" />
+                </>
+              )}
+            </div>
           </main>
           <footer>
             <table>

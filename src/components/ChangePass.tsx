@@ -3,7 +3,7 @@ import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../pagescss/ChangePass.css";
+
 import { ToastContainer, toast } from "react-toastify";
 
 const ChangePass = () => {

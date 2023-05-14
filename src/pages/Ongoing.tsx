@@ -1,43 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../pagescss/Ongoing.css";
-import { useNavigate } from "react-router-dom";
 
 const Ongoing = () => {
   localStorage.setItem("route", "onGoing");
-  const endDate = new Date();
-  const navigate = useNavigate();
+  // const endDate = new Date();
+
   const [personal, setPersonal] = useState({
-    name: "",
     email: "",
-    flavor: "",
-    shape: "",
-    type: "",
-    size: "",
-    orderDate: "",
+    payment: "",
     id: "",
-    finish: "",
   });
 
-  const [price, setPrice] = useState(0);
+  // const [price, setPrice] = useState(0);
   const [img, setImg] = useState("");
+  const [gcash, setGcash] = useState("");
 
-  function handleImage(e: any) {
-    let reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      // @ts-ignore
-      setImg(reader.result);
-    };
+  const [reload, toggleReload] = useState(false);
+  const [upload, toggleSending] = useState(false);
+  const [sending, toggleUpload] = useState(false);
 
-    reader.onerror = (error) => {
-      console.log("error: ", error);
-    };
-  }
-  //@ts-ignore
-  const detailsOrder = JSON.parse(localStorage.getItem("items"));
-  if (personal.name !== "") {
-    localStorage.setItem("items", JSON.stringify(personal));
+  if (upload && sending) {
+    window.location.reload();
   }
 
   const [orders, setOrders] = useState([]);
@@ -53,7 +36,9 @@ const Ongoing = () => {
       });
 
     axios
-      .get(`https://baked-goodies-api.vercel.app/api/order?status=pickup`)
+      .get(
+        `https://baked-goodies-api.vercel.app/api/order?status=pickup&&isDone=false`
+      )
       .then((response) => {
         setPickUP(response.data);
       });
@@ -66,13 +51,47 @@ const Ongoing = () => {
   }, 10000);
   const submitInfo = (e: any) => {
     e.preventDefault();
-    let information = {
-      price: price,
-      img: img,
-    };
 
-    localStorage.setItem("info", JSON.stringify(information));
-    navigate("/finish-product");
+    toggleReload(true);
+    const formData = new FormData();
+    const formImg = new FormData();
+
+    formData.append("image", img);
+    formImg.append("imageUpload", img);
+
+    if (personal.payment === "Gcash") {
+      formData.append("image", gcash);
+    }
+    formData.append("gmail", "goodiesbaked9@gmail.com");
+    formData.append("payment", personal.payment);
+
+    axios
+      .post("https://new-back-rho.vercel.app/sender", formData)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          toggleSending(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .post("https://baked-goodies.vercel.app/api/upload", formImg)
+      .then((res) => {
+        axios
+          .put(
+            `https://baked-goodies.vercel.app/api/order/server/${personal.id}`,
+            { endImage: res.data[0], status: "pickup" }
+          )
+          .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+              toggleUpload(true);
+            }
+          });
+      });
   };
 
   return (
@@ -95,38 +114,63 @@ const Ongoing = () => {
         </div>
       )}
 
-      {detailsOrder && (
+      {personal.payment !== "" && (
         <div className="detalsOrder">
           <form onSubmit={submitInfo}>
-            <label>Email: {detailsOrder.email} </label>
-            <br />
-            <br />
             <label>Picture of Cake: </label>
             <div>
               <input
                 type="file"
                 required
                 accept="image/*"
-                onChange={handleImage}
+                onChange={(e) => {
+                  //@ts-ignore
+                  setImg(e.target.files[0]);
+                }}
               />
 
-              <img
-                src={img}
-                alt="cake"
-                className="uploadPic"
-                onClick={() => setPic(img)}
-              />
+              {img && (
+                <img
+                  //@ts-ignore
+                  src={URL.createObjectURL(img)}
+                  alt="cake"
+                  className="uploadPic"
+                  //@ts-ignore
+                  onClick={() => setPic(URL.createObjectURL(img))}
+                />
+              )}
             </div>
             <br />
-            <label>Price: </label>
-            <input
-              type="number"
-              placeholder="Price for Cake"
-              required
-              onChange={(e) => {
-                setPrice(e.target.valueAsNumber);
-              }}
-            />
+            <label>payment: </label>
+            {personal.payment.toLocaleLowerCase() === "cash on pickup" && (
+              <input type="number" placeholder="Price" />
+            )}
+            {personal.payment === "Gcash" && (
+              <>
+                <br />
+                <input
+                  type="file"
+                  required
+                  accept="image/*"
+                  onChange={(e) => {
+                    //@ts-ignore
+                    setGcash(e.target.files[0]);
+                  }}
+                />
+
+                {gcash && (
+                  <img
+                    //@ts-ignore
+                    src={URL.createObjectURL(gcash)}
+                    alt="gcash"
+                    className="uploadPic"
+                    //@ts-ignore
+                    onClick={() => setPic(URL.createObjectURL(gcash))}
+                  />
+                )}
+              </>
+            )}
+
             <br />
             <br />
 
@@ -135,24 +179,21 @@ const Ongoing = () => {
             <button
               className="btn btn-danger"
               onClick={() => {
-                localStorage.removeItem("items");
-                localStorage.removeItem("info");
-                setPersonal({
-                  name: "",
-                  email: "",
-                  flavor: "",
-                  shape: "",
-                  type: "",
-                  size: "",
-                  orderDate: "",
-                  id: "",
-                  finish: "",
-                });
                 setImg("");
+                setGcash("");
+                setPersonal({
+                  email: "",
+                  payment: "",
+                  id: "",
+                });
+                toggleReload(false);
+                toggleSending(false);
+                toggleUpload(false);
               }}
             >
               cancel
             </button>
+            {reload && <span className="spinner"></span>}
           </form>
         </div>
       )}
@@ -200,71 +241,61 @@ const Ongoing = () => {
           <div className="process">
             {orders.map((order: any, index) => (
               <div className="num" key={index}>
-                {order.customer !== null && (
-                  <div className="index">
-                    <h3>Request </h3>
+                <div className="index">
+                  <h3>Request </h3>
 
-                    <p>Name: {order.customer.name}</p>
-                    <p>Email: {order.customer.email}</p>
+                  <p>Name: {order.customer.name}</p>
+                  <p>Email: {order.customer.email}</p>
 
-                    <div className="loader">
-                      <span className="hour"></span>
-                      <span className="min"></span>
-                      <span className="circel"></span>
-                    </div>
+                  <div className="loader">
+                    <span className="hour"></span>
+                    <span className="min"></span>
+                    <span className="circel"></span>
+                  </div>
 
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        setPersonal({
-                          name: order.customer.name,
-                          email: order.customer.email,
-                          flavor: order.flavor,
-                          shape: order.shape,
-                          type: order.type,
-                          size: order.size,
-                          orderDate: order.orderDate,
-                          id: order._id,
-                          finish: `${endDate.getDate()}/${
-                            endDate.getMonth() + 1
-                          }/${endDate.getFullYear()}`,
-                        });
-                      }}
-                    >
-                      Ready to pickup
-                    </button>
-                    <details>
-                      <div className="order" key={index}>
-                        <div className="png">
-                          <img
-                            src={order.images}
-                            alt="Cake"
-                            onClick={() => {
-                              setPic(order.images);
-                            }}
-                          />
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      setPersonal({
+                        email: order.customer.email,
+                        payment: "Gcash",
+                        id: order._id,
+                      });
+                    }}
+                  >
+                    Ready to pickup
+                  </button>
+                  <details>
+                    <div className="order" key={index}>
+                      <div className="png">
+                        <img
+                          src={order.images}
+                          alt="Cake"
+                          onClick={() => {
+                            setPic(order.images);
+                          }}
+                        />
+                      </div>
+                      <div className="details">
+                        <div className="flavor">
+                          <b>Flavor: {order.flavor}</b>
                         </div>
-                        <div className="details">
-                          <div className="flavor">
-                            <b>Flavor: {order.flavor}</b>
-                          </div>
-                          <div className="shape">
-                            <b>Shape: {order.shape}</b>
-                          </div>
-                        </div>
-
-                        <div className="dates">
-                          <div className="orderDate">
-                            <b>Order Date: {order.orderDate}</b>
-                          </div>
-                          <div className="promiseDate">
-                            <b>Deadline: {order.promiseDate}</b>
-                          </div>
+                        <div className="shape">
+                          <b>Shape: {order.shape}</b>
                         </div>
                       </div>
-                    </details>
-                  </div>
-                )}
+
+                      <div className="dates">
+                        <div className="orderDate">
+                          <b>Order Date: {order.orderDate}</b>
+                        </div>
+                        <div className="promiseDate">
+                          <b>Deadline: {order.promiseDate}</b>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
               </div>
             ))}
           </div>
@@ -277,44 +308,42 @@ const Ongoing = () => {
           <div className="process">
             {pickUp.map((pick: any, index) => (
               <div className="num" key={index}>
-                {pick.status === "pickup" && pick.isDone === false && (
-                  <div className="index">
-                    <h4>Waiting </h4>
-                    <p>Name: {pick.customer.name}</p>
-                    <p>Email: {pick.customer.email}</p>
+                <div className="index">
+                  <h4>Waiting </h4>
+                  <p>Name: {pick.customer.name}</p>
+                  <p>Email: {pick.customer.email}</p>
 
-                    <button className="btn btn-primary">
-                      Customer get the cake
-                    </button>
-                    <details>
-                      <div className="order" key={index}>
-                        <div className="png">
-                          <img
-                            src={pick.images}
-                            alt="Cake"
-                            onClick={() => {
-                              setPic(pick.images);
-                            }}
-                          />
+                  <button className="btn btn-primary">
+                    Customer get the cake
+                  </button>
+                  <details>
+                    <div className="order" key={index}>
+                      <div className="png">
+                        <img
+                          src={pick.images}
+                          alt="Cake"
+                          onClick={() => {
+                            setPic(pick.images);
+                          }}
+                        />
+                      </div>
+                      <div className="details">
+                        <div className="flavor">
+                          <b>Flavor: {pick.flavor}</b>
                         </div>
-                        <div className="details">
-                          <div className="flavor">
-                            <b>Flavor: {pick.flavor}</b>
-                          </div>
-                          <div className="shape">
-                            <b>Shape: {pick.shape}</b>
-                          </div>
-                        </div>
-
-                        <div className="dates">
-                          <div className="orderDate">
-                            <b>Order Date: {pick.orderDate}</b>
-                          </div>
+                        <div className="shape">
+                          <b>Shape: {pick.shape}</b>
                         </div>
                       </div>
-                    </details>
-                  </div>
-                )}
+
+                      <div className="dates">
+                        <div className="orderDate">
+                          <b>Order Date: {pick.orderDate}</b>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
               </div>
             ))}
           </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../pagescss/History.css";
+
 import axios from "axios";
 
 const History = () => {
@@ -9,7 +9,9 @@ const History = () => {
 
   useEffect(() => {
     axios
-      .get(`https://baked-goodies-api.vercel.app/api/order?isDone=true`)
+      .get(
+        `https://baked-goodies-api.vercel.app/api/order?isDone=true&&status=pickup`
+      )
       .then((response) => {
         setPickUP(response.data);
       });

@@ -226,7 +226,7 @@
     gap: 15px;
     background: pink;
     height: 50%;
-    width: 50%;
+    width: 60%;
   }
 
   .Pages4 .individual aside div {
@@ -248,7 +248,7 @@
 
   .Pages4 .individual main {
     height: 50%;
-    width: 50%;
+    width: 40%;
     background: violet;
   }
 
@@ -278,4 +278,8 @@
   .Pages4 :where(.cakeStatus, .cakeRating) {
     width: 20%;
   }
+}
+
+.star {
+  color: yellow;
 }

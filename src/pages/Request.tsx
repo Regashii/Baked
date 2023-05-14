@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import "../pagescss/Request.css";
+
 const Request = () => {
   localStorage.setItem("route", "request");
   // order request from customer
@@ -29,10 +29,7 @@ const Request = () => {
   const changeStatus = () => {
     const newStatus = { status: "accepted" };
     axios
-      .put(
-        `https://baked-goodies-api.vercel.app/api/order/server/${id}`,
-        newStatus
-      )
+      .put(`https://baked-goodies.vercel.app/api/order/server/${id}`, newStatus)
       .then((res) => {
         console.log(res.data);
       });
@@ -53,7 +50,7 @@ const Request = () => {
 
   useEffect(() => {
     axios
-      .get("https://baked-goodies-api.vercel.app/api/order?status=processing")
+      .get("https://baked-goodies.vercel.app/api/order?status=processing")
       .then((res) => {
         setOrders(res.data);
       });
@@ -66,10 +63,7 @@ const Request = () => {
       comment: comment,
     };
     axios
-      .put(
-        `https://baked-goodies-api.vercel.app/api/order/server/${id}`,
-        newStatus
-      )
+      .put(`https://baked-goodies.vercel.app/api/order/server/${id}`, newStatus)
       .then((res) => {
         console.log(res.data);
       });
