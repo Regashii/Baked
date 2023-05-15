@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-const MainPage = () => {
+function MainPage() {
   const navigate = useNavigate();
+
   return (
     <>
       <div>MainPage</div>
@@ -46,6 +47,6 @@ const MainPage = () => {
       </button>
     </>
   );
-};
+}
 
 export default MainPage;
