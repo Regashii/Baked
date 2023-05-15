@@ -26,7 +26,7 @@ const ForgotPass = () => {
     }
   }, [countdown]);
 
-  const handleOtp = () => {
+  function handleOtp() {
     axios
       .post("new-back-rho.vercel.app/api/verify", { otp: input })
       .then((res) => {
@@ -57,9 +57,9 @@ const ForgotPass = () => {
           });
         }
       });
-  };
+  }
 
-  const sendOTP = () => {
+  function sendOTP() {
     axios.post("new-back-rho.vercel.app/api/otp").then((res) => {
       console.log(res.status);
       if (res.status === 200) {
@@ -77,7 +77,7 @@ const ForgotPass = () => {
         setResend(true);
       }
     });
-  };
+  }
 
   return (
     <div className="Forgot">
