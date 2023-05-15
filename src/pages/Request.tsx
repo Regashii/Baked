@@ -28,11 +28,11 @@ const Request = () => {
 
   const changeStatus = () => {
     const newStatus = { status: "accepted" };
-    axios
-      .put(`https://baked-goodies.vercel.app/api/order/server/${id}`, newStatus)
-      .then((res) => {
-        console.log(res.data);
-      });
+    axios.put(
+      `https://baked-goodies.vercel.app/api/order/server/${id}`,
+      newStatus
+    );
+
     toast.success("Suceess", {
       position: "top-right",
       autoClose: false,
@@ -62,11 +62,11 @@ const Request = () => {
       status: "decline",
       comment: comment,
     };
-    axios
-      .put(`https://baked-goodies.vercel.app/api/order/server/${id}`, newStatus)
-      .then((res) => {
-        console.log(res.data);
-      });
+    axios.put(
+      `https://baked-goodies.vercel.app/api/order/server/${id}`,
+      newStatus
+    );
+
     toast.success("Suceess", {
       position: "top-right",
       autoClose: false,

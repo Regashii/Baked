@@ -53,12 +53,10 @@ const Ongoing = () => {
     e.preventDefault();
 
     toggleReload(true);
-    
+
     const formImg = new FormData();
     formImg.append("imageUpload", img);
-    formImg.append('imageUpload', gcash)
-
-
+    formImg.append("imageUpload", gcash);
 
     const formData = new FormData();
     formData.append("image", img);
@@ -69,7 +67,7 @@ const Ongoing = () => {
     formData.append("payment", personal.payment);
 
     axios
-      .post("https://new-back-rho.vercel.app/sender", formData)
+      .post("/api/sender", formData)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -89,7 +87,6 @@ const Ongoing = () => {
             { endImage: res.data[0], finalPrice: res.data[1], status: "pickup" }
           )
           .then((response) => {
-            console.log(response);
             if (response.status === 200) {
               toggleUpload(true);
             }

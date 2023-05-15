@@ -44,7 +44,7 @@ const Settings = () => {
   const logout = async () => {
     localStorage.clear();
     navigate("/login");
-    axios.get("/api/logout").then((res) => console.log(res));
+    axios.get("/api/logout");
   };
 
   async function checkPass() {

@@ -15,7 +15,16 @@ const Reset = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (newPass !== confirmPass) {
-      console.log("not match");
+      toast.warning("Not match", {
+        position: "top-right",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } else {
       setDone(true);
       toast.success("Please wait", {
@@ -30,9 +39,8 @@ const Reset = () => {
       });
 
       setTimeout(() => {
-        axios.get("/api/logout").then((res) => {
-          console.log(res);
-        });
+        axios.get("/api/logout");
+        localStorage.clear();
         navigate("/login");
       }, 10000);
     }
@@ -47,7 +55,6 @@ const Reset = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 403 || err.response.status === 401) {
           localStorage.clear();
           navigate("/forgotPass");
