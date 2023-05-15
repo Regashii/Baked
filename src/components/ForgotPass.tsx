@@ -28,7 +28,7 @@ const ForgotPass = () => {
 
   function handleOtp() {
     axios
-      .post("new-back-rho.vercel.app/api/verify", { otp: input })
+      .post("/api/verify", { otp: input })
       .then((res) => {
         console.log(res.data);
       })
@@ -60,7 +60,7 @@ const ForgotPass = () => {
   }
 
   function sendOTP() {
-    axios.post("new-back-rho.vercel.app/api/otp").then((res) => {
+    axios.post("/api/otp").then((res) => {
       console.log(res.status);
       if (res.status === 200) {
         toast.success("OTP succesfully send to your gmail", {
