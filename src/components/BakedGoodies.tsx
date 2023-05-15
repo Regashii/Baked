@@ -41,7 +41,7 @@ const BakedGoodies = () => {
 
   useEffect(() => {
     axios
-      .get("https://new-back-rho.vercel.app/admin", {
+      .get("https://new-back-rho.vercel.app/api/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

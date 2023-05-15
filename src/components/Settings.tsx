@@ -23,7 +23,7 @@ const Settings = () => {
 
   useEffect(() => {
     axios
-      .get("https://new-back-rho.vercel.app/admin", {
+      .get("https://new-back-rho.vercel.app/api/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ const Settings = () => {
 
   async function checkPass() {
     await axios
-      .post("https://new-back-rho.vercel.app/username", { password })
+      .post("https://new-back-rho.vercel.app/api/username", { password })
       .then((res) => {
         if (res.data === "Correct") {
           changeUser(true);
@@ -70,7 +70,7 @@ const Settings = () => {
 
   async function changeUsername() {
     const success = await axios.put(
-      "https://new-back-rho.vercel.app/username",
+      "https://new-back-rho.vercel.app/api/username",
       { username }
     );
     if (success) {

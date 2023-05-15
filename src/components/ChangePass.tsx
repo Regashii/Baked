@@ -17,7 +17,7 @@ const ChangePass = () => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     axios
-      .get("https://new-back-rho.vercel.app/admin", {
+      .get("https://new-back-rho.vercel.app/api/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +32,10 @@ const ChangePass = () => {
 
   function checkAdmin() {
     axios
-      .post("https://new-back-rho.vercel.app/password", { password, username })
+      .post("https://new-back-rho.vercel.app/api/password", {
+        password,
+        username,
+      })
       .then((res) => {
         if (res.data === "Correct") {
           setCorrect(true);
