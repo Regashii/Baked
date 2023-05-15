@@ -65,7 +65,10 @@ function Login(): JSX.Element {
 
     if (username != "" && password != "") {
       axios
-        .post("https://new-back-rho.vercel.app/login", { username, password })
+        .post("https://new-back-rho.vercel.app/login", {
+          username: username,
+          password: password,
+        })
         .then((res) => {
           if (res.data.accessToken) {
             localStorage.setItem("token", res.data.accessToken);
