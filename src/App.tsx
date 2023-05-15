@@ -19,6 +19,7 @@ import History from "./pages/History";
 import Sched from "./pages/Customer";
 import { ToastContainer } from "react-toastify";
 import MainPage from "./components/MainPage";
+import ForgotPass from "./components/ForgotPass";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/forgotPass" element={<ForgotPass />}></Route>
           <Route element={<Confirm />}>
             <Route
               path="/dashboard-request"

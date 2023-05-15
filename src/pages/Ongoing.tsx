@@ -62,7 +62,7 @@ const Ongoing = () => {
     if (personal.payment === "Gcash") {
       formData.append("image", gcash);
     }
-    formData.append("gmail", "goodiesbaked9@gmail.com");
+    formData.append("gmail", personal.email);
     formData.append("payment", personal.payment);
 
     axios
@@ -246,6 +246,7 @@ const Ongoing = () => {
 
                   <p>Name: {order.customer.name}</p>
                   <p>Email: {order.customer.email}</p>
+                  <p>ID: {order._id}</p>
 
                   <div className="loader">
                     <span className="hour"></span>
@@ -312,6 +313,7 @@ const Ongoing = () => {
                   <h4>Waiting </h4>
                   <p>Name: {pick.customer.name}</p>
                   <p>Email: {pick.customer.email}</p>
+                  <p>ID: {pick._id}</p>
 
                   <button className="btn btn-primary">
                     Customer get the cake

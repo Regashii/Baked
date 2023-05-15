@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { json, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -138,6 +138,20 @@ function Login(): JSX.Element {
               Enter
             </button>
           </div>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "20px",
+              textDecoration: "underline",
+              color: "blue",
+            }}
+            onClick={() => {
+              navigate("/forgotPass");
+            }}
+          >
+            Forgot Password
+          </div>
+
           <ToastContainer />
         </div>
       </div>
