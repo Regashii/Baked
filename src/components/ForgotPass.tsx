@@ -26,7 +26,7 @@ const ForgotPass = () => {
     }
   }, [countdown]);
 
-  function handleOtp() {
+  async function handleOtp() {
     axios
       .post("/api/verify", { otp: input })
       .then((res) => {
@@ -59,7 +59,7 @@ const ForgotPass = () => {
       });
   }
 
-  function sendOTP() {
+  async function sendOTP() {
     axios.post("/api/otp").then((res) => {
       console.log(res.status);
       if (res.status === 200) {
