@@ -79,6 +79,10 @@ const ForgotPass = () => {
     });
   }
 
+  async function sendOtp() {
+    axios.post("https://new-back-rho.vercel.app/api/otp");
+  }
+
   return (
     <div className="Forgot">
       <ToastContainer />
@@ -110,7 +114,7 @@ const ForgotPass = () => {
           <button
             disabled={resend}
             className="btn btn-warning"
-            onClick={sendOTP}
+            onClick={sendOtp}
             style={{ color: "white" }}
           >
             Send
