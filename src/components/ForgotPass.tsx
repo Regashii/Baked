@@ -28,7 +28,8 @@ const ForgotPass = () => {
 
   async function handleOtp() {
     axios
-      .post("/api/verify", { otp: input })
+      .post("https://new-back-rho.vercel.app/api/verify", { otp: input })
+
       .then((res) => {
         console.log(res.data);
       })
@@ -57,26 +58,6 @@ const ForgotPass = () => {
           });
         }
       });
-  }
-
-  async function sendOTP() {
-    axios.post("/api/otp").then((res) => {
-      console.log(res.status);
-      if (res.status === 200) {
-        toast.success("OTP succesfully send to your gmail", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        setCountDown(15);
-        setResend(true);
-      }
-    });
   }
 
   async function sendOtp() {
