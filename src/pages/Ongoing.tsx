@@ -53,12 +53,15 @@ const Ongoing = () => {
     e.preventDefault();
 
     toggleReload(true);
-    const formData = new FormData();
+    
     const formImg = new FormData();
-
-    formData.append("image", img);
     formImg.append("imageUpload", img);
+    formImg.append('imageUpload', gcash)
 
+
+
+    const formData = new FormData();
+    formData.append("image", img);
     if (personal.payment === "Gcash") {
       formData.append("image", gcash);
     }
@@ -83,7 +86,7 @@ const Ongoing = () => {
         axios
           .put(
             `https://baked-goodies.vercel.app/api/order/server/${personal.id}`,
-            { endImage: res.data[0], status: "pickup" }
+            { endImage: res.data[0], finalPrice: res.data[1], status: "pickup" }
           )
           .then((response) => {
             console.log(response);

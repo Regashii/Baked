@@ -8,7 +8,7 @@ const useAuth = () => {
 
   useEffect(() => {
     axios
-      .get("https://new-back-rho.vercel.app/api/admin", {
+      .get("/api/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

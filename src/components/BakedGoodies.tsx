@@ -37,11 +37,12 @@ const BakedGoodies = () => {
   const logout = async () => {
     localStorage.clear();
     navigate("/login");
+    axios.get("/api/logout").then((res) => console.log(res));
   };
 
   useEffect(() => {
     axios
-      .get("https://new-back-rho.vercel.app/api/admin", {
+      .get("/api/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

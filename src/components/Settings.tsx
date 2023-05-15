@@ -44,28 +44,27 @@ const Settings = () => {
   const logout = async () => {
     localStorage.clear();
     navigate("/login");
+    axios.get("/api/logout").then((res) => console.log(res));
   };
 
   async function checkPass() {
-    await axios
-      .post("https://new-back-rho.vercel.app/api/username", { password })
-      .then((res) => {
-        if (res.data === "Correct") {
-          changeUser(true);
-          setDisabled1(true);
-        } else {
-          toast.error("Wrong password", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      });
+    await axios.post("/api/username", { password }).then((res) => {
+      if (res.data === "Correct") {
+        changeUser(true);
+        setDisabled1(true);
+      } else {
+        toast.error("Wrong password", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    });
   }
 
   async function changeUsername() {

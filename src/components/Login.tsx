@@ -21,13 +21,10 @@ function Login(): JSX.Element {
 
   const tokenRefresh = async () => {
     try {
-      const res = await axios.post(
-        "https://new-back-rho.vercel.app/api/token",
-        {
-          // @ts-ignore
-          token: access.refeshToken,
-        }
-      );
+      const res = await axios.post("/api/token", {
+        // @ts-ignore
+        token: access.refeshToken,
+      });
 
       setAccess({
         // @ts-ignore
@@ -68,7 +65,7 @@ function Login(): JSX.Element {
 
     if (username != "" && password != "") {
       axios
-        .post("https://new-back-rho.vercel.app/api/login", {
+        .post("/api/login", {
           username: username,
           password: password,
         })
