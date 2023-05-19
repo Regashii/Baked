@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 const Ongoing = () => {
   localStorage.setItem("route", "onGoing");
-  // const endDate = new Date();
+  const endDate = new Date();
+
+  console.log();
 
   const [personal, setPersonal] = useState({
     email: "",
@@ -11,7 +14,7 @@ const Ongoing = () => {
     id: "",
   });
 
-  // const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [img, setImg] = useState("");
   const [gcash, setGcash] = useState("");
 
@@ -56,14 +59,58 @@ const Ongoing = () => {
 
     const formImg = new FormData();
     formImg.append("imageUpload", img);
-    formImg.append("imageUpload", gcash);
 
     const formData = new FormData();
     formData.append("image", img);
     if (personal.payment === "Gcash") {
       formData.append("image", gcash);
+      formImg.append("imageUpload", gcash);
+      axios
+        .post("https://baked-goodies.vercel.app/api/upload", formImg)
+        .then((res) => {
+          axios
+            .put(
+              `https://baked-goodies.vercel.app/api/order/server/${personal.id}`,
+              {
+                endImage: res.data[0],
+                finalPrice: res.data[1],
+                status: "pickup",
+                endDate: `${endDate.getFullYear()}-${
+                  endDate.getMonth() + 1
+                }-${endDate.getDate()}`,
+              }
+            )
+            .then((response) => {
+              if (response.status === 200) {
+                toggleUpload(true);
+              }
+            });
+        });
+    } else if (personal.payment.toLowerCase() === "cash on pickup") {
+      formData.append("price", price);
+      axios
+        .post("https://baked-goodies.vercel.app/api/upload", formImg)
+        .then((res) => {
+          axios
+            .put(
+              `https://baked-goodies.vercel.app/api/order/server/${personal.id}`,
+              {
+                endImage: res.data[0],
+                finalPrice: price,
+                status: "pickup",
+                endDate: `${endDate.getFullYear()}-${
+                  endDate.getMonth() + 1
+                }-${endDate.getDate()}`,
+              }
+            )
+            .then((response) => {
+              if (response.status === 200) {
+                toggleUpload(true);
+              }
+            });
+        });
     }
-    formData.append("gmail", personal.email);
+    formData.append("gmail", "goodiesbaked9@gmail.com");
     formData.append("payment", personal.payment);
 
     axios
@@ -77,20 +124,31 @@ const Ongoing = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
 
+  const pikcUpCake = (orderID: any) => {
     axios
-      .post("https://baked-goodies.vercel.app/api/upload", formImg)
-      .then((res) => {
-        axios
-          .put(
-            `https://baked-goodies.vercel.app/api/order/server/${personal.id}`,
-            { endImage: res.data[0], finalPrice: res.data[1], status: "pickup" }
-          )
-          .then((response) => {
-            if (response.status === 200) {
-              toggleUpload(true);
-            }
+      .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
+        status: "getCake",
+        isDone: true,
+      })
+      .then((response) => {
+        toast;
+        if (response.status === 200) {
+          toast.success("Please wait", {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
       });
   };
 
@@ -143,7 +201,13 @@ const Ongoing = () => {
             <br />
             <label>payment: </label>
             {personal.payment.toLocaleLowerCase() === "cash on pickup" && (
-              <input type="number" placeholder="Price" />
+              <input
+                type="text"
+                placeholder="Price"
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+              />
             )}
             {personal.payment === "Gcash" && (
               <>
@@ -189,6 +253,7 @@ const Ongoing = () => {
                 toggleReload(false);
                 toggleSending(false);
                 toggleUpload(false);
+                setPrice("");
               }}
             >
               cancel
@@ -259,7 +324,7 @@ const Ongoing = () => {
                     onClick={() => {
                       setPersonal({
                         email: order.customer.email,
-                        payment: "Gcash",
+                        payment: "Cash on pickup",
                         id: order._id,
                       });
                     }}
@@ -288,10 +353,16 @@ const Ongoing = () => {
 
                       <div className="dates">
                         <div className="orderDate">
-                          <b>Order Date: {order.orderDate}</b>
+                          <b>
+                            Order Date:{" "}
+                            {new Date(order.orderDate).toLocaleDateString()}
+                          </b>
                         </div>
                         <div className="promiseDate">
-                          <b>Deadline: {order.promiseDate}</b>
+                          <b>
+                            Deadline:{" "}
+                            {new Date(order.promiseDate).toLocaleDateString()}
+                          </b>
                         </div>
                       </div>
                     </div>
@@ -315,7 +386,12 @@ const Ongoing = () => {
                   <p>Email: {pick.customer.email}</p>
                   <p>ID: {pick._id}</p>
 
-                  <button className="btn btn-primary">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      pikcUpCake(pick._id);
+                    }}
+                  >
                     Customer get the cake
                   </button>
                   <details>
@@ -340,7 +416,16 @@ const Ongoing = () => {
 
                       <div className="dates">
                         <div className="orderDate">
-                          <b>Order Date: {pick.orderDate}</b>
+                          <b>
+                            Order Date:{" "}
+                            {new Date(pick.orderDate).toLocaleDateString()}
+                          </b>
+                        </div>
+                        <div className="promiseDate">
+                          <b>
+                            Deadline:{" "}
+                            {new Date(pick.promiseDate).toLocaleDateString()}
+                          </b>
                         </div>
                       </div>
                     </div>
@@ -351,6 +436,8 @@ const Ongoing = () => {
           </div>
         </>
       )}
+
+      <ToastContainer />
     </div>
   );
 };

@@ -125,10 +125,14 @@
   }
 
   .Pages4 .individual footer table {
-    width: 60em;
+    width: 80em;
   }
 
   .Pages4 :where(.cakeType, .cakeSize) {
+    width: 20em;
+  }
+
+  .Pages4 .orderID {
     width: 20em;
   }
 
@@ -272,11 +276,15 @@
   }
 
   .Pages4 :where(.cakeType, .cakeSize) {
+    width: 20%;
+  }
+
+  .Pages4 .orderID {
     width: 30%;
   }
 
   .Pages4 :where(.cakeStatus, .cakeRating) {
-    width: 20%;
+    width: 10%;
   }
 }
 

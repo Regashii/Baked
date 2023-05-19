@@ -210,6 +210,7 @@ const Customer = () => {
                   <th colSpan={3}></th>
                 </tr>
                 <tr>
+                  <th className="orderID">Id</th>
                   <th className="cakeType">Cake type</th>
                   <th className="cakeSize">Size</th>
                   <th className="cakeStatus">Status</th>
@@ -219,6 +220,7 @@ const Customer = () => {
               <tbody>
                 {allOrders.map((allOrder: any, index: any) => (
                   <tr key={index}>
+                    <td className="orderID">{allOrder._id}</td>
                     <td className="cakeType">{allOrder.type}</td>
                     <td className="cakeSize">{allOrder.size}</td>
                     {allOrder.status === "processing" && (
@@ -255,7 +257,7 @@ const Customer = () => {
                       </td>
                     )}
                     {allOrder.isDone === true &&
-                      allOrder.status === "pickup" && (
+                      allOrder.status === "getCake" && (
                         <td
                           className="cakeStatus"
                           style={{ background: "green", padding: "2px" }}

@@ -245,10 +245,16 @@ const Request = () => {
 
                 <div className="dates">
                   <div className="orderDate">
-                    <b>Order Date: {order.orderDate}</b>
+                    <b>
+                      Order Date:{" "}
+                      {new Date(order.promiseDate).toLocaleDateString()}
+                    </b>
                   </div>
                   <div className="promiseDate">
-                    <b>Deadline: {order.promiseDate}</b>
+                    <b>
+                      Deadline:{" "}
+                      {new Date(order.promiseDate).toLocaleDateString()}
+                    </b>
                   </div>
                 </div>
                 <div className="description">

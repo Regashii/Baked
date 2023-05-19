@@ -8,6 +8,7 @@ import {
   faRightFromBracket,
   faBagShopping,
   faUsers,
+  faCakeCandles,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useEffect, useState } from "react";
@@ -145,6 +146,21 @@ const BakedGoodies = () => {
                 className="icon1"
               />
             </div>
+            <div className="icon">
+              <FontAwesomeIcon
+                onClick={() => {
+                  localStorage.setItem("route", "cakes");
+                  navigate("/dashboard-cakes");
+                }}
+                icon={faCakeCandles}
+                style={{
+                  color: dashRoute === "cakes" ? "#d53f8c" : "",
+                  width: "3m",
+                  height: "2em",
+                }}
+                className="icon1"
+              />
+            </div>
           </div>
 
           <div className="iconBar2">
@@ -208,7 +224,23 @@ const BakedGoodies = () => {
               </div>
               <h4>Customer</h4>
             </div>
+            <div
+              className="con1"
+              onClick={() => {
+                localStorage.setItem("route", "cakes");
+                navigate("/dashboard-cakes");
+              }}
+              style={{
+                background: dashRoute === "cakes" ? "#d53f8c" : "",
+              }}
+            >
+              <div className="icon">
+                <FontAwesomeIcon icon={faUsers} />
+              </div>
+              <h4>Cakes</h4>
+            </div>
           </div>
+
           <div className="userInter">
             <div className="con1" onClick={directSettings}>
               <div className="icon">

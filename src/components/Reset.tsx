@@ -37,12 +37,21 @@ const Reset = () => {
         progress: undefined,
         theme: "colored",
       });
-
-      setTimeout(() => {
-        axios.get("/api/logout");
-        localStorage.clear();
-        navigate("/login");
-      }, 10000);
+      axios
+        .put("/api/forgot", { password: newPass })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            setTimeout(() => {
+              axios.get("/api/logout");
+              localStorage.clear();
+              navigate("/login");
+            }, 5000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   useEffect(() => {
@@ -75,6 +84,7 @@ const Reset = () => {
             onChange={(e) => {
               setNewPass(e.target.value);
             }}
+            readOnly={done}
           />
           <input
             type="text"
@@ -84,6 +94,7 @@ const Reset = () => {
             onChange={(e) => {
               setConfirmPass(e.target.value);
             }}
+            readOnly={done}
           />
           <button disabled={done}>Submit</button>
         </form>

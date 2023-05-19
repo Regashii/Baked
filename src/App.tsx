@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 import MainPage from "./components/MainPage";
 import ForgotPass from "./components/ForgotPass";
 import Reset from "./components/Reset";
+import Cakes from "./pages/Cakes";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
                 </div>
               }
             />
+
             <Route
               path="/dashboard-ongoing"
               element={
@@ -69,6 +71,17 @@ function App() {
                 <div className="dashboard-main">
                   <div className="dashboard-container">
                     <BakedGoodies /> <Sched />
+                  </div>
+                </div>
+              }
+            />
+            <Route
+              path="/dashboard-cakes"
+              element={
+                <div className="dashboard-main">
+                  <ToastContainer />
+                  <div className="dashboard-container">
+                    <BakedGoodies /> <Cakes />
                   </div>
                 </div>
               }

@@ -1,0 +1,163 @@
+.navbar {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+}
+
+.navbar-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.navbar-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin: 0 1rem;
+  font-size: 1.2rem;
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-item:hover {
+  color: #333;
+  background-color: #fff;
+  transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+  .navbar-logo {
+    font-size: 1.2rem;
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+
+  .navbar-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 1rem;
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid #fff;
+  }
+
+  .navbar-menu.active {
+    display: flex;
+  }
+
+  .navbar-item {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-item:hover {
+    color: #333;
+    background-color: #fff;
+    transform: translateY(-5px);
+  }
+}
+
+main {
+  height: 90vh;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content {
+  /* max-width: 1200px; */
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+.godly-button {
+  display: inline-block;
+  padding: 0.75em 2em;
+  background-color: #3f51b5;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.godly-button:hover {
+  background-color: #fff;
+  color: #3f51b5;
+  box-shadow: 0 0 0 2px #3f51b5 inset;
+}
+
+.godly-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(#fff 40%, transparent 50%);
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+
+.godly-button:hover::before {
+  transform: scale(2);
+  opacity: 0;
+}

@@ -1,0 +1,204 @@
+@media (width < 770px) {
+  .Pages5 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 5px;
+    gap: 5px;
+    width: 100vw;
+    height: 80vh;
+    overflow: auto;
+  }
+
+  .Pages5 .cardCake {
+    border: 2px solid white;
+    background: white;
+  }
+
+  .Pages5 .cardCake img {
+    width: 100%;
+    height: 90%;
+  }
+
+  .Pages5 .cardCake p {
+    display: flex;
+    justify-content: center;
+  }
+
+  .Pages5 .Sales {
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    position: absolute;
+    background: white;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: auto;
+  }
+
+  .Pages5 .Sales div:nth-child(1) p {
+    display: flex;
+    justify-content: center;
+  }
+  .Pages5 .Sales div:nth-child(2) {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 5px;
+  }
+
+  .Pages5 .Sales .feedback {
+    border-top: 1px solid gray;
+    padding: 10px;
+    background-color: whitesmoke;
+  }
+
+  .Pages5 .Sales img {
+    width: 100%;
+    height: 20em;
+  }
+
+  .Pages5 .Sales footer {
+    border-top: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    color: orangered;
+  }
+
+  .Pages5 .Sales .No-feedback {
+    padding: 10px;
+  }
+
+  .Pages5 .BG {
+    display: none;
+  }
+}
+
+@media (width > 770px) {
+  .Pages5 {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    gap: 5px;
+    width: 100vw;
+
+    overflow: auto;
+  }
+
+  .Pages5 .cardCake {
+    border: 2px solid white;
+    background: white;
+    height: 20em;
+    width: 18em;
+  }
+
+  .Pages5 .cardCake img {
+    width: 100%;
+    height: 90%;
+  }
+
+  .Pages5 .cardCake p {
+    display: flex;
+    justify-content: center;
+  }
+
+  .Pages5 .Sales {
+    width: 40%;
+    height: 100%;
+    position: absolute;
+    background: white;
+    top: 0;
+    right: 20%;
+    z-index: 2;
+    overflow: auto;
+  }
+
+  .Pages5 .BG {
+    content: "";
+    width: 80%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    right: 0;
+    z-index: 1;
+    overflow: auto;
+  }
+
+  .Pages5 .Sales div:nth-child(1) p {
+    display: flex;
+    justify-content: center;
+  }
+  .Pages5 .Sales div:nth-child(2) {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 5px;
+  }
+
+  .Pages5 .Sales .feedback {
+    border-top: 1px solid gray;
+    padding: 10px;
+    background-color: whitesmoke;
+  }
+
+  .Pages5 .Sales img {
+    width: 100%;
+  }
+
+  .Pages5 .Sales footer {
+    border-top: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    color: orangered;
+  }
+
+  .Pages5 .Sales .No-feedback {
+    padding: 10px;
+  }
+
+  .Pages5::-webkit-scrollbar {
+    width: 10px;
+  }
+  .Pages5::-webkit-scrollbar-thumb {
+    background-color: bisque;
+    border-radius: 20px;
+    border: 3px solid orange;
+  }
+
+  .Pages5 .Sales::-webkit-scrollbar {
+    width: 1px;
+  }
+  .Pages5 .Sales::-webkit-scrollbar-thumb {
+    background-color: bisque;
+    border-radius: 20px;
+    border: 3px solid orange;
+  }
+}
+
+.Pages5 .waiting {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.8);
+  left: 0;
+  top: 0;
+}
+
+.Pages5 .loader {
+  width: 60px;
+  height: 60px;
+  border: 10px solid #1cd42550;
+  border-top-color: #1cd425;
+  animation: spin013151 1s linear infinite;
+  border-radius: 100%;
+}
+
+@keyframes spin013151 {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -10,7 +10,7 @@ const History = () => {
   useEffect(() => {
     axios
       .get(
-        `https://baked-goodies-api.vercel.app/api/order?isDone=true&&status=pickup`
+        `https://baked-goodies-api.vercel.app/api/order?isDone=true&&status=getCake`
       )
       .then((response) => {
         setPickUP(response.data);
@@ -71,8 +71,8 @@ const History = () => {
                   <tr key={pick.type}>
                     <td>{pick.customer.email}</td>
                     <td>{pick.type}</td>
-                    <td>{pick.orderDate}</td>
-                    <td>{pick.endDate}</td>
+                    <td>{new Date(pick.orderDate).toDateString()}</td>
+                    <td>{new Date(pick.endDate).toDateString()}</td>
                   </tr>
                 )}
 
@@ -80,8 +80,8 @@ const History = () => {
                   <tr key={pick.type}>
                     <td>{pick.customer.email}</td>
                     <td>{pick.type}</td>
-                    <td>{pick.orderDate}</td>
-                    <td>{pick.endDate}</td>
+                    <td>{new Date(pick.orderDate).toDateString()}</td>
+                    <td>{new Date(pick.endDate).toDateString()}</td>
                   </tr>
                 )}
               </>
