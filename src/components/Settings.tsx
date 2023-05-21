@@ -1,9 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import {
-  faArrowLeftLong,
-  faArrowAltCircleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,18 +9,41 @@ import "react-toastify/dist/ReactToastify.css";
 const Settings = () => {
   const navigate = useNavigate();
   const Router = localStorage.getItem("route");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [info, setInfo] = useState("");
-  const [user, changeUser] = useState(false);
+  const [account, setAccount] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e: any) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setAccount((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const [newAccount, setNewAccount] = useState({
+    newUsername: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [disabled, setDisabled] = useState(false);
+
+  const handleNewChange = (e: any) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setNewAccount((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
   const token = localStorage.getItem("token");
 
-  const [disabled1, setDisabled1] = useState(false);
-  const [disabled2, setDisabled2] = useState(false);
+  const [user, changeUser] = useState(false);
 
   useEffect(() => {
     axios
-      .get("https://new-back-rho.vercel.app/api/admin", {
+      .get("/api/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,10 +53,18 @@ const Settings = () => {
           localStorage.clear();
           navigate("/login");
         }
+      });
+
+    axios
+      .get("/api/change")
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 403) {
+          changeUser(false);
+        }
       })
-      .then((response: any) => {
-        if (response.status === 200) {
-          setInfo(response.data.username);
+      .then((res: any) => {
+        if (res.status === 200) {
+          changeUser(true);
         }
       });
   }, []);
@@ -47,35 +75,41 @@ const Settings = () => {
     axios.get("/api/logout");
   };
 
-  async function checkPass() {
-    await axios.post("/api/username", { password }).then((res) => {
-      if (res.data === "Correct") {
-        changeUser(true);
-        setDisabled1(true);
-      } else {
-        toast.error("Wrong password", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-    });
-  }
+  const verifyAcc = (e: any) => {
+    e.preventDefault();
 
-  async function changeUsername() {
-    const success = await axios.put(
-      "https://new-back-rho.vercel.app/api/username",
-      { username }
-    );
-    if (success) {
-      toast.success("Success!", {
+    axios
+      .post("/api/change", {
+        username: account.username,
+        password: account.password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400 || err.response.status === 400) {
+          toast.error("Wrong", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
+  };
+
+  const changeAcc = (e: any) => {
+    e.preventDefault();
+    if (newAccount.newPassword !== newAccount.confirmPassword) {
+      toast.error("new and confirm pass not match", {
         position: "top-right",
-        autoClose: false,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -83,29 +117,38 @@ const Settings = () => {
         progress: undefined,
         theme: "colored",
       });
-
-      toast.warn(
-        "Log in again, in any minute this account will be signing out",
-        {
-          position: "top-right",
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        }
-      );
-
-      setDisabled2(true);
+    } else {
+      setDisabled(true);
+      axios
+        .put("/api/change", {
+          username: newAccount.newUsername,
+          password: newAccount.newPassword,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("Change success", {
+              position: "top-right",
+              autoClose: false,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            setTimeout(() => {
+              localStorage.clear();
+              navigate("/login");
+            }, 5000);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 500) {
+            setDisabled(false);
+          }
+        });
     }
-    setTimeout(() => {
-      changeUser(false);
-      localStorage.clear();
-      navigate("/login");
-    }, 10000);
-  }
+  };
 
   return (
     <>
@@ -116,6 +159,7 @@ const Settings = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          width: "30em",
         }}
       >
         <div className="container bg-info" style={{ padding: "20px" }}>
@@ -127,57 +171,97 @@ const Settings = () => {
             <FontAwesomeIcon icon={faArrowAltCircleLeft} />
             Dashboard
           </h4>
-          <h1
-            className="container"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "3em",
-            }}
-          >
-            Admin Side
-          </h1>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Username:</span>
-            <input type="text" className="form-control" value={info} readOnly />
-            <button
-              className="btn btn-danger"
-              type="button"
-              id="button-addon2"
-              onClick={checkPass}
-              disabled={disabled1}
-            >
-              Edit
-            </button>
-            <input
-              type="text"
-              placeholder="enter password to edit"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-          {user && (
-            <div className="input-group mb-3">
-              <span className="input-group-text">New username:</span>
-              <input
-                type="text"
-                className="form-control"
-                onChange={(e) => {
-                  setUsername(e.target.value);
+
+          {!user && (
+            <form onSubmit={verifyAcc}>
+              <h1
+                className="container"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "3em",
                 }}
-              />
-              <button
-                className="btn btn-danger"
-                type="button"
-                id="button-addon2"
-                onClick={changeUsername}
-                disabled={disabled2}
               >
-                Change
+                Verify account
+              </h1>
+              <div className="input-group mb-3">
+                <span className="input-group-text">Username:</span>
+                <input
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  required
+                  placeholder="Verify"
+                  onChange={handleChange}
+                  disabled
+                />
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text">Password:</span>
+                <input
+                  name="password"
+                  type="text"
+                  className="form-control"
+                  required
+                  placeholder="First"
+                  onChange={handleChange}
+                  disabled
+                />
+              </div>
+              <button className="btn btn-warning" disabled>
+                Verify account
               </button>
-            </div>
+            </form>
+          )}
+
+          {user && (
+            <form onSubmit={changeAcc}>
+              <h1
+                className="container"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "3em",
+                }}
+              >
+                Change account
+              </h1>
+              <div className="input-group mb-3">
+                <span className="input-group-text">New username:</span>
+                <input
+                  name="newUsername"
+                  type="text"
+                  className="form-control"
+                  required
+                  onChange={handleNewChange}
+                />
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text">New password:</span>
+                <input
+                  name="newPassword"
+                  type="text"
+                  className="form-control"
+                  required
+                  onChange={handleNewChange}
+                />
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text">Confirm password:</span>
+                <input
+                  name="confirmPassword"
+                  type="text"
+                  className="form-control"
+                  required
+                  onChange={handleNewChange}
+                />
+              </div>
+              <button className="btn btn-warning" disabled={disabled}>
+                Change account
+              </button>
+            </form>
           )}
 
           <div
@@ -190,14 +274,6 @@ const Settings = () => {
               gap: "20px ",
             }}
           >
-            <button
-              className="btn btn-warning"
-              onClick={() => {
-                navigate("/admin/change");
-              }}
-            >
-              Change password
-            </button>
             <button className="btn btn-success" onClick={logout}>
               Log out
             </button>

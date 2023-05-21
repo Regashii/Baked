@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import "../pagescss/MainPage.css";
 
 function MainPage() {
   const navigate = useNavigate();

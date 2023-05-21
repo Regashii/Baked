@@ -5,11 +5,14 @@ import "./pagescss/Request.css";
 import "./pagescss/Ongoing.css";
 import "./pagescss/History.css";
 import "./pagescss/Customer.css";
+import "./pagescss/Cakes.css";
 import "./pagescss/Loading.css";
 import "./pagescss/ChangePass.css";
+import "./pagescss/Reset.css";
+import "./pagescss/Forgot.css";
+import "./pagescss/MainPage.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
-import ChangePass from "./components/ChangePass";
 import BakedGoodies from "./components/BakedGoodies";
 import Confirm from "./components/Confirm";
 import Settings from "./components/Settings";
@@ -86,7 +89,7 @@ function App() {
                 </div>
               }
             />
-            <Route path="/admin/change" element={<ChangePass />}></Route>
+
             <Route path="/dashboard/setting" element={<Settings />}></Route>
           </Route>
         </Routes>

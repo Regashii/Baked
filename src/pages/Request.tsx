@@ -226,13 +226,14 @@ const Request = () => {
             return (
               <div className="order" key={index}>
                 <div className="png">
-                  <img
+                  {/* <img
                     src={order.images}
                     alt="Cake"
                     onClick={() => {
                       setPic(order.images);
                     }}
-                  />
+                  /> */}
+                  <h2>{order.type}</h2>
                 </div>
                 <div className="details">
                   <div className="flavor">
@@ -241,13 +242,38 @@ const Request = () => {
                   <div className="shape">
                     <b>Shape: {order.shape}</b>
                   </div>
+                  <div>
+                    <b>Size: {order.size.replace(/^(.*)₱(.).*/, "$1")}</b>
+                  </div>
+                </div>
+                <div className="details">
+                  <div className="flavor">
+                    {order.upgrades.length > 0 && (
+                      <b>
+                        Upgrades:{" "}
+                        {order.upgrades.map((upgrade: any) => (
+                          <>{upgrade.replace(/^(.*)₱(.).*/, "$1")}</>
+                        ))}
+                      </b>
+                    )}
+                  </div>
+                  <div className="shape">
+                    {order.addons.length > 0 && (
+                      <b>
+                        Addons:{" "}
+                        {order.addons.map((addon: any) => (
+                          <>{addon.replace(/^(.*)₱(.).*/, "$1")}</>
+                        ))}
+                      </b>
+                    )}
+                  </div>
                 </div>
 
                 <div className="dates">
                   <div className="orderDate">
                     <b>
                       Order Date:{" "}
-                      {new Date(order.promiseDate).toLocaleDateString()}
+                      {new Date(order.orderDate).toLocaleDateString()}
                     </b>
                   </div>
                   <div className="promiseDate">
@@ -257,11 +283,36 @@ const Request = () => {
                     </b>
                   </div>
                 </div>
-                <div className="description">
-                  <b>
-                    Description: <i>{order.orderDetails}</i>
-                  </b>
-                </div>
+
+                <details className="styled">
+                  <summary>
+                    <b>More info</b>{" "}
+                  </summary>
+                  <div className="description">
+                    <p>
+                      <b>Dedication:</b> {order.dedication}
+                    </p>
+
+                    <p>
+                      <b>Description:</b> {order.orderDetails}
+                    </p>
+
+                    <p>
+                      <b>Payment:</b> {order.payment}
+                    </p>
+
+                    {order.isRush === false && (
+                      <p>
+                        <b>Rush: </b>No
+                      </p>
+                    )}
+                    {order.isRush === true && (
+                      <p>
+                        <b>Rush: </b>Yes
+                      </p>
+                    )}
+                  </div>
+                </details>
 
                 <div className="settle">
                   <div className="decision">

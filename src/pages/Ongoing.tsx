@@ -26,16 +26,26 @@ const Ongoing = () => {
     window.location.reload();
   }
 
-  const [orders, setOrders] = useState([]);
+  const [rush, setRush] = useState([]);
+  const [notRush, setNotRush] = useState([]);
   const [pickUp, setPickUP] = useState([]);
   const [pic, setPic] = useState("");
   const [arrayItem, setArrayItem] = useState(false);
 
   useEffect(() => {
     axios
-      .get(`https://baked-goodies-api.vercel.app/api/order?status=accepted`)
+      .get(
+        `https://baked-goodies-api.vercel.app/api/order?status=accepted&&isRush=true`
+      )
       .then((res) => {
-        setOrders(res.data);
+        setRush(res.data);
+      });
+    axios
+      .get(
+        `https://baked-goodies-api.vercel.app/api/order?status=accepted&&isRush=false`
+      )
+      .then((res) => {
+        setNotRush(res.data);
       });
 
     axios
@@ -48,7 +58,7 @@ const Ongoing = () => {
   }, []);
 
   setTimeout(() => {
-    if (orders.length === 0 && pickUp.length === 0) {
+    if (rush.length === 0 && notRush.length === 0 && pickUp.length === 0) {
       setArrayItem(true);
     }
   }, 10000);
@@ -62,7 +72,7 @@ const Ongoing = () => {
 
     const formData = new FormData();
     formData.append("image", img);
-    if (personal.payment === "Gcash") {
+    if (personal.payment.toLowerCase() === "gcash") {
       formData.append("image", gcash);
       formImg.append("imageUpload", gcash);
       axios
@@ -86,7 +96,10 @@ const Ongoing = () => {
               }
             });
         });
-    } else if (personal.payment.toLowerCase() === "cash on pickup") {
+    } else if (
+      personal.payment.toLowerCase() === "cash on pickup" ||
+      personal.payment.toLowerCase() === "bdo"
+    ) {
       formData.append("price", price);
       axios
         .post("https://baked-goodies.vercel.app/api/upload", formImg)
@@ -130,7 +143,31 @@ const Ongoing = () => {
     axios
       .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
         status: "getCake",
-        isDone: true,
+      })
+      .then((response) => {
+        toast;
+        if (response.status === 200) {
+          toast.success("Please wait", {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      });
+  };
+
+  const cancelCake = (orderID: any) => {
+    axios
+      .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
+        status: "canceled",
       })
       .then((response) => {
         toast;
@@ -199,18 +236,39 @@ const Ongoing = () => {
               )}
             </div>
             <br />
-            <label>payment: </label>
+
             {personal.payment.toLocaleLowerCase() === "cash on pickup" && (
-              <input
-                type="text"
-                placeholder="Price"
-                onChange={(e) => {
-                  setPrice(e.target.value);
-                }}
-              />
-            )}
-            {personal.payment === "Gcash" && (
               <>
+                <label>Payment: {personal.payment} </label>
+                <br />
+                <input
+                  type="text"
+                  placeholder="Price"
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                  required
+                />
+              </>
+            )}
+            {personal.payment.toLocaleLowerCase() === "bdo" && (
+              <>
+                <label>Payment: {personal.payment} </label>
+                <br />
+                <input
+                  type="text"
+                  placeholder="example: https://checkout.bdo.com.ph/"
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                  required
+                  size={35}
+                />
+              </>
+            )}
+            {personal.payment.toLowerCase() === "gcash" && (
+              <>
+                <label>Payment: {personal.payment} </label>
                 <br />
                 <input
                   type="file"
@@ -238,7 +296,9 @@ const Ongoing = () => {
             <br />
             <br />
 
-            <button className="btn btn-success">confirm</button>
+            <button className="btn btn-success" disabled={reload}>
+              confirm
+            </button>
 
             <button
               className="btn btn-danger"
@@ -255,6 +315,7 @@ const Ongoing = () => {
                 toggleUpload(false);
                 setPrice("");
               }}
+              disabled={reload}
             >
               cancel
             </button>
@@ -263,55 +324,61 @@ const Ongoing = () => {
         </div>
       )}
 
-      {orders.length === 0 && pickUp.length === 0 && arrayItem === false && (
-        <div className="loadingPage">
-          <div
-            aria-label="Orange and tan hamster running in a metal wheel"
-            role="img"
-            className="wheel-and-hamster"
-          >
-            <div className="wheel"></div>
-            <div className="hamster">
-              <div className="hamster__body">
-                <div className="hamster__head">
-                  <div className="hamster__ear"></div>
-                  <div className="hamster__eye"></div>
-                  <div className="hamster__nose"></div>
+      {rush.length === 0 &&
+        notRush.length === 0 &&
+        pickUp.length === 0 &&
+        arrayItem === false && (
+          <div className="loadingPage">
+            <div
+              aria-label="Orange and tan hamster running in a metal wheel"
+              role="img"
+              className="wheel-and-hamster"
+            >
+              <div className="wheel"></div>
+              <div className="hamster">
+                <div className="hamster__body">
+                  <div className="hamster__head">
+                    <div className="hamster__ear"></div>
+                    <div className="hamster__eye"></div>
+                    <div className="hamster__nose"></div>
+                  </div>
+                  <div className="hamster__limb hamster__limb--fr"></div>
+                  <div className="hamster__limb hamster__limb--fl"></div>
+                  <div className="hamster__limb hamster__limb--br"></div>
+                  <div className="hamster__limb hamster__limb--bl"></div>
+                  <div className="hamster__tail"></div>
                 </div>
-                <div className="hamster__limb hamster__limb--fr"></div>
-                <div className="hamster__limb hamster__limb--fl"></div>
-                <div className="hamster__limb hamster__limb--br"></div>
-                <div className="hamster__limb hamster__limb--bl"></div>
-                <div className="hamster__tail"></div>
               </div>
+              <div className="spoke"></div>
             </div>
-            <div className="spoke"></div>
+            <div>
+              <h2>LOADING</h2>
+            </div>
           </div>
-          <div>
-            <h2>LOADING</h2>
+        )}
+
+      {rush.length === 0 &&
+        notRush.length === 0 &&
+        pickUp.length === 0 &&
+        arrayItem === true && (
+          <div className="errorPage">
+            <img src="idk.png" alt="idk" width={100} />
+            <h2> No data found or low connection</h2>
           </div>
-        </div>
-      )}
+        )}
 
-      {orders.length === 0 && pickUp.length === 0 && arrayItem === true && (
-        <div className="errorPage">
-          <img src="idk.png" alt="idk" width={100} />
-          <h2> No data found or low connection</h2>
-        </div>
-      )}
-
-      {orders.length > 0 && (
+      {rush.length > 0 && (
         <>
-          <h1>Cake still Processing</h1>
+          <h1>Cake still Processing - Rush</h1>
           <div className="process">
-            {orders.map((order: any, index) => (
+            {rush.map((rushing: any, index) => (
               <div className="num" key={index}>
                 <div className="index">
                   <h3>Request </h3>
 
-                  <p>Name: {order.customer.name}</p>
-                  <p>Email: {order.customer.email}</p>
-                  <p>ID: {order._id}</p>
+                  <p>Name: {rushing.customer.name}</p>
+                  <p>Email: {rushing.customer.email}</p>
+                  <p>ID: {rushing._id}</p>
 
                   <div className="loader">
                     <span className="hour"></span>
@@ -323,17 +390,18 @@ const Ongoing = () => {
                     className="btn btn-primary"
                     onClick={() => {
                       setPersonal({
-                        email: order.customer.email,
-                        payment: "Cash on pickup",
-                        id: order._id,
+                        email: rushing.customer.email,
+                        payment: rushing.payment,
+                        id: rushing._id,
                       });
                     }}
                   >
                     Ready to pickup
                   </button>
-                  <details>
-                    <div className="order" key={index}>
-                      <div className="png">
+                  <details className="styling">
+                    <summary>Info about order</summary>
+                    <div className="orderInfo" key={index}>
+                      {/* <div className="png">
                         <img
                           src={order.images}
                           alt="Cake"
@@ -341,29 +409,173 @@ const Ongoing = () => {
                             setPic(order.images);
                           }}
                         />
+                      </div> */}
+
+                      <div>
+                        <b>Type: {rushing.type}</b>
                       </div>
-                      <div className="details">
-                        <div className="flavor">
-                          <b>Flavor: {order.flavor}</b>
-                        </div>
-                        <div className="shape">
-                          <b>Shape: {order.shape}</b>
-                        </div>
+                      <div>
+                        <b>Flavor: {rushing.flavor}</b>
+                      </div>
+                      <div>
+                        <b>Shape: {rushing.shape}</b>
+                      </div>
+                      <div>
+                        <b>Size: {rushing.size.replace(/^(.*)₱(.).*/, "$1")}</b>
                       </div>
 
-                      <div className="dates">
-                        <div className="orderDate">
+                      {rushing.upgrades.length > 0 && (
+                        <div>
                           <b>
-                            Order Date:{" "}
-                            {new Date(order.orderDate).toLocaleDateString()}
+                            Upgrades:{" "}
+                            {rushing.upgrades.map((upgrade: any) => (
+                              <>{upgrade.replace(/^(.*)₱(.).*/, "$1")}</>
+                            ))}
                           </b>
                         </div>
-                        <div className="promiseDate">
+                      )}
+
+                      {rushing.addons.length > 0 && (
+                        <div>
                           <b>
-                            Deadline:{" "}
-                            {new Date(order.promiseDate).toLocaleDateString()}
+                            Addons:{" "}
+                            {rushing.addons.map((addon: any) => (
+                              <>{addon.replace(/^(.*)₱(.).*/, "$1")}</>
+                            ))}
                           </b>
                         </div>
+                      )}
+
+                      <div>
+                        <b>Dedication: {rushing.dedication}</b>
+                      </div>
+                      <div>
+                        <b>Description: {rushing.orderDetails}</b>
+                      </div>
+                      <div>
+                        <b>
+                          Order Date:{" "}
+                          {new Date(rushing.orderDate).toLocaleDateString()}
+                        </b>
+                      </div>
+                      <div>
+                        <b>
+                          Deadline:{" "}
+                          {new Date(rushing.promiseDate).toLocaleDateString()}
+                        </b>
+                      </div>
+                      <div>
+                        <b>Payment: {rushing.payment}</b>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+      {notRush.length > 0 && (
+        <>
+          <h1>Cake still Processing - Not rush</h1>
+          <div className="process">
+            {notRush.map((norushing: any, index) => (
+              <div className="num" key={index}>
+                <div className="index">
+                  <h3>Request </h3>
+
+                  <p>Name: {norushing.customer.name}</p>
+                  <p>Email: {norushing.customer.email}</p>
+                  <p>ID: {norushing._id}</p>
+
+                  <div className="loader">
+                    <span className="hour"></span>
+                    <span className="min"></span>
+                    <span className="circel"></span>
+                  </div>
+
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      setPersonal({
+                        email: norushing.customer.email,
+                        payment: norushing.payment,
+                        id: norushing._id,
+                      });
+                    }}
+                  >
+                    Ready to pickup
+                  </button>
+                  <details className="styling">
+                    <summary>Info about order</summary>
+                    <div className="orderInfo" key={index}>
+                      {/* <div className="png">
+                        <img
+                          src={order.images}
+                          alt="Cake"
+                          onClick={() => {
+                            setPic(order.images);
+                          }}
+                        />
+                      </div> */}
+
+                      <div>
+                        <b>Type: {norushing.type}</b>
+                      </div>
+                      <div>
+                        <b>Flavor: {norushing.flavor}</b>
+                      </div>
+                      <div>
+                        <b>Shape: {norushing.shape}</b>
+                      </div>
+                      <div>
+                        <b>
+                          Size: {norushing.size.replace(/^(.*)₱(.).*/, "$1")}
+                        </b>
+                      </div>
+
+                      {norushing.upgrades.length > 0 && (
+                        <div>
+                          <b>
+                            Upgrades:{" "}
+                            {norushing.upgrades.map((upgrade: any) => (
+                              <>{upgrade.replace(/^(.*)₱(.).*/, "$1")}</>
+                            ))}
+                          </b>
+                        </div>
+                      )}
+
+                      {norushing.addons.length > 0 && (
+                        <div>
+                          <b>
+                            Addons:{" "}
+                            {norushing.addons.map((addon: any) => (
+                              <>{addon.replace(/^(.*)₱(.).*/, "$1")}</>
+                            ))}
+                          </b>
+                        </div>
+                      )}
+
+                      <div>
+                        <b>Dedication: {norushing.dedication}</b>
+                      </div>
+                      <div>
+                        <b>Description: {norushing.orderDetails}</b>
+                      </div>
+                      <div>
+                        <b>
+                          Order Date:{" "}
+                          {new Date(norushing.orderDate).toLocaleDateString()}
+                        </b>
+                      </div>
+                      <div>
+                        <b>
+                          Deadline:{" "}
+                          {new Date(norushing.promiseDate).toLocaleDateString()}
+                        </b>
+                      </div>
+                      <div>
+                        <b>Payment: {norushing.payment}</b>
                       </div>
                     </div>
                   </details>
@@ -386,32 +598,53 @@ const Ongoing = () => {
                   <p>Email: {pick.customer.email}</p>
                   <p>ID: {pick._id}</p>
 
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      pikcUpCake(pick._id);
-                    }}
-                  >
-                    Customer get the cake
-                  </button>
+                  <div className="Action">
+                    {" "}
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        pikcUpCake(pick._id);
+                      }}
+                    >
+                      Customer get the cake
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        cancelCake(pick._id);
+                      }}
+                    >
+                      Cancel order
+                    </button>
+                  </div>
+
                   <details>
                     <div className="order" key={index}>
-                      <div className="png">
+                      {/* <div className="png">
                         <img
-                          src={pick.images}
+                          src={pick.endImage}
                           alt="Cake"
                           onClick={() => {
                             setPic(pick.images);
                           }}
                         />
-                      </div>
-                      <div className="details">
-                        <div className="flavor">
-                          <b>Flavor: {pick.flavor}</b>
-                        </div>
-                        <div className="shape">
-                          <b>Shape: {pick.shape}</b>
-                        </div>
+                      </div> */}
+                      <div>
+                        {!pick.paymentImage && <p>Not paid yet</p>}
+
+                        {pick.paymentImage && (
+                          <>
+                            {pick.paymentMethod &&
+                              pick.paymentMethod.toLowerCase() === "gcash" && (
+                                <img src={pick.paymentImage} alt="paid" />
+                              )}
+                            {pick.paymentMethod &&
+                              pick.paymentMethod.toLowerCase() ===
+                                "cash on pickup" && (
+                                <p>{pick.finalPrice} Paid</p>
+                              )}
+                          </>
+                        )}
                       </div>
 
                       <div className="dates">

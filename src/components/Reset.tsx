@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "../pagescss/Reset.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -40,7 +39,6 @@ const Reset = () => {
       axios
         .put("/api/forgot", { password: newPass })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             setTimeout(() => {
               axios.get("/api/logout");

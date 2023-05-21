@@ -246,7 +246,7 @@ const BakedGoodies = () => {
               <div className="icon">
                 <FontAwesomeIcon icon={faGear} />
               </div>
-              <h4>Settings</h4>
+              <h4>Change Account</h4>
             </div>
             <div className="con1">
               <div className="icon" onClick={logout}>

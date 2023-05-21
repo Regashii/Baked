@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../pagescss/Cakes.css";
+
 import axios from "axios";
 import { faStar as thinStar } from "@fortawesome/free-regular-svg-icons";
 import {

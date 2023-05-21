@@ -39,6 +39,14 @@
     margin-bottom: 10px;
   }
 
+  .Pages1 .png h2 {
+    font-size: 35 px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+
   .Pages1 .png img {
     width: 60%;
     height: 90%;
@@ -89,14 +97,6 @@
     margin-bottom: 10px;
     align-items: center;
     justify-content: center;
-  }
-
-  /* -------dates--------------- */
-
-  .Pages1 .dates {
-    height: 20%;
-    margin-top: 10px;
-    margin-bottom: 10px;
   }
 
   /* ----------descripion----------- */
@@ -218,6 +218,57 @@
   }
 }
 
+.Pages1 details.styled {
+  padding: 1em;
+  border: 1px solid #121212;
+  border-radius: 4px;
+}
+
+.Pages1 details.styled summary {
+  outline: none;
+}
+
+.Pages1 .description {
+  background: whitesmoke;
+  height: 80%;
+  padding: 10px;
+  overflow: auto;
+}
+
+.Pages1 .description p {
+  background: rgb(227, 227, 227);
+  margin: 5px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.Pages1 details[open].styled {
+  background: pink;
+}
+
+.Pages1 details[open].styled summary {
+  background: whitesmoke;
+  padding: 10px;
+}
+
+.Pages1 .details b {
+  background-color: whitesmoke;
+  border: 1px solid;
+  border-radius: 10px;
+  display: flex;
+  padding: 5px;
+}
+
+/* -------dates--------------- */
+
+.Pages1 .dates {
+  height: 20%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 20px;
+}
+
 @media (width > 770px) {
   .Pages1 header {
     display: none;
@@ -235,10 +286,6 @@
   .Pages1::-webkit-scrollbar {
     width: 10px;
   }
-
-  /* .Pages1::-webkit-scrollbar-track {
-    background: orange;
-  } */
 
   .Pages1::-webkit-scrollbar-thumb {
     background-color: bisque;
@@ -298,20 +345,34 @@
     justify-content: center;
   }
 
-  /* -------dates--------------- */
-
-  .Pages1 .dates {
-    height: 10%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
   /* ----------descripion----------- */
 
   .Pages1 .description {
-    height: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    background: whitesmoke;
+    height: 90%;
+    padding: 10px;
+    overflow: auto;
+  }
+
+  .Pages1 .description p {
+    background: rgb(227, 227, 227);
+    margin: 5px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  .Pages1 details[open].styled {
+    background: pink;
+    position: absolute;
+    height: 100%;
+    width: 80%;
+    top: 0;
+    right: 0;
+  }
+
+  .Pages1 details[open].styled summary {
+    background: whitesmoke;
+    padding: 10px;
   }
 
   /* -------decison making------- */

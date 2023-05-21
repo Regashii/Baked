@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../pagescss/Forgot.css";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -120,7 +120,8 @@ const ForgotPass = () => {
         <p className="sending" style={{ color: "white" }}>
           Click to send the otp number -
           <button
-            disabled={resend}
+            // disabled={resend}
+            disabled
             className="btn btn-warning"
             onClick={sendOtp}
             style={{ color: "white" }}

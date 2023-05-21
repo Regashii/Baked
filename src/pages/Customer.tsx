@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import { faStar as thinStar } from "@fortawesome/free-regular-svg-icons";
 import {
   faStarHalfStroke,
@@ -212,7 +211,7 @@ const Customer = () => {
                 <tr>
                   <th className="orderID">Id</th>
                   <th className="cakeType">Cake type</th>
-                  <th className="cakeSize">Size</th>
+
                   <th className="cakeStatus">Status</th>
                   <th className="cakeRating">Rating</th>
                 </tr>
@@ -222,11 +221,11 @@ const Customer = () => {
                   <tr key={index}>
                     <td className="orderID">{allOrder._id}</td>
                     <td className="cakeType">{allOrder.type}</td>
-                    <td className="cakeSize">{allOrder.size}</td>
+
                     {allOrder.status === "processing" && (
                       <td
                         className="cakeStatus"
-                        style={{ background: "lightblue", padding: "2px" }}
+                        style={{ background: "lightblue", paddingLeft: "10px" }}
                       >
                         Pending
                       </td>
@@ -234,7 +233,7 @@ const Customer = () => {
                     {allOrder.status === "accepted" && (
                       <td
                         className="cakeStatus"
-                        style={{ background: "yellow", padding: "2px" }}
+                        style={{ background: "yellow", paddingLeft: "10px" }}
                       >
                         Working
                       </td>
@@ -243,7 +242,7 @@ const Customer = () => {
                       allOrder.status === "pickup" && (
                         <td
                           className="cakeStatus"
-                          style={{ background: "orange", padding: "2px" }}
+                          style={{ background: "orange", paddingLeft: "10px" }}
                         >
                           Pick up
                         </td>
@@ -251,7 +250,7 @@ const Customer = () => {
                     {allOrder.status === "decline" && (
                       <td
                         className="cakeStatus"
-                        style={{ background: "red", padding: "2px" }}
+                        style={{ background: "red", paddingLeft: "10px" }}
                       >
                         Declined
                       </td>
@@ -260,7 +259,7 @@ const Customer = () => {
                       allOrder.status === "getCake" && (
                         <td
                           className="cakeStatus"
-                          style={{ background: "green", padding: "2px" }}
+                          style={{ background: "green", paddingLeft: "10px" }}
                         >
                           Done
                         </td>
