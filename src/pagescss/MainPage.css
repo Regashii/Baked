@@ -121,6 +121,10 @@ main {
   .main-content {
     padding: 1rem;
   }
+
+  .main-content h1 {
+    font-size: 20px;
+  }
 }
 
 .godly-button {

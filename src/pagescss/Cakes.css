@@ -26,7 +26,7 @@
 
   .Pages5 .Sales {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     border: 1px solid;
     position: absolute;
     background: white;
