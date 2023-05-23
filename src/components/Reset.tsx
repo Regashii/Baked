@@ -43,7 +43,7 @@ const Reset = () => {
             setTimeout(() => {
               axios.get("/api/logout");
               localStorage.clear();
-              navigate("/login");
+              navigate("/");
             }, 5000);
           }
         })

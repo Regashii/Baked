@@ -51,7 +51,7 @@ const Settings = () => {
       .catch((error) => {
         if (error.response.status === 401 || error.response.status === 403) {
           localStorage.clear();
-          navigate("/login");
+          navigate("/");
         }
       });
 
@@ -71,7 +71,7 @@ const Settings = () => {
 
   const logout = async () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
     axios.get("/api/logout");
   };
 
@@ -138,7 +138,7 @@ const Settings = () => {
             });
             setTimeout(() => {
               localStorage.clear();
-              navigate("/login");
+              navigate("/");
             }, 5000);
           }
         })

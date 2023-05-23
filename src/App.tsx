@@ -20,7 +20,6 @@ import Ongoing from "./pages/Ongoing";
 import History from "./pages/History";
 import Sched from "./pages/Customer";
 import { ToastContainer } from "react-toastify";
-import MainPage from "./components/MainPage";
 import ForgotPass from "./components/ForgotPass";
 import Reset from "./components/Reset";
 import Cakes from "./pages/Cakes";
@@ -30,8 +29,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/" element={<Login />}></Route>
           <Route path="/forgotPass" element={<ForgotPass />}></Route>
           <Route path="/Reset" element={<Reset />}></Route>
           <Route element={<Confirm />}>
