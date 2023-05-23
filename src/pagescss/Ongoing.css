@@ -66,46 +66,83 @@
     }
   }
 
-  .Pages2 details[open].styling {
-    background: pink;
+  .Pages2 .loadOng {
+    background-color: rgba(0, 0, 0, 0.8);
     position: absolute;
-    margin-top: 0;
     top: 0;
     left: 0;
     height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Pages2 .orderInfo {
+    background: pink;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 100%;
+    height: 100vh;
     z-index: 1;
   }
 }
 
-.Pages2 .orderInfo {
-  background: whitesmoke;
-  height: 90%;
-  padding: 10px;
-  overflow: auto;
+.Pages2 .ongLoad {
+  border: 4px solid white;
+  border-left-color: transparent;
+  border-radius: 50%;
 }
 
-.Pages2 .orderInfo div {
+.Pages2 .ongLoad {
+  border: 4px solid white;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+}
+
+.Pages2 .ongLoad {
+  border: 4px solid white;
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.Pages2 .orderCon {
+  background: white;
+  height: 100px;
+  height: auto;
+  overflow: auto;
+  padding: 10px;
+  height: 100%;
+}
+
+.Pages2 .orderCon div {
   background: rgb(227, 227, 227);
   margin: 5px;
   padding: 10px;
   border-radius: 4px;
 }
 
-.Pages2 details.styling {
+.Pages2 .openDetail {
   padding: 1em;
   border: 1px solid #121212;
   border-radius: 4px;
   margin-top: 5px;
-}
-
-.Pages2 details.styling summary {
-  outline: none;
-}
-
-.Pages2 details[open].styling summary {
-  padding: 1em;
-  background: whitesmoke;
 }
 
 @media (width > 770px) {
@@ -136,7 +173,7 @@
     display: flex;
     flex-direction: column;
     padding: 15px;
-    width: 21em;
+    width: 25em;
   }
 
   .Pages2 .order {
@@ -150,13 +187,26 @@
     height: 20%;
   }
 
-  .Pages2 details[open].styling {
-    background: pink;
+  .Pages2 .loadOng {
+    background-color: rgba(0, 0, 0, 0.8);
     position: absolute;
-    bottom: 0;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .Pages2 .orderInfo {
+    background: pink;
+    padding: 20px;
+    position: absolute;
+    top: 0;
     right: 0;
-    height: 100%;
     width: 80%;
+    height: 100%;
     z-index: 1;
   }
 }

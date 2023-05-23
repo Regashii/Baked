@@ -7,6 +7,7 @@ import {
   faStar as solidStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BakedGoodies from "../components/BakedGoodies";
 
 const Cakes = () => {
   const allCakes = [
@@ -118,314 +119,317 @@ const Cakes = () => {
   };
 
   return (
-    <div className="Pages5">
-      {wait && (
-        <div className="waiting">
-          <div className="loader"></div>
-        </div>
-      )}
-
-      {allCakes.map((allCake, index) => (
-        <div
-          className="cardCake"
-          key={index}
-          onClick={() => {
-            getDetails(allCake.name, allCake.pic);
-          }}
-        >
-          <img src={allCake.pic} alt="cakes" />
-          <p>{allCake.name}</p>
-        </div>
-      ))}
-      {show.typeCake !== "" && (
-        <>
-          <div className="BG"></div>
-          <div className="Sales">
-            <div>
-              <button
-                className="btn btn-danger"
-                style={{ position: "absolute" }}
-                onClick={() => {
-                  toggleShow({
-                    typeCake: "",
-                    picCake: "",
-                  });
-                  setFeedback([]);
-                  setAddStar(0);
-                  setSumStar([]);
-                }}
-              >
-                X
-              </button>
-              <img src={show.picCake} alt="" />
-              <p>{show.typeCake}</p>
-            </div>
-
-            {feedbacks.length === 0 && (
-              <>
-                <div>
-                  <p>No rating yet</p>
-                  <p>0 sold</p>
-                </div>
-                <div className="No-feedback">
-                  <b>No feedback</b>
-                </div>
-              </>
-            )}
-            {feedbacks.length > 0 && (
-              <>
-                <div>
-                  <p>
-                    {sumStar.length === 0 && <p>No rarting yet </p>}
-                    {sumStar.length > 0 && (
-                      <>
-                        {addStar / sumStar.length <= 5 &&
-                          addStar / sumStar.length > 4 && (
-                            <>
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              {addStar / sumStar.length === 5 && (
-                                <FontAwesomeIcon
-                                  icon={solidStar}
-                                  className="star"
-                                />
-                              )}
-                              {addStar / sumStar.length <= 4.99 &&
-                                addStar / sumStar.length >= 4.5 && (
-                                  <FontAwesomeIcon
-                                    icon={faStarHalfStroke}
-                                    className="star"
-                                  />
-                                )}
-                              {addStar / sumStar.length <= 4.49 &&
-                                addStar / sumStar.length >= 4 && (
-                                  <FontAwesomeIcon
-                                    icon={thinStar}
-                                    className="star"
-                                  />
-                                )}
-                              <span style={{ paddingLeft: "20px" }}>
-                                {addStar / sumStar.length} rate
-                              </span>
-                            </>
-                          )}
-                        {addStar / sumStar.length <= 4 &&
-                          addStar / sumStar.length > 3 && (
-                            <>
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              {addStar / sumStar.length === 4 && (
-                                <FontAwesomeIcon
-                                  icon={solidStar}
-                                  className="star"
-                                />
-                              )}
-                              {addStar / sumStar.length <= 3.99 &&
-                                addStar / sumStar.length >= 3.5 && (
-                                  <FontAwesomeIcon
-                                    icon={faStarHalfStroke}
-                                    className="star"
-                                  />
-                                )}
-                              {addStar / sumStar.length <= 3.49 &&
-                                addStar / sumStar.length >= 3 && (
-                                  <FontAwesomeIcon
-                                    icon={thinStar}
-                                    className="star"
-                                  />
-                                )}
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <span style={{ paddingLeft: "20px" }}>
-                                {addStar / sumStar.length} rate
-                              </span>
-                            </>
-                          )}
-                        {addStar / sumStar.length <= 3 &&
-                          addStar / sumStar.length > 2 && (
-                            <>
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              {addStar / sumStar.length === 3 && (
-                                <FontAwesomeIcon
-                                  icon={solidStar}
-                                  className="star"
-                                />
-                              )}
-                              {addStar / sumStar.length <= 2.99 &&
-                                addStar / sumStar.length >= 2.5 && (
-                                  <FontAwesomeIcon
-                                    icon={faStarHalfStroke}
-                                    className="star"
-                                  />
-                                )}
-                              {addStar / sumStar.length <= 2.49 &&
-                                addStar / sumStar.length >= 2 && (
-                                  <FontAwesomeIcon
-                                    icon={thinStar}
-                                    className="star"
-                                  />
-                                )}
-
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <span style={{ paddingLeft: "20px" }}>
-                                {addStar / sumStar.length} rate
-                              </span>
-                            </>
-                          )}
-                        {addStar / sumStar.length <= 2 &&
-                          addStar / sumStar.length > 1.1 && (
-                            <>
-                              <FontAwesomeIcon
-                                icon={solidStar}
-                                className="star"
-                              />
-                              {addStar / sumStar.length === 2 && (
-                                <FontAwesomeIcon
-                                  icon={solidStar}
-                                  className="star"
-                                />
-                              )}
-                              {addStar / sumStar.length <= 1.99 &&
-                                addStar / sumStar.length >= 1.5 && (
-                                  <FontAwesomeIcon
-                                    icon={faStarHalfStroke}
-                                    className="star"
-                                  />
-                                )}
-                              {addStar / sumStar.length <= 1.49 &&
-                                addStar / sumStar.length >= 1 && (
-                                  <FontAwesomeIcon
-                                    icon={thinStar}
-                                    className="star"
-                                  />
-                                )}
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <span style={{ paddingLeft: "20px" }}>
-                                {addStar / sumStar.length} rate
-                              </span>
-                            </>
-                          )}
-                        {addStar / sumStar.length <= 1 &&
-                          addStar / sumStar.length > 0 && (
-                            <>
-                              {addStar / sumStar.length === 1 && (
-                                <FontAwesomeIcon
-                                  icon={solidStar}
-                                  className="star"
-                                />
-                              )}
-                              {addStar / sumStar.length <= 0.99 &&
-                                addStar / sumStar.length >= 0.5 && (
-                                  <FontAwesomeIcon
-                                    icon={faStarHalfStroke}
-                                    className="star"
-                                  />
-                                )}
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <FontAwesomeIcon
-                                icon={thinStar}
-                                className="star"
-                              />
-                              <span style={{ paddingLeft: "20px" }}>
-                                {addStar / sumStar.length} rate
-                              </span>
-                            </>
-                          )}
-                      </>
-                    )}
-                  </p>
-
-                  <p>{feedbacks.length} sold</p>
-                </div>
-
-                {feedbacks.map((feedback: any, index) => (
-                  <>
-                    {feedback.feedback && (
-                      <>
-                        <div className="feedback" key={index}>
-                          <b>{feedback.customer.name}</b>
-                          {feedback.feedback.rating === 5 && (
-                            <p>Rating: ⭐⭐⭐⭐⭐</p>
-                          )}
-                          {feedback.feedback.comment && (
-                            <p>Comment: {feedback.feedback.comment}</p>
-                          )}
-                        </div>
-                      </>
-                    )}
-                  </>
-                ))}
-                <footer>
-                  <p>No more rating</p>
-                </footer>
-              </>
-            )}
+    <>
+      <BakedGoodies />
+      <div className="Pages5">
+        {wait && (
+          <div className="waiting">
+            <div className="loader"></div>
           </div>
-        </>
-      )}
-    </div>
+        )}
+
+        {allCakes.map((allCake, index) => (
+          <div
+            className="cardCake"
+            key={index}
+            onClick={() => {
+              getDetails(allCake.name, allCake.pic);
+            }}
+          >
+            <img src={allCake.pic} alt="cakes" />
+            <p>{allCake.name}</p>
+          </div>
+        ))}
+        {show.typeCake !== "" && (
+          <>
+            <div className="BG"></div>
+            <div className="Sales">
+              <div>
+                <button
+                  className="btn btn-danger"
+                  style={{ position: "absolute" }}
+                  onClick={() => {
+                    toggleShow({
+                      typeCake: "",
+                      picCake: "",
+                    });
+                    setFeedback([]);
+                    setAddStar(0);
+                    setSumStar([]);
+                  }}
+                >
+                  X
+                </button>
+                <img src={show.picCake} alt="" />
+                <p>{show.typeCake}</p>
+              </div>
+
+              {feedbacks.length === 0 && (
+                <>
+                  <div>
+                    <p>No rating yet</p>
+                    <p>0 sold</p>
+                  </div>
+                  <div className="No-feedback">
+                    <b>No feedback</b>
+                  </div>
+                </>
+              )}
+              {feedbacks.length > 0 && (
+                <>
+                  <div>
+                    <p>
+                      {sumStar.length === 0 && <p>No rarting yet </p>}
+                      {sumStar.length > 0 && (
+                        <>
+                          {addStar / sumStar.length <= 5 &&
+                            addStar / sumStar.length > 4 && (
+                              <>
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                {addStar / sumStar.length === 5 && (
+                                  <FontAwesomeIcon
+                                    icon={solidStar}
+                                    className="star"
+                                  />
+                                )}
+                                {addStar / sumStar.length <= 4.99 &&
+                                  addStar / sumStar.length >= 4.5 && (
+                                    <FontAwesomeIcon
+                                      icon={faStarHalfStroke}
+                                      className="star"
+                                    />
+                                  )}
+                                {addStar / sumStar.length <= 4.49 &&
+                                  addStar / sumStar.length >= 4 && (
+                                    <FontAwesomeIcon
+                                      icon={thinStar}
+                                      className="star"
+                                    />
+                                  )}
+                                <span style={{ paddingLeft: "20px" }}>
+                                  {addStar / sumStar.length} rate
+                                </span>
+                              </>
+                            )}
+                          {addStar / sumStar.length <= 4 &&
+                            addStar / sumStar.length > 3 && (
+                              <>
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                {addStar / sumStar.length === 4 && (
+                                  <FontAwesomeIcon
+                                    icon={solidStar}
+                                    className="star"
+                                  />
+                                )}
+                                {addStar / sumStar.length <= 3.99 &&
+                                  addStar / sumStar.length >= 3.5 && (
+                                    <FontAwesomeIcon
+                                      icon={faStarHalfStroke}
+                                      className="star"
+                                    />
+                                  )}
+                                {addStar / sumStar.length <= 3.49 &&
+                                  addStar / sumStar.length >= 3 && (
+                                    <FontAwesomeIcon
+                                      icon={thinStar}
+                                      className="star"
+                                    />
+                                  )}
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <span style={{ paddingLeft: "20px" }}>
+                                  {addStar / sumStar.length} rate
+                                </span>
+                              </>
+                            )}
+                          {addStar / sumStar.length <= 3 &&
+                            addStar / sumStar.length > 2 && (
+                              <>
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                {addStar / sumStar.length === 3 && (
+                                  <FontAwesomeIcon
+                                    icon={solidStar}
+                                    className="star"
+                                  />
+                                )}
+                                {addStar / sumStar.length <= 2.99 &&
+                                  addStar / sumStar.length >= 2.5 && (
+                                    <FontAwesomeIcon
+                                      icon={faStarHalfStroke}
+                                      className="star"
+                                    />
+                                  )}
+                                {addStar / sumStar.length <= 2.49 &&
+                                  addStar / sumStar.length >= 2 && (
+                                    <FontAwesomeIcon
+                                      icon={thinStar}
+                                      className="star"
+                                    />
+                                  )}
+
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <span style={{ paddingLeft: "20px" }}>
+                                  {addStar / sumStar.length} rate
+                                </span>
+                              </>
+                            )}
+                          {addStar / sumStar.length <= 2 &&
+                            addStar / sumStar.length > 1.1 && (
+                              <>
+                                <FontAwesomeIcon
+                                  icon={solidStar}
+                                  className="star"
+                                />
+                                {addStar / sumStar.length === 2 && (
+                                  <FontAwesomeIcon
+                                    icon={solidStar}
+                                    className="star"
+                                  />
+                                )}
+                                {addStar / sumStar.length <= 1.99 &&
+                                  addStar / sumStar.length >= 1.5 && (
+                                    <FontAwesomeIcon
+                                      icon={faStarHalfStroke}
+                                      className="star"
+                                    />
+                                  )}
+                                {addStar / sumStar.length <= 1.49 &&
+                                  addStar / sumStar.length >= 1 && (
+                                    <FontAwesomeIcon
+                                      icon={thinStar}
+                                      className="star"
+                                    />
+                                  )}
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <span style={{ paddingLeft: "20px" }}>
+                                  {addStar / sumStar.length} rate
+                                </span>
+                              </>
+                            )}
+                          {addStar / sumStar.length <= 1 &&
+                            addStar / sumStar.length > 0 && (
+                              <>
+                                {addStar / sumStar.length === 1 && (
+                                  <FontAwesomeIcon
+                                    icon={solidStar}
+                                    className="star"
+                                  />
+                                )}
+                                {addStar / sumStar.length <= 0.99 &&
+                                  addStar / sumStar.length >= 0.5 && (
+                                    <FontAwesomeIcon
+                                      icon={faStarHalfStroke}
+                                      className="star"
+                                    />
+                                  )}
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <FontAwesomeIcon
+                                  icon={thinStar}
+                                  className="star"
+                                />
+                                <span style={{ paddingLeft: "20px" }}>
+                                  {addStar / sumStar.length} rate
+                                </span>
+                              </>
+                            )}
+                        </>
+                      )}
+                    </p>
+
+                    <p>{feedbacks.length} sold</p>
+                  </div>
+
+                  {feedbacks.map((feedback: any, index) => (
+                    <>
+                      {feedback.feedback && (
+                        <>
+                          <div className="feedback" key={index}>
+                            <b>{feedback.customer.name}</b>
+                            {feedback.feedback.rating === 5 && (
+                              <p>Rating: ⭐⭐⭐⭐⭐</p>
+                            )}
+                            {feedback.feedback.comment && (
+                              <p>Comment: {feedback.feedback.comment}</p>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </>
+                  ))}
+                  <footer>
+                    <p>No more rating</p>
+                  </footer>
+                </>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

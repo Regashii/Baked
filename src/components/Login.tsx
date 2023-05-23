@@ -9,9 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 function Login(): JSX.Element {
   const navigate = useNavigate();
 
-  const [errUser, seterrUser] = useState(false);
-  const [errPass, seterrPass] = useState(false);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [show, toggleShow] = useState(false);
@@ -49,53 +46,41 @@ function Login(): JSX.Element {
   //   });
   // }
 
-  async function loginAuth() {
-    if (username === "") {
-      seterrUser(true);
-    } else {
-      seterrUser(false);
-    }
+  const loginAuth = (e: any) => {
+    e.preventDefault();
 
-    if (password === "") {
-      seterrPass(true);
-    } else {
-      seterrPass(false);
-    }
-
-    if (username != "" && password != "") {
-      axios
-        .post("/api/login", {
-          username: username,
-          password: password,
-        })
-        .then((res) => {
-          if (res.data.accessToken) {
-            localStorage.setItem("token", res.data.accessToken);
-            localStorage.setItem("route", "request");
-            navigate("/dashboard-request");
-          }
-        })
-        .catch((error) => {
-          if (error.response.status === 404 || error.response.status === 400) {
-            toast.error("No user found", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-          }
-        });
-    }
-  }
+    axios
+      .post("/api/login", {
+        username: username,
+        password: password,
+      })
+      .then((res) => {
+        if (res.data.accessToken) {
+          localStorage.setItem("token", res.data.accessToken);
+          localStorage.setItem("route", "request");
+          navigate("/dashboard-request");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 404 || error.response.status === 400) {
+          toast.error("No user found", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
+  };
 
   return (
     <>
       <div className="sign-in">
-        <div className="card">
+        <form className="card" onSubmit={loginAuth}>
           <a className="login">Log in</a>
           <div className="inputBox">
             <input
@@ -107,7 +92,6 @@ function Login(): JSX.Element {
               }}
             />
             <span className="user">Username</span>
-            {errUser && <p>Please input your usernames</p>}
           </div>
 
           <div className="inputBox">
@@ -132,13 +116,10 @@ function Login(): JSX.Element {
               )}
             </div>
             <span>Password</span>
-            {errPass && <p>Please input your password</p>}
           </div>
 
           <div className="buttons">
-            <button className="enter" onClick={loginAuth}>
-              Enter
-            </button>
+            <button className="enter">Enter</button>
           </div>
           <div
             style={{
@@ -155,7 +136,7 @@ function Login(): JSX.Element {
           </div>
 
           <ToastContainer />
-        </div>
+        </form>
       </div>
     </>
   );

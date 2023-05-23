@@ -13,7 +13,6 @@ import "./pagescss/Forgot.css";
 import "./pagescss/MainPage.css";
 import Login from "./components/Login";
 import "./pagescss/Request.css";
-import BakedGoodies from "./components/BakedGoodies";
 import Confirm from "./components/Confirm";
 import Settings from "./components/Settings";
 import Request from "./pages/Request";
@@ -42,7 +41,7 @@ function App() {
                 <div className="dashboard-main">
                   <ToastContainer />
                   <div className="dashboard-container">
-                    <BakedGoodies /> <Request />
+                    <Request />
                   </div>
                 </div>
               }
@@ -53,7 +52,7 @@ function App() {
               element={
                 <div className="dashboard-main">
                   <div className="dashboard-container">
-                    <BakedGoodies /> <Ongoing />
+                    <Ongoing />
                   </div>
                 </div>
               }
@@ -63,7 +62,7 @@ function App() {
               element={
                 <div className="dashboard-main">
                   <div className="dashboard-container">
-                    <BakedGoodies /> <History />
+                    <History />
                   </div>
                 </div>
               }
@@ -73,7 +72,7 @@ function App() {
               element={
                 <div className="dashboard-main">
                   <div className="dashboard-container">
-                    <BakedGoodies /> <Sched />
+                    <Sched />
                   </div>
                 </div>
               }
@@ -84,7 +83,7 @@ function App() {
                 <div className="dashboard-main">
                   <ToastContainer />
                   <div className="dashboard-container">
-                    <BakedGoodies /> <Cakes />
+                    <Cakes />
                   </div>
                 </div>
               }

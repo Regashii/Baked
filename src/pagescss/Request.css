@@ -244,6 +244,7 @@
 
 .Pages1 details[open].styled {
   background: pink;
+  z-index: 1;
 }
 
 .Pages1 details[open].styled summary {
@@ -302,7 +303,7 @@
     padding: 2px;
   }
   .Pages1 .order {
-    height: auto;
+    height: 25em;
     width: 30em;
     display: flex;
     flex-wrap: nowrap;
@@ -354,25 +355,10 @@
     overflow: auto;
   }
 
-  .Pages1 .description p {
-    background: rgb(227, 227, 227);
-    margin: 5px;
-    padding: 10px;
-    border-radius: 4px;
-  }
-
-  .Pages1 details[open].styled {
-    background: pink;
-    position: absolute;
-    height: 100%;
-    width: 80%;
-    top: 0;
-    right: 0;
-  }
-
-  .Pages1 details[open].styled summary {
-    background: whitesmoke;
-    padding: 10px;
+  .Pages1 .description {
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   /* -------decison making------- */
@@ -464,7 +450,7 @@
     left: 0;
     top: 0;
     padding: 20px;
-    z-index: 1;
+    z-index: 2;
   }
 
   .Pages1 .container {

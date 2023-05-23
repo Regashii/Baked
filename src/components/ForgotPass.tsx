@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -8,6 +8,8 @@ const ForgotPass = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [resend, setResend] = useState(false);
+  const [pleaseWait, togglePleaseWait] = useState(false);
+  const [reachLimit, toggleReachLimit] = useState(false);
 
   const [countdown, setCountDown] = useState(0);
 
@@ -25,15 +27,6 @@ const ForgotPass = () => {
       setResend(false);
     }
   }, [countdown]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/forgot")
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // });
 
   async function handleOtp() {
     axios
@@ -73,26 +66,60 @@ const ForgotPass = () => {
   }
 
   async function sendOtp() {
-    axios.post("/api/otp").then((res) => {
-      if (res.status === 200) {
-        toast.success("OTP succesfully send to your gmail", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+    togglePleaseWait(true);
+    axios.get("https://ipapi.co/json").then((res) => {
+      axios
+        .post("/api/limit", { ip: res.data.ip })
+        .then((res) => {
+          if (res.status === 201 || res.status === 200) {
+            axios.post("/api/otp").then((res) => {
+              if (res.status === 200) {
+                togglePleaseWait(false);
+                toast.success("OTP succesfully send to your gmail", {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+                setCountDown(15);
+                setResend(true);
+              }
+            });
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 500) {
+            setCountDown(15);
+            setResend(true);
+            togglePleaseWait(false);
+            toggleReachLimit(true);
+          }
         });
-        setCountDown(15);
-        setResend(true);
-      }
     });
   }
 
   return (
     <div className="Forgot">
+      <Modal show={pleaseWait}>
+        <Modal.Body>Please wait...</Modal.Body>
+      </Modal>
+      <Modal show={reachLimit}>
+        <Modal.Body>You reach your limit, try again later</Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              toggleReachLimit(false);
+            }}
+          >
+            Ok
+          </button>
+        </Modal.Footer>
+      </Modal>
       <ToastContainer />
       <div className="form">
         <span className="close" onClick={() => navigate("/login")}>
@@ -120,8 +147,7 @@ const ForgotPass = () => {
         <p className="sending" style={{ color: "white" }}>
           Click to send the otp number -
           <button
-            // disabled={resend}
-            disabled
+            disabled={resend}
             className="btn btn-warning"
             onClick={sendOtp}
             style={{ color: "white" }}

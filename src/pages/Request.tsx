@@ -3,8 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import BakedGoodies from "../components/BakedGoodies";
 
 const Request = () => {
+  useEffect(() => {
+    window.onpageshow = function (event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+  }, []);
   localStorage.setItem("route", "request");
   // order request from customer
   const [orders, setOrders] = useState([]);
@@ -89,272 +97,285 @@ const Request = () => {
   }, 10000);
 
   return (
-    <div className="Pages1">
-      <header>
-        <h1>Request</h1>
-      </header>
-      {orders.length === 0 && arrayItem === false && (
-        <div className="loadingPage">
-          <div
-            aria-label="Orange and tan hamster running in a metal wheel"
-            role="img"
-            className="wheel-and-hamster"
-          >
-            <div className="wheel"></div>
-            <div className="hamster">
-              <div className="hamster__body">
-                <div className="hamster__head">
-                  <div className="hamster__ear"></div>
-                  <div className="hamster__eye"></div>
-                  <div className="hamster__nose"></div>
+    <>
+      <BakedGoodies />
+      <div className="Pages1">
+        <header>
+          <h1>Request</h1>
+        </header>
+        {orders.length === 0 && arrayItem === false && (
+          <div className="loadingPage">
+            <div
+              aria-label="Orange and tan hamster running in a metal wheel"
+              role="img"
+              className="wheel-and-hamster"
+            >
+              <div className="wheel"></div>
+              <div className="hamster">
+                <div className="hamster__body">
+                  <div className="hamster__head">
+                    <div className="hamster__ear"></div>
+                    <div className="hamster__eye"></div>
+                    <div className="hamster__nose"></div>
+                  </div>
+                  <div className="hamster__limb hamster__limb--fr"></div>
+                  <div className="hamster__limb hamster__limb--fl"></div>
+                  <div className="hamster__limb hamster__limb--br"></div>
+                  <div className="hamster__limb hamster__limb--bl"></div>
+                  <div className="hamster__tail"></div>
                 </div>
-                <div className="hamster__limb hamster__limb--fr"></div>
-                <div className="hamster__limb hamster__limb--fl"></div>
-                <div className="hamster__limb hamster__limb--br"></div>
-                <div className="hamster__limb hamster__limb--bl"></div>
-                <div className="hamster__tail"></div>
+              </div>
+              <div className="spoke"></div>
+            </div>
+            <div>
+              <h2>LOADING</h2>
+            </div>
+          </div>
+        )}
+
+        {orders.length === 0 && arrayItem === true && (
+          <div className="errorPage">
+            <img src="idk.png" alt="idk" width={100} />
+            <h2> No data found or low connection, try to again later</h2>
+          </div>
+        )}
+
+        {personal.name !== "" && (
+          <div className="personalPop">
+            <div className="container">
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Close"
+                onClick={() => {
+                  setPersonal({
+                    name: "",
+                    email: "",
+                    phone: "",
+                  });
+                  window.history.back();
+                  console.log("nc");
+                }}
+              />
+              <div className="profile">
+                <FontAwesomeIcon icon={faUser} className="icon" />
+              </div>
+              <div className="name">
+                <b>Name: {personal.name}</b>
+              </div>
+              <div className="email">
+                <b>Email: {personal.email}</b>
               </div>
             </div>
-            <div className="spoke"></div>
           </div>
-          <div>
-            <h2>LOADING</h2>
-          </div>
-        </div>
-      )}
-
-      {orders.length === 0 && arrayItem === true && (
-        <div className="errorPage">
-          <img src="idk.png" alt="idk" width={100} />
-          <h2> No data found or low connection, try to again later</h2>
-        </div>
-      )}
-
-      {personal.name !== "" && (
-        <div className="personalPop">
-          <div className="container">
+        )}
+        {pic !== "" && (
+          <div className="pop">
             <button
               type="button"
-              className="btn-close"
+              className="btn-close bg-danger"
               aria-label="Close"
               onClick={() => {
-                setPersonal({
-                  name: "",
-                  email: "",
-                  phone: "",
-                });
+                setPic("");
               }}
-            />
-            <div className="profile">
-              <FontAwesomeIcon icon={faUser} className="icon" />
-            </div>
-            <div className="name">
-              <b>Name: {personal.name}</b>
-            </div>
-            <div className="email">
-              <b>Email: {personal.email}</b>
-            </div>
+            ></button>
+            <img src={pic} alt="pic" />
           </div>
-        </div>
-      )}
-      {pic !== "" && (
-        <div className="pop">
-          <button
-            type="button"
-            className="btn-close bg-danger"
-            aria-label="Close"
-            onClick={() => {
-              setPic("");
-            }}
-          ></button>
-          <img src={pic} alt="pic" />
-        </div>
-      )}
+        )}
 
-      {acceptPop && (
-        <div className="finalDecision">
-          <div>
-            <p>Are you sure</p>
-            <button className="btn btn-success" onClick={changeStatus}>
-              Yes
-            </button>
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                setId("");
-                toggleAcceptPop(false);
-              }}
-            >
-              No
-            </button>
-          </div>
-        </div>
-      )}
-
-      {declinePop && (
-        <form className="declineBox" onSubmit={declineReq}>
-          <div className="declineCon">
-            <textarea
-              cols={30}
-              rows={10}
-              placeholder="Reason"
-              required
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-            ></textarea>
+        {acceptPop && (
+          <div className="finalDecision">
             <div>
-              <button className="btn btn-success">Confirm</button>
+              <p>Are you sure</p>
+              <button className="btn btn-success" onClick={changeStatus}>
+                Yes
+              </button>
               <button
                 className="btn btn-danger"
                 onClick={() => {
                   setId("");
-                  toggleDeclinePop(false);
-                  setComment("");
+                  toggleAcceptPop(false);
+                  window.history.back();
                 }}
               >
-                Cancel
+                No
               </button>
             </div>
           </div>
-        </form>
-      )}
+        )}
 
-      {orders.length > 0 && (
-        <div className="body">
-          {orders.map((order: any, index) => {
-            return (
-              <div className="order" key={index}>
-                <div className="png">
-                  {/* <img
+        {declinePop && (
+          <form className="declineBox" onSubmit={declineReq}>
+            <div className="declineCon">
+              <textarea
+                cols={30}
+                rows={10}
+                placeholder="Reason"
+                required
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              ></textarea>
+              <div>
+                <button className="btn btn-success">Confirm</button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    setId("");
+                    toggleDeclinePop(false);
+                    setComment("");
+                    window.history.back();
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+
+        {orders.length > 0 && (
+          <div className="body">
+            {orders.map((order: any, index) => {
+              return (
+                <div className="order" key={index}>
+                  <div className="png">
+                    {/* <img
                     src={order.images}
                     alt="Cake"
                     onClick={() => {
                       setPic(order.images);
                     }}
                   /> */}
-                  <h2>{order.type}</h2>
-                </div>
-                <div className="details">
-                  <div className="flavor">
-                    <b>Flavor: {order.flavor}</b>
+                    <h2>{order.type}</h2>
                   </div>
-                  <div className="shape">
-                    <b>Shape: {order.shape}</b>
+                  <div className="details">
+                    <div className="flavor">
+                      <b>Flavor: {order.flavor}</b>
+                    </div>
+                    <div className="shape">
+                      <b>Shape: {order.shape}</b>
+                    </div>
+                    <div>
+                      <b>Size: {order.size.replace(/^(.*)₱(.).*/, "$1")}</b>
+                    </div>
                   </div>
-                  <div>
-                    <b>Size: {order.size.replace(/^(.*)₱(.).*/, "$1")}</b>
+                  <div className="details">
+                    <div className="flavor">
+                      {order.upgrades.length > 0 && (
+                        <b>
+                          Upgrades:{" "}
+                          {order.upgrades.map((upgrade: any) => (
+                            <>{upgrade.replace(/^(.*)₱(.).*/, "$1")}</>
+                          ))}
+                        </b>
+                      )}
+                    </div>
+                    <div className="shape">
+                      {order.addons.length > 0 && (
+                        <b>
+                          Addons:{" "}
+                          {order.addons.map((addon: any) => (
+                            <>{addon.replace(/^(.*)₱(.).*/, "$1")}</>
+                          ))}
+                        </b>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className="details">
-                  <div className="flavor">
-                    {order.upgrades.length > 0 && (
+
+                  <div className="dates">
+                    <div className="orderDate">
                       <b>
-                        Upgrades:{" "}
-                        {order.upgrades.map((upgrade: any) => (
-                          <>{upgrade.replace(/^(.*)₱(.).*/, "$1")}</>
-                        ))}
+                        Order Date:{" "}
+                        {new Date(order.orderDate).toLocaleDateString()}
                       </b>
-                    )}
-                  </div>
-                  <div className="shape">
-                    {order.addons.length > 0 && (
+                    </div>
+                    <div className="promiseDate">
                       <b>
-                        Addons:{" "}
-                        {order.addons.map((addon: any) => (
-                          <>{addon.replace(/^(.*)₱(.).*/, "$1")}</>
-                        ))}
+                        Deadline:{" "}
+                        {new Date(order.promiseDate).toLocaleDateString()}
                       </b>
-                    )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="dates">
-                  <div className="orderDate">
-                    <b>
-                      Order Date:{" "}
-                      {new Date(order.orderDate).toLocaleDateString()}
-                    </b>
+                  <div className="settle">
+                    <div className="decision">
+                      <button
+                        className="btn btn-success"
+                        onClick={() => {
+                          setId(order._id);
+                          toggleAcceptPop(true);
+                          window.history.pushState(null, "", "?q=Accept");
+                        }}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          setId(order._id);
+                          toggleDeclinePop(!declinePop);
+                          window.history.pushState(null, "", "?q=Decline");
+                        }}
+                      >
+                        Decline
+                      </button>
+                    </div>
+                    <div className="personalInfo">
+                      <FontAwesomeIcon
+                        icon={faUser}
+                        onClick={() => {
+                          setPersonal({
+                            name: order.customer.name,
+                            email: order.customer.email,
+                            phone: order.customer.phone,
+                          });
+                          window.history.pushState(
+                            null,
+                            "",
+                            "?q=Personal Info"
+                          );
+                        }}
+                        className="icon"
+                      />
+                    </div>
                   </div>
-                  <div className="promiseDate">
-                    <b>
-                      Deadline:{" "}
-                      {new Date(order.promiseDate).toLocaleDateString()}
-                    </b>
-                  </div>
-                </div>
-
-                <details className="styled">
-                  <summary>
-                    <b>More info</b>{" "}
-                  </summary>
-                  <div className="description">
-                    <p>
-                      <b>Dedication:</b> {order.dedication}
-                    </p>
-
-                    <p>
-                      <b>Description:</b> {order.orderDetails}
-                    </p>
-
-                    <p>
-                      <b>Payment:</b> {order.payment}
-                    </p>
-
-                    {order.isRush === false && (
+                  <details className="styled">
+                    <summary>
+                      <b>More info</b>{" "}
+                    </summary>
+                    <div className="description">
                       <p>
-                        <b>Rush: </b>No
+                        <b>Dedication:</b> {order.dedication}
                       </p>
-                    )}
-                    {order.isRush === true && (
-                      <p>
-                        <b>Rush: </b>Yes
-                      </p>
-                    )}
-                  </div>
-                </details>
 
-                <div className="settle">
-                  <div className="decision">
-                    <button
-                      className="btn btn-success"
-                      onClick={() => {
-                        setId(order._id);
-                        toggleAcceptPop(true);
-                      }}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => {
-                        setId(order._id);
-                        toggleDeclinePop(!declinePop);
-                      }}
-                    >
-                      Decline
-                    </button>
-                  </div>
-                  <div className="personalInfo">
-                    <FontAwesomeIcon
-                      icon={faUser}
-                      onClick={() => {
-                        setPersonal({
-                          name: order.customer.name,
-                          email: order.customer.email,
-                          phone: order.customer.phone,
-                        });
-                      }}
-                      className="icon"
-                    />
-                  </div>
+                      <p>
+                        <b>Description:</b> {order.orderDetails}
+                      </p>
+
+                      <p>
+                        <b>Payment:</b> {order.payment}
+                      </p>
+
+                      {order.isRush === false && (
+                        <p>
+                          <b>Rush: </b>No
+                        </p>
+                      )}
+                      {order.isRush === true && (
+                        <p>
+                          <b>Rush: </b>Yes
+                        </p>
+                      )}
+                    </div>
+                  </details>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
