@@ -159,7 +159,7 @@ const Settings = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          width: "30em",
+          maxWidth: "35em",
         }}
       >
         <div className="container bg-info" style={{ padding: "20px" }}>
