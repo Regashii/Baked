@@ -4,15 +4,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import BakedGoodies from "../components/BakedGoodies";
+import Modal from "react-bootstrap/Modal";
 
 const Request = () => {
-  useEffect(() => {
-    window.onpageshow = function (event) {
-      if (event.persisted) {
-        window.location.reload();
-      }
-    };
-  }, []);
   localStorage.setItem("route", "request");
   // order request from customer
   const [orders, setOrders] = useState([]);
@@ -34,7 +28,10 @@ const Request = () => {
   const [declinePop, toggleDeclinePop] = useState(false);
   const [comment, setComment] = useState("");
 
+  const [pleaseWait, togglePleaseWait] = useState(false);
+
   const changeStatus = () => {
+    togglePleaseWait(true);
     const newStatus = { status: "accepted" };
     axios.put(
       `https://baked-goodies.vercel.app/api/order/server/${id}`,
@@ -66,6 +63,7 @@ const Request = () => {
 
   const declineReq = (e: any) => {
     e.preventDefault();
+    togglePleaseWait(true);
     const newStatus = {
       status: "decline",
       comment: comment,
@@ -103,6 +101,9 @@ const Request = () => {
         <header>
           <h1>Request</h1>
         </header>
+        <Modal show={pleaseWait}>
+          <Modal.Body>Please wait processing...</Modal.Body>
+        </Modal>
         {orders.length === 0 && arrayItem === false && (
           <div className="loadingPage">
             <div

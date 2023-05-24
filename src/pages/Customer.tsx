@@ -7,15 +7,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BakedGoodies from "../components/BakedGoodies";
+import Avatar from "react-avatar";
 
 const Customer = () => {
   localStorage.setItem("route", "customer");
-  let images = "th.jpg";
+
   const [buyers, setBuyers] = useState([]);
   const [search, setSearch] = useState("");
   const [allOrders, setAllOrders] = useState([]);
   const [average, setAverage] = useState(0);
   const [total, setTotal] = useState([]);
+  const [avatar, changeAvatar] = useState("");
 
   useEffect(() => {
     axios
@@ -72,7 +74,14 @@ const Customer = () => {
               >
                 X
               </button>
-              <img src={images} alt="avatar" />
+              {/* @ts-ignore */}
+              {avatar && <img src={avatar} alt="avatar" />}
+              {!avatar && (
+                <img
+                  src="https://i.pinimg.com/originals/15/6f/bb/156fbb01d3ec2f7ea869e06bf34351dc.jpg"
+                  alt="avatar"
+                />
+              )}
               <div>
                 {/* @ts-ignore */}
                 <p className="text-break">{allOrders[0].customer.name}</p>
@@ -265,15 +274,14 @@ const Customer = () => {
                           Declined
                         </td>
                       )}
-                      {allOrder.isDone === true &&
-                        allOrder.status === "getCake" && (
-                          <td
-                            className="cakeStatus"
-                            style={{ background: "green", paddingLeft: "10px" }}
-                          >
-                            Done
-                          </td>
-                        )}
+                      {allOrder.status === "getCake" && (
+                        <td
+                          className="cakeStatus"
+                          style={{ background: "green", paddingLeft: "10px" }}
+                        >
+                          Done
+                        </td>
+                      )}
                       {!allOrder.feedback && (
                         <td className="cakeRating">None</td>
                       )}
@@ -353,7 +361,17 @@ const Customer = () => {
                           </td>
                           <td className="name">
                             <span>
-                              <img src={images} alt="avatar" />{" "}
+                              {buyer.avatar && (
+                                <img src={buyer.avatar} alt="avatar" />
+                              )}
+
+                              {!buyer.avatar && (
+                                <img
+                                  src="https://i.pinimg.com/originals/15/6f/bb/156fbb01d3ec2f7ea869e06bf34351dc.jpg"
+                                  alt="avatar"
+                                />
+                              )}
+
                               <span
                                 style={{
                                   display: "flex",
@@ -376,6 +394,8 @@ const Customer = () => {
                                 className="btn btn-outline-warning"
                                 onClick={() => {
                                   handleSubmit(buyer.orders);
+
+                                  changeAvatar(buyer.avatar);
                                 }}
                               >
                                 View profile

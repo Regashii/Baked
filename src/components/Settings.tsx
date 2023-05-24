@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Modal from "react-bootstrap/Modal";
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -75,9 +76,11 @@ const Settings = () => {
     axios.get("/api/logout");
   };
 
+  const [pleaseWait, togglePleaseWait] = useState(false);
+
   const verifyAcc = (e: any) => {
     e.preventDefault();
-
+    togglePleaseWait(true);
     axios
       .post("/api/change", {
         username: account.username,
@@ -106,6 +109,7 @@ const Settings = () => {
 
   const changeAcc = (e: any) => {
     e.preventDefault();
+    togglePleaseWait(true);
     if (newAccount.newPassword !== newAccount.confirmPassword) {
       toast.error("new and confirm pass not match", {
         position: "top-right",
@@ -152,6 +156,9 @@ const Settings = () => {
 
   return (
     <>
+      <Modal show={pleaseWait}>
+        <Modal.Body>Please wait processing...</Modal.Body>
+      </Modal>
       <div
         className="container-fluid"
         style={{

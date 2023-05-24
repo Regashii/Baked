@@ -122,7 +122,7 @@ const ForgotPass = () => {
       </Modal>
       <ToastContainer />
       <div className="form">
-        <span className="close" onClick={() => navigate("/login")}>
+        <span className="close" onClick={() => navigate("/")}>
           X
         </span>
 

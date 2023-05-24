@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import BakedGoodies from "../components/BakedGoodies";
+import Modal from "react-bootstrap/Modal";
 
 const Ongoing = () => {
   localStorage.setItem("route", "onGoing");
@@ -139,7 +140,10 @@ const Ongoing = () => {
       });
   };
 
+  const [pleaseWait, togglePleaseWait] = useState(false);
+
   const pikcUpCake = (orderID: any) => {
+    togglePleaseWait(true);
     axios
       .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
         status: "getCake",
@@ -165,6 +169,7 @@ const Ongoing = () => {
   };
 
   const cancelCake = (orderID: any) => {
+    togglePleaseWait(true);
     axios
       .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
         status: "canceled",
@@ -210,6 +215,10 @@ const Ongoing = () => {
         <header>
           <h1>Ongoing</h1>
         </header>
+
+        <Modal show={pleaseWait}>
+          <Modal.Body>Please wait processing...</Modal.Body>
+        </Modal>
 
         {pickReload && (
           <div className="loadOng">
@@ -406,33 +415,40 @@ const Ongoing = () => {
                       <span className="min"></span>
                       <span className="circel"></span>
                     </div>
+                    <div>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          if (rushing.payment) {
+                            setPersonal({
+                              email: rushing.customer.email,
+                              payment: rushing.payment,
+                              id: rushing._id,
+                            });
+                          } else {
+                            toast.error("No payment method", {
+                              position: "top-right",
+                              autoClose: 3000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                              theme: "colored",
+                            });
+                          }
+                        }}
+                      >
+                        Ready to pickup
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => cancelCake(rushing._id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
 
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        if (rushing.payment) {
-                          setPersonal({
-                            email: rushing.customer.email,
-                            payment: rushing.payment,
-                            id: rushing._id,
-                          });
-                        } else {
-                          toast.error("No payment method", {
-                            position: "top-right",
-                            autoClose: 3000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "colored",
-                          });
-                        }
-                      }}
-                    >
-                      Ready to pickup
-                    </button>
-                    <p>{rushing.shape}</p>
                     <div
                       className="openDetail"
                       onClick={() => {
@@ -555,32 +571,39 @@ const Ongoing = () => {
                       <span className="min"></span>
                       <span className="circel"></span>
                     </div>
-
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        if (norushing.payment) {
-                          setPersonal({
-                            email: norushing.customer.email,
-                            payment: norushing.payment,
-                            id: norushing._id,
-                          });
-                        } else {
-                          toast.error("No payment method", {
-                            position: "top-right",
-                            autoClose: 3000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "colored",
-                          });
-                        }
-                      }}
-                    >
-                      Ready to pickup
-                    </button>
+                    <div>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          if (norushing.payment) {
+                            setPersonal({
+                              email: norushing.customer.email,
+                              payment: norushing.payment,
+                              id: norushing._id,
+                            });
+                          } else {
+                            toast.error("No payment method", {
+                              position: "top-right",
+                              autoClose: 3000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                              theme: "colored",
+                            });
+                          }
+                        }}
+                      >
+                        Ready to pickup
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => cancelCake(norushing._id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
                     <div
                       className="openDetail"
                       onClick={() => {
