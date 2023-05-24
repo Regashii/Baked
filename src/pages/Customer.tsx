@@ -7,11 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BakedGoodies from "../components/BakedGoodies";
-import Avatar from "react-avatar";
+import Modal from "react-bootstrap/Modal";
 
 const Customer = () => {
   localStorage.setItem("route", "customer");
-
+  const [pleaseWait, togglePleaseWait] = useState(false);
   const [buyers, setBuyers] = useState([]);
   const [search, setSearch] = useState("");
   const [allOrders, setAllOrders] = useState([]);
@@ -46,6 +46,8 @@ const Customer = () => {
             return [...ordering, res.data[0]];
           });
 
+          togglePleaseWait(false);
+
           if (res.data[0].isDone === true) {
             allSum(res.data[0].feedback.rating);
           }
@@ -56,6 +58,10 @@ const Customer = () => {
   return (
     <>
       <BakedGoodies />
+      <Modal show={pleaseWait}>
+        <Modal.Body>Please wait processing...</Modal.Body>
+      </Modal>
+
       <div className="Pages4">
         {allOrders.length > 0 && (
           <div className="individual">
@@ -402,7 +408,7 @@ const Customer = () => {
                                 className="btn btn-outline-warning"
                                 onClick={() => {
                                   handleSubmit(buyer.orders);
-
+                                  togglePleaseWait(true);
                                   changeAvatar(buyer.avatar);
                                 }}
                               >
