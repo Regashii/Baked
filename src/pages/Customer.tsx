@@ -274,6 +274,14 @@ const Customer = () => {
                           Declined
                         </td>
                       )}
+                      {allOrder.status === "canceled" && (
+                        <td
+                          className="cakeStatus"
+                          style={{ background: "red", paddingLeft: "10px" }}
+                        >
+                          Canceled
+                        </td>
+                      )}
                       {allOrder.status === "getCake" && (
                         <td
                           className="cakeStatus"
