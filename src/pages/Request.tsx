@@ -241,13 +241,13 @@ const Request = () => {
               return (
                 <div className="order" key={index}>
                   <div className="png">
-                    {/* <img
-                    src={order.images}
-                    alt="Cake"
-                    onClick={() => {
-                      setPic(order.images);
-                    }}
-                  /> */}
+                    <img
+                      src={order.images}
+                      alt="Cake"
+                      onClick={() => {
+                        setPic(order.images);
+                      }}
+                    />
                     <h2>{order.type}</h2>
                   </div>
                   <div className="details">

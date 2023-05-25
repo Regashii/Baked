@@ -29,7 +29,6 @@ const Ongoing = () => {
   const [notRush, setNotRush] = useState([]);
 
   const [pickUp, setPickUP] = useState([]);
-  const [pickReload, setPickReload] = useState(false);
 
   const [pic, setPic] = useState("");
   const [arrayItem, setArrayItem] = useState(false);
@@ -142,10 +141,12 @@ const Ongoing = () => {
 
   const [pleaseWait, togglePleaseWait] = useState(false);
 
-  const pikcUpCake = (orderID: any) => {
+  const [orderId, setOrderId] = useState(null);
+
+  const pikcUpCake = () => {
     togglePleaseWait(true);
     axios
-      .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
+      .put(`https://baked-goodies.vercel.app/api/order/server/${orderId}`, {
         status: "getCake",
       })
       .then((response) => {
@@ -168,10 +169,10 @@ const Ongoing = () => {
       });
   };
 
-  const cancelCake = (orderID: any) => {
+  const cancelCake = () => {
     togglePleaseWait(true);
     axios
-      .put(`https://baked-goodies.vercel.app/api/order/server/${orderID}`, {
+      .put(`https://baked-goodies.vercel.app/api/order/server/${orderId}`, {
         status: "canceled",
       })
       .then((response) => {
@@ -195,6 +196,7 @@ const Ongoing = () => {
   };
 
   const [display, setDisplay] = useState({
+    img: "",
     type: "",
     flavor: "",
     shape: "",
@@ -208,6 +210,9 @@ const Ongoing = () => {
     payment: "",
   });
 
+  const [getModal, toggleGetModal] = useState(false);
+  const [cancelModal, toggleCancelModal] = useState(false);
+
   return (
     <>
       <BakedGoodies />
@@ -219,12 +224,44 @@ const Ongoing = () => {
         <Modal show={pleaseWait}>
           <Modal.Body>Please wait processing...</Modal.Body>
         </Modal>
-
-        {pickReload && (
-          <div className="loadOng">
-            <div className="ongLoad"></div>
-          </div>
-        )}
+        <Modal show={getModal}>
+          <Modal.Body>
+            Are you sure the customer get the cake?
+            <div>
+              <button className="btn btn-success" onClick={pikcUpCake}>
+                Yes
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  setOrderId(null);
+                  toggleGetModal(false);
+                }}
+              >
+                No
+              </button>
+            </div>
+          </Modal.Body>
+        </Modal>
+        <Modal show={cancelModal}>
+          <Modal.Body>
+            Are you sure you want to cancel?
+            <div>
+              <button className="btn btn-success" onClick={cancelCake}>
+                Yes
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  setOrderId(null);
+                  toggleCancelModal(false);
+                }}
+              >
+                No
+              </button>
+            </div>
+          </Modal.Body>
+        </Modal>
 
         {pic !== "" && (
           <div className="pop">
@@ -443,7 +480,10 @@ const Ongoing = () => {
                       </button>
                       <button
                         className="btn btn-danger"
-                        onClick={() => cancelCake(rushing._id)}
+                        onClick={() => {
+                          setOrderId(rushing._id);
+                          toggleCancelModal(true);
+                        }}
                       >
                         Remove
                       </button>
@@ -453,6 +493,7 @@ const Ongoing = () => {
                       className="openDetail"
                       onClick={() => {
                         setDisplay({
+                          img: rushing.images,
                           type: rushing.type,
                           flavor: rushing.flavor,
                           shape: rushing.shape,
@@ -483,6 +524,7 @@ const Ongoing = () => {
                 className="btn btn-danger"
                 onClick={() => {
                   setDisplay({
+                    img: "",
                     type: "",
                     flavor: "",
                     shape: "",
@@ -499,6 +541,9 @@ const Ongoing = () => {
               >
                 Close
               </button>
+              <div>
+                <img src={display.img} alt="" />
+              </div>
               <div>
                 <b>Type: {display.type}</b>
               </div>
@@ -599,7 +644,10 @@ const Ongoing = () => {
                       </button>
                       <button
                         className="btn btn-danger"
-                        onClick={() => cancelCake(norushing._id)}
+                        onClick={() => {
+                          setOrderId(norushing._id);
+                          toggleCancelModal(true);
+                        }}
                       >
                         Remove
                       </button>
@@ -608,6 +656,7 @@ const Ongoing = () => {
                       className="openDetail"
                       onClick={() => {
                         setDisplay({
+                          img: norushing.images,
                           type: norushing.type,
                           flavor: norushing.flavor,
                           shape: norushing.shape,
@@ -647,8 +696,8 @@ const Ongoing = () => {
                       <button
                         className="btn btn-primary"
                         onClick={() => {
-                          setPickReload(true);
-                          pikcUpCake(pick._id);
+                          setOrderId(pick._id);
+                          toggleGetModal(true);
                         }}
                       >
                         Customer get the cake
@@ -656,7 +705,8 @@ const Ongoing = () => {
                       <button
                         className="btn btn-danger"
                         onClick={() => {
-                          cancelCake(pick._id);
+                          setOrderId(pick._id);
+                          toggleCancelModal(true);
                         }}
                       >
                         Cancel order
@@ -667,6 +717,7 @@ const Ongoing = () => {
                       className="openDetail"
                       onClick={() => {
                         setDisplay({
+                          img: pick.images,
                           type: pick.type,
                           flavor: pick.flavor,
                           shape: pick.shape,
