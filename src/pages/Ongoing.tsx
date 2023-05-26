@@ -33,6 +33,8 @@ const Ongoing = () => {
   const [pic, setPic] = useState("");
   const [arrayItem, setArrayItem] = useState(false);
 
+  const [pendings, setPendings] = useState([]);
+
   useEffect(() => {
     axios
       .get(
@@ -51,15 +53,28 @@ const Ongoing = () => {
 
     axios
       .get(
-        `https://baked-goodies-api.vercel.app/api/order?status=pickup&&isDone=false`
+        `https://baked-goodies-api.vercel.app/api/order?status=confirm&&isDone=false`
       )
       .then((response) => {
         setPickUP(response.data);
       });
+
+    axios
+      .get(
+        `https://baked-goodies-api.vercel.app/api/order?status=paid&&isDone=false`
+      )
+      .then((response) => {
+        setPendings(response.data);
+      });
   }, []);
 
   setTimeout(() => {
-    if (rush.length === 0 && notRush.length === 0 && pickUp.length === 0) {
+    if (
+      rush.length === 0 &&
+      notRush.length === 0 &&
+      pickUp.length === 0 &&
+      pendings.length === 0
+    ) {
       setArrayItem(true);
     }
   }, 10000);
@@ -142,12 +157,44 @@ const Ongoing = () => {
   const [pleaseWait, togglePleaseWait] = useState(false);
 
   const [orderId, setOrderId] = useState(null);
+  const [getModal, toggleGetModal] = useState(false);
+  const [cancelModal, toggleCancelModal] = useState(false);
+  const [confirmModal, toggleConfirmModal] = useState(false);
+
+  const confirmPayment = () => {
+    togglePleaseWait(true);
+    toggleConfirmModal(false);
+    axios
+      .put(`https://baked-goodies.vercel.app/api/order/server/${orderId}`, {
+        status: "confirm",
+      })
+      .then((response) => {
+        toast;
+        if (response.status === 200) {
+          toast.success("Please wait", {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      });
+  };
 
   const pikcUpCake = () => {
     togglePleaseWait(true);
+    toggleGetModal(false);
     axios
       .put(`https://baked-goodies.vercel.app/api/order/server/${orderId}`, {
         status: "getCake",
+        isDone: true,
       })
       .then((response) => {
         toast;
@@ -171,9 +218,15 @@ const Ongoing = () => {
 
   const cancelCake = () => {
     togglePleaseWait(true);
+    toggleCancelModal(false);
     axios
       .put(`https://baked-goodies.vercel.app/api/order/server/${orderId}`, {
         status: "canceled",
+        endImage: "",
+        finalPrice: "",
+        endDate: "",
+        isDone: true,
+        paymentImage: "",
       })
       .then((response) => {
         toast;
@@ -209,9 +262,6 @@ const Ongoing = () => {
     promiseDate: new Date(),
     payment: "",
   });
-
-  const [getModal, toggleGetModal] = useState(false);
-  const [cancelModal, toggleCancelModal] = useState(false);
 
   return (
     <>
@@ -255,6 +305,25 @@ const Ongoing = () => {
                 onClick={() => {
                   setOrderId(null);
                   toggleCancelModal(false);
+                }}
+              >
+                No
+              </button>
+            </div>
+          </Modal.Body>
+        </Modal>
+        <Modal show={confirmModal}>
+          <Modal.Body>
+            Are you sure the customer already paid?
+            <div>
+              <button className="btn btn-success" onClick={confirmPayment}>
+                Yes
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  setOrderId(null);
+                  toggleConfirmModal(false);
                 }}
               >
                 No
@@ -394,6 +463,7 @@ const Ongoing = () => {
         {rush.length === 0 &&
           notRush.length === 0 &&
           pickUp.length === 0 &&
+          pendings.length === 0 &&
           arrayItem === false && (
             <div className="loadingPage">
               <div
@@ -427,6 +497,7 @@ const Ongoing = () => {
         {rush.length === 0 &&
           notRush.length === 0 &&
           pickUp.length === 0 &&
+          pendings.length === 0 &&
           arrayItem === true && (
             <div className="errorPage">
               <img src="idk.png" alt="idk" width={100} />
@@ -543,6 +614,7 @@ const Ongoing = () => {
               </button>
               <div>
                 <img src={display.img} alt="" />
+                <h1>Proof of payment</h1>
               </div>
               <div>
                 <b>Type: {display.type}</b>
@@ -680,6 +752,67 @@ const Ongoing = () => {
           </>
         )}
 
+        {pendings.length > 0 && (
+          <>
+            <h1>Waiting for the customer payment</h1>
+            <div className="process">
+              {pendings.map((pending: any, index) => (
+                <div className="num" key={index}>
+                  <div className="index">
+                    <h4>Pending for payment </h4>
+                    <p>Name: {pending.customer.name}</p>
+                    <p>Email: {pending.customer.email}</p>
+                    <p>ID: {pending._id}</p>
+
+                    <div className="Action">
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setOrderId(pending._id);
+                          toggleConfirmModal(true);
+                        }}
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          setOrderId(pending._id);
+                          toggleCancelModal(true);
+                        }}
+                      >
+                        Scammer
+                      </button>
+                    </div>
+
+                    <div
+                      className="openDetail"
+                      onClick={() => {
+                        setDisplay({
+                          img: pending.paymentImage,
+                          type: pending.type,
+                          flavor: pending.flavor,
+                          shape: pending.shape,
+                          size: pending.size,
+                          upgrades: pending.upgrades,
+                          addons: pending.addons,
+                          dedication: pending.dedication,
+                          orderDetails: pending.orderDetails,
+                          orderDate: pending.orderDate,
+                          promiseDate: pending.promiseDate,
+                          payment: pending.payment,
+                        });
+                      }}
+                    >
+                      See details
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         {pickUp.length > 0 && (
           <>
             <h1>Waiting for cake to pick up</h1>
@@ -717,7 +850,7 @@ const Ongoing = () => {
                       className="openDetail"
                       onClick={() => {
                         setDisplay({
-                          img: pick.images,
+                          img: pick.endImage,
                           type: pick.type,
                           flavor: pick.flavor,
                           shape: pick.shape,

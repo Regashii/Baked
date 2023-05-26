@@ -500,6 +500,20 @@
       transform: scale(1);
     }
   }
+
+  .Pages1 details[open].styled {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    background: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    z-index: 2;
+  }
 }
 
 .Pages1 .loadingPage {

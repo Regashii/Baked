@@ -55,11 +55,136 @@ const Customer = () => {
     }
   };
 
+  const [display, setDisplay] = useState({
+    imgPay: "",
+    imgEnd: "",
+    imgStart: [],
+    type: "",
+    flavor: "",
+    shape: "",
+    size: "",
+    upgrades: [],
+    addons: [],
+    dedication: "",
+    orderDetails: "",
+    orderDate: new Date(),
+    promiseDate: new Date(),
+    endDate: new Date(),
+    payment: "",
+  });
+
+  console.log(display.imgStart);
+
+  const [displayModal, toggleDisplayModal] = useState(false);
+
   return (
     <>
       <BakedGoodies />
       <Modal show={pleaseWait}>
         <Modal.Body>Please wait processing...</Modal.Body>
+      </Modal>
+
+      <Modal show={displayModal}>
+        <Modal.Header>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+            {display.imgStart.map((imageS: any) => (
+              <div>
+                <img src={imageS} alt="startCake" width={100} />
+                <p>Start Cake</p>
+              </div>
+            ))}
+
+            <div>
+              <img src={display.imgPay} alt="confirmCake" width={100} />
+              <p>Confirm Payment</p>
+            </div>
+
+            <div>
+              <img src={display.imgEnd} alt="finalProduct" width={100} />
+              <p>final Product</p>
+            </div>
+          </div>
+        </Modal.Header>
+        <Modal.Body>
+          <b>Type: {display.type}</b>
+          <br />
+
+          <b>Flavor: {display.flavor}</b>
+          <br />
+
+          <b>Shape: {display.shape}</b>
+          <br />
+
+          <b>Size: {display.size.replace(/^(.*)₱(.).*/, "$1")}</b>
+          <br />
+
+          {display.upgrades.length > 0 && (
+            <>
+              <b>
+                Upgrades:{" "}
+                {display.upgrades.map((upgrade: any) => (
+                  <>{upgrade.replace(/^(.*)₱(.).*/, "$1")}</>
+                ))}
+              </b>
+              <br />
+            </>
+          )}
+          {display.addons.length > 0 && (
+            <>
+              <b>
+                Addons:{" "}
+                {display.addons.map((addon: any) => (
+                  <>{addon.replace(/^(.*)₱(.).*/, "$1")}</>
+                ))}
+              </b>
+              <br />
+            </>
+          )}
+
+          <b>Dedication: {display.dedication}</b>
+          <br />
+
+          <b>Description: {display.orderDetails}</b>
+          <br />
+
+          <b>Order Date: {new Date(display.orderDate).toLocaleDateString()}</b>
+          <br />
+
+          <b>Deadline: {new Date(display.promiseDate).toLocaleDateString()}</b>
+          <br />
+          <b>end Date: {new Date(display.endDate).toLocaleDateString()}</b>
+          <br />
+
+          <b>Payment: {display.payment}</b>
+          <br />
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              toggleDisplayModal(false);
+              setDisplay({
+                imgPay: "",
+                imgEnd: "",
+                imgStart: [],
+                type: "",
+                flavor: "",
+                shape: "",
+                size: "",
+                upgrades: [],
+                addons: [],
+                dedication: "",
+                orderDetails: "",
+                orderDate: new Date(),
+                promiseDate: new Date(),
+                endDate: new Date(),
+                payment: "",
+              });
+            }}
+          >
+            Ok
+          </button>
+        </Modal.Footer>
       </Modal>
 
       <div className="Pages4">
@@ -233,6 +358,7 @@ const Customer = () => {
 
                     <th className="cakeStatus">Status</th>
                     <th className="cakeRating">Rating</th>
+                    <th className="cakeAction">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -260,18 +386,39 @@ const Customer = () => {
                           Working
                         </td>
                       )}
-                      {allOrder.isDone === false &&
-                        allOrder.status === "pickup" && (
-                          <td
-                            className="cakeStatus"
-                            style={{
-                              background: "orange",
-                              paddingLeft: "10px",
-                            }}
-                          >
-                            Pick up
-                          </td>
-                        )}
+                      {allOrder.status === "pickup" && (
+                        <td
+                          className="cakeStatus"
+                          style={{
+                            background: "orange",
+                            paddingLeft: "10px",
+                          }}
+                        >
+                          Wating for payment
+                        </td>
+                      )}
+                      {allOrder.status === "paid" && (
+                        <td
+                          className="cakeStatus"
+                          style={{
+                            background: "pink",
+                            paddingLeft: "10px",
+                          }}
+                        >
+                          Checking the payment
+                        </td>
+                      )}
+                      {allOrder.status === "confirm" && (
+                        <td
+                          className="cakeStatus"
+                          style={{
+                            background: "lightgreen",
+                            paddingLeft: "10px",
+                          }}
+                        >
+                          Wating for pickup
+                        </td>
+                      )}
                       {allOrder.status === "decline" && (
                         <td
                           className="cakeStatus"
@@ -318,6 +465,34 @@ const Customer = () => {
                           )}
                         </>
                       )}
+
+                      <td>
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => {
+                            toggleDisplayModal(true);
+                            setDisplay({
+                              imgPay: allOrder.paymentImage,
+                              imgEnd: allOrder.endImage,
+                              imgStart: allOrder.images,
+                              type: allOrder.type,
+                              flavor: allOrder.flavor,
+                              shape: allOrder.shape,
+                              size: allOrder.size,
+                              upgrades: allOrder.upgrades,
+                              addons: allOrder.addons,
+                              dedication: allOrder.dedication,
+                              orderDetails: allOrder.orderDetails,
+                              orderDate: allOrder.orderDate,
+                              promiseDate: allOrder.promiseDate,
+                              endDate: allOrder.endDate,
+                              payment: allOrder.payment,
+                            });
+                          }}
+                        >
+                          View
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
