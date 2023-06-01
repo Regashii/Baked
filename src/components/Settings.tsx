@@ -103,6 +103,7 @@ const Settings = () => {
             progress: undefined,
             theme: "colored",
           });
+          togglePleaseWait(false);
         }
       });
   };
@@ -121,6 +122,7 @@ const Settings = () => {
         progress: undefined,
         theme: "colored",
       });
+      togglePleaseWait(false);
     } else {
       setDisabled(true);
       axios
@@ -149,6 +151,7 @@ const Settings = () => {
         .catch((err) => {
           if (err.response.status === 500) {
             setDisabled(false);
+            togglePleaseWait(false);
           }
         });
     }
