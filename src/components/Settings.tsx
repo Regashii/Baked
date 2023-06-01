@@ -201,7 +201,6 @@ const Settings = () => {
                   required
                   placeholder="Verify"
                   onChange={handleChange}
-                  disabled
                 />
               </div>
               <div className="input-group mb-3">
@@ -213,12 +212,9 @@ const Settings = () => {
                   required
                   placeholder="First"
                   onChange={handleChange}
-                  disabled
                 />
               </div>
-              <button className="btn btn-warning" disabled>
-                Verify account
-              </button>
+              <button className="btn btn-warning">Verify account</button>
             </form>
           )}
 
