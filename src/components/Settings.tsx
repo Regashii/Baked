@@ -92,7 +92,7 @@ const Settings = () => {
         }
       })
       .catch((err) => {
-        if (err.response.status === 400 || err.response.status === 400) {
+        if (err.response.status === 400 || err.response.status === 404) {
           toast.error("Wrong", {
             position: "top-right",
             autoClose: 5000,
